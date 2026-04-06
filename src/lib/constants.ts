@@ -1,0 +1,106 @@
+export const SCHOOLS = [
+  {
+    id: "jeonglim",
+    name: "화성 정림초등학교",
+    shortName: "정림초",
+    date: "2026-04-29",
+    dateLabel: "2026년 4월 29일 (수)",
+    time: "오전 9:00 ~ 12:00",
+    location: "정림초등학교 강당",
+    capacityPerSubject: 8,
+  },
+  {
+    id: "cheongwon",
+    name: "화성 청원초등학교",
+    shortName: "청원초",
+    date: "2026-06-12",
+    dateLabel: "2026년 6월 12일 (금)",
+    time: "오전 9:00 ~ 12:00",
+    location: "청원초등학교 강당",
+    capacityPerSubject: 8,
+  },
+] as const;
+
+export const SUBJECTS = [
+  {
+    id: "vibe-coding",
+    name: "바이브코딩",
+    description: "AI와 함께 나만의 게임 만들기 코딩 체험",
+    skills: "코딩교육, 게임개발 경험",
+    icon: "🎮",
+    closed: false,
+  },
+  {
+    id: "ai-story",
+    name: "AI 동화 만들기",
+    description: "구글 제미나이로 상상을 동화책으로 제작",
+    skills: "AI도구 활용, 스토리텔링",
+    icon: "📖",
+    closed: true,
+  },
+  {
+    id: "turtle-bot",
+    name: "터틀봇 조종하기",
+    description: "음성 명령으로 로봇 제어 활동",
+    skills: "로봇교육, 터틀봇 운용",
+    icon: "🐢",
+    closed: false,
+  },
+  {
+    id: "dash-robot",
+    name: "대시로봇 조종하기",
+    description: "로봇 조종하며 미션 클리어",
+    skills: "로봇교육, 대시로봇 운용",
+    icon: "🤖",
+    closed: false,
+  },
+  {
+    id: "ai-orchestra",
+    name: "구글 AI 오케스트라",
+    description: "AI 지휘로 음악 창작 체험",
+    skills: "음악교육, AI도구 활용",
+    icon: "🎵",
+    closed: false,
+  },
+  {
+    id: "reactive-robot",
+    name: "반응형 로봇 만들기",
+    description: "센서·모터 조립 및 코딩으로 로봇 제작",
+    skills: "메이커교육, 아두이노/센서",
+    icon: "⚙️",
+    closed: true,
+  },
+  {
+    id: "ai-image",
+    name: "AI 이미지·영상 생성",
+    description: "상상을 그림과 영상으로 창작",
+    skills: "AI 이미지/영상 생성 도구",
+    icon: "🎨",
+    closed: false,
+  },
+  {
+    id: "cooking",
+    name: "요리 체험",
+    description: "AI 레시피로 햄버거·샌드위치 제작",
+    skills: "조리자격, 아동 요리교육",
+    icon: "🍔",
+    closed: true,
+  },
+] as const;
+
+export const EDUCATION_OPTIONS = [
+  "고졸",
+  "전문학사",
+  "학사",
+  "석사",
+  "박사",
+] as const;
+
+export const SUBJECT_CLOSE_THRESHOLD = 3;
+
+export const STATUS_OPTIONS = [
+  { value: "pending", label: "접수완료", color: "bg-blue-100 text-blue-800" },
+  { value: "reviewing", label: "검토중", color: "bg-yellow-100 text-yellow-800" },
+  { value: "accepted", label: "선발", color: "bg-green-100 text-green-800" },
+  { value: "rejected", label: "불합격", color: "bg-red-100 text-red-800" },
+] as const;

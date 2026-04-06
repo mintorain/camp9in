@@ -1,65 +1,387 @@
-import Image from "next/image";
+import {
+  Calendar,
+  MapPin,
+  Clock,
+  Users,
+  ChevronRight,
+  Sparkles,
+} from "lucide-react";
+import { SCHOOLS } from "@/lib/constants";
+import TiltCard from "@/components/TiltCard";
+import FloatingParticles from "@/components/FloatingParticles";
+import ScrollReveal from "@/components/ScrollReveal";
+import AnimatedCounter from "@/components/AnimatedCounter";
+import GlowButton from "@/components/GlowButton";
+import SubjectGrid from "@/components/SubjectGrid";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <>
+      {/* 글래스모피즘 헤더 */}
+      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-white/70 border-b border-white/20">
+        <nav className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+          <span className="text-lg font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+            두온교육 AI캠프
+          </span>
+          <a
+            href="/apply"
+            className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-5 py-2 rounded-full text-sm font-semibold hover:shadow-lg hover:shadow-indigo-500/30 transition-all duration-300 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          >
+            강사 지원하기
+          </a>
+        </nav>
+      </header>
+
+      <main id="main-content">
+        {/* 히어로 - 3D 파티클 배경 */}
+        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-950">
+          <FloatingParticles />
+
+          {/* 그라디언트 오브 */}
+          <div
+            className="absolute top-1/4 -left-32 w-96 h-96 bg-indigo-500/30 rounded-full blur-3xl animate-pulse"
+            aria-hidden="true"
+          />
+          <div
+            className="absolute bottom-1/4 -right-32 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl animate-pulse"
+            style={{ animationDelay: "1s" }}
+            aria-hidden="true"
+          />
+          <div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-3xl"
+            aria-hidden="true"
+          />
+
+          <div className="relative z-10 max-w-6xl mx-auto px-4 text-center pt-20">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-indigo-300 text-sm mb-8">
+              <Sparkles className="w-4 h-4" aria-hidden="true" />
+              두온교육(주) 캠프사업부
+            </div>
+
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-8">
+              <span className="text-white">AI로 만나는</span>
+              <br />
+              <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                미래 교육 체험 캠프
+              </span>
+              <br />
+              <span className="bg-gradient-to-r from-amber-300 to-orange-400 bg-clip-text text-transparent">
+                강사 모집
+              </span>
+            </h1>
+
+            <p className="text-indigo-200/80 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
+              초등학생들에게 AI 시대의 창의력과 문제해결력을 키워줄
+              <br className="hidden md:block" />
+              열정 있는 강사를 찾습니다.
+            </p>
+
+            <GlowButton
+              href="/apply"
+              className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white px-10 py-5 rounded-2xl text-lg font-bold transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-amber-500/30 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-slate-900"
             >
-              Templates
+              강사 지원하기
+              <ChevronRight className="w-5 h-5" aria-hidden="true" />
+            </GlowButton>
+
+            {/* 스크롤 인디케이터 */}
+            <div className="mt-16 flex flex-col items-center gap-2 text-indigo-400/50">
+              <span className="text-xs">Scroll</span>
+              <div className="w-5 h-8 border-2 border-indigo-400/30 rounded-full flex justify-center pt-1">
+                <div className="w-1 h-2 bg-indigo-400/50 rounded-full animate-bounce" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* 숫자 하이라이트 */}
+        <section className="py-16 bg-white border-b border-gray-100">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              {[
+                { value: 2, suffix: "개교", label: "참여 학교" },
+                { value: 8, suffix: "개", label: "체험 분야" },
+                { value: 16, suffix: "명", label: "모집 강사" },
+                { value: 3, suffix: "시간", label: "캠프 운영" },
+              ].map((stat, i) => (
+                <ScrollReveal key={stat.label} delay={i * 100} direction="up">
+                  <div>
+                    <p className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                      <AnimatedCounter
+                        target={stat.value}
+                        suffix={stat.suffix}
+                      />
+                    </p>
+                    <p className="text-gray-500 text-sm mt-1">{stat.label}</p>
+                  </div>
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 캠프 소개 */}
+        <section className="py-20 bg-gray-50" aria-labelledby="about-heading">
+          <div className="max-w-6xl mx-auto px-4 text-center">
+            <ScrollReveal>
+              <h2
+                id="about-heading"
+                className="text-2xl md:text-4xl font-bold text-gray-900 mb-6"
+              >
+                캠프 소개
+              </h2>
+              <p className="text-gray-600 max-w-3xl mx-auto text-lg leading-relaxed">
+                &ldquo;AI로 만나는 미래 교육 체험 캠프&rdquo;는 초등학생들이{" "}
+                <strong className="text-indigo-600">
+                  8개 체험 부스를 순환
+                </strong>
+                하며 AI, 로봇, 코딩, 요리 등 다양한 분야를 직접 체험하는
+                프로그램입니다. 각 부스에서 전문 강사가 학생들의 창의적 체험을
+                이끌어주게 됩니다.
+              </p>
+            </ScrollReveal>
+          </div>
+        </section>
+
+        {/* 일정 및 장소 - 3D 틸트 카드 */}
+        <section className="py-20 bg-white" aria-labelledby="schedule-heading">
+          <div className="max-w-6xl mx-auto px-4">
+            <ScrollReveal>
+              <h2
+                id="schedule-heading"
+                className="text-2xl md:text-4xl font-bold text-gray-900 text-center mb-4"
+              >
+                캠프 일정 및 장소
+              </h2>
+              <p className="text-gray-500 text-center mb-12">
+                카드 위에 마우스를 올려보세요
+              </p>
+            </ScrollReveal>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              {SCHOOLS.map((school, i) => (
+                <ScrollReveal
+                  key={school.id}
+                  delay={i * 200}
+                  direction={i === 0 ? "left" : "right"}
+                >
+                  <TiltCard className="rounded-2xl">
+                    <article className="relative bg-gradient-to-br from-indigo-600 to-purple-700 rounded-2xl p-8 text-white overflow-hidden">
+                      {/* 배경 장식 */}
+                      <div
+                        className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2"
+                        aria-hidden="true"
+                      />
+                      <div
+                        className="absolute bottom-0 left-0 w-24 h-24 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2"
+                        aria-hidden="true"
+                      />
+
+                      <h3 className="text-2xl font-bold mb-6 relative z-10">
+                        {school.name}
+                      </h3>
+                      <ul className="space-y-4 relative z-10">
+                        <li className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center backdrop-blur-sm">
+                            <Calendar
+                              className="w-5 h-5"
+                              aria-hidden="true"
+                            />
+                          </div>
+                          <span className="text-white/90">
+                            {school.dateLabel}
+                          </span>
+                        </li>
+                        <li className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center backdrop-blur-sm">
+                            <Clock className="w-5 h-5" aria-hidden="true" />
+                          </div>
+                          <span className="text-white/90">{school.time}</span>
+                        </li>
+                        <li className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center backdrop-blur-sm">
+                            <MapPin className="w-5 h-5" aria-hidden="true" />
+                          </div>
+                          <span className="text-white/90">
+                            {school.location}
+                          </span>
+                        </li>
+                        <li className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center backdrop-blur-sm">
+                            <Users className="w-5 h-5" aria-hidden="true" />
+                          </div>
+                          <span className="text-white/90">
+                            각 분야별{" "}
+                            <strong className="text-amber-300">
+                              {school.capacityPerSubject}명
+                            </strong>{" "}
+                            모집
+                          </span>
+                        </li>
+                      </ul>
+                    </article>
+                  </TiltCard>
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 모집 분야 - 3D 틸트 그리드 */}
+        <section
+          className="py-20 bg-gray-50"
+          aria-labelledby="subjects-heading"
+        >
+          <div className="max-w-6xl mx-auto px-4">
+            <ScrollReveal>
+              <h2
+                id="subjects-heading"
+                className="text-2xl md:text-4xl font-bold text-gray-900 text-center mb-4"
+              >
+                모집 분야
+              </h2>
+              <p className="text-gray-500 text-center mb-12">
+                8개 체험 부스별 전문 강사를 모집합니다
+              </p>
+            </ScrollReveal>
+
+            <SubjectGrid />
+          </div>
+        </section>
+
+        {/* 지원 절차 - 3D 스텝 */}
+        <section
+          className="py-20 bg-gray-50"
+          aria-labelledby="process-heading"
+        >
+          <div className="max-w-6xl mx-auto px-4">
+            <ScrollReveal>
+              <h2
+                id="process-heading"
+                className="text-2xl md:text-4xl font-bold text-gray-900 text-center mb-12"
+              >
+                지원 절차
+              </h2>
+            </ScrollReveal>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                {
+                  step: "STEP 1",
+                  title: "지원서 작성",
+                  desc: "온라인 지원서를 작성하고 제출해주세요",
+                  gradient: "from-blue-500 to-indigo-600",
+                },
+                {
+                  step: "STEP 2",
+                  title: "서류 검토",
+                  desc: "제출된 지원서를 검토합니다",
+                  gradient: "from-indigo-500 to-purple-600",
+                },
+                {
+                  step: "STEP 3",
+                  title: "최종 선발",
+                  desc: "선발 결과를 이메일/문자로 안내합니다",
+                  gradient: "from-purple-500 to-pink-600",
+                },
+              ].map((item, i) => (
+                <ScrollReveal key={item.step} delay={i * 150} direction="up">
+                  <TiltCard className="rounded-2xl h-full">
+                    <div className="relative bg-white rounded-2xl p-8 text-center border border-gray-100 h-full shadow-sm">
+                      <div
+                        className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-br ${item.gradient} text-white text-lg font-bold mb-5 shadow-lg`}
+                      >
+                        {i + 1}
+                      </div>
+                      <p className="text-xs font-bold text-indigo-500 tracking-widest mb-2">
+                        {item.step}
+                      </p>
+                      <h3 className="font-bold text-gray-900 text-lg mb-3">
+                        {item.title}
+                      </h3>
+                      <p className="text-gray-500">{item.desc}</p>
+
+                      {/* 연결선 (md 이상) */}
+                      {i < 2 && (
+                        <div
+                          className="hidden md:block absolute top-1/2 -right-4 w-8 h-0.5 bg-gradient-to-r from-indigo-300 to-purple-300"
+                          aria-hidden="true"
+                        />
+                      )}
+                    </div>
+                  </TiltCard>
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA - 3D 배경 */}
+        <section className="relative py-24 overflow-hidden bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-950 text-white text-center">
+          <div
+            className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl"
+            aria-hidden="true"
+          />
+          <div
+            className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"
+            aria-hidden="true"
+          />
+
+          <div className="relative z-10 max-w-6xl mx-auto px-4">
+            <ScrollReveal>
+              <h2 className="text-3xl md:text-5xl font-extrabold mb-6">
+                AI캠프 강사로
+                <br />
+                <span className="bg-gradient-to-r from-amber-300 to-orange-400 bg-clip-text text-transparent">
+                  함께해주세요!
+                </span>
+              </h2>
+              <p className="text-indigo-300/80 text-lg mb-10">
+                아이들의 미래를 함께 만들어갈 열정 있는 분을 기다립니다
+              </p>
+              <GlowButton
+                href="/apply"
+                className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white px-10 py-5 rounded-2xl text-lg font-bold transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-amber-500/30 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-slate-900"
+              >
+                지금 지원하기
+                <ChevronRight className="w-5 h-5" aria-hidden="true" />
+              </GlowButton>
+            </ScrollReveal>
+          </div>
+        </section>
+      </main>
+
+      <footer className="bg-slate-950 text-gray-500 py-10 border-t border-white/5">
+        <div className="max-w-6xl mx-auto px-4 text-center text-sm">
+          <p className="font-semibold text-gray-400 mb-2">
+            두온교육(주) 캠프사업부
+          </p>
+          <p>
+            이메일:{" "}
+            <a href="mailto:duonedu@duonedu.net" className="hover:text-gray-300 transition-colors">
+              duonedu@duonedu.net
             </a>{" "}
-            or the{" "}
+            | 연락처:{" "}
+            <a href="tel:010-3343-4000" className="hover:text-gray-300 transition-colors">
+              010-3343-4000
+            </a>
+          </p>
+          <p className="mt-2">
+            홈페이지:{" "}
             <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              href="https://vibe.duonedu.net"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-gray-300 transition-colors"
             >
-              Learning
-            </a>{" "}
-            center.
+              vibe.duonedu.net
+            </a>
+          </p>
+          <p className="mt-4 text-gray-600">
+            &copy; 2026 두온교육(주). All rights reserved.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </footer>
+    </>
   );
 }
