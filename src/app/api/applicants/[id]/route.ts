@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServiceSupabase } from "@/lib/supabase";
+import { query } from "@/lib/db";
 
 export async function PATCH(
   request: NextRequest,
@@ -12,7 +12,6 @@ export async function PATCH(
 
   const { id } = await params;
   const body = await request.json();
-  const serviceSupabase = getServiceSupabase();
 
   if (body.status) {
     const validStatuses = ["pending", "reviewing", "accepted", "rejected"];
@@ -23,12 +22,12 @@ export async function PATCH(
       );
     }
 
-    const { error } = await serviceSupabase
-      .from("applicants")
-      .update({ status: body.status })
-      .eq("id", id);
-
-    if (error) {
+    try {
+      await query("UPDATE applicants SET status = ? WHERE id = ?", [
+        body.status,
+        id,
+      ]);
+    } catch {
       return NextResponse.json(
         { error: "상태 변경에 실패했습니다" },
         { status: 500 }

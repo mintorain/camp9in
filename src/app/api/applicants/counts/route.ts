@@ -1,23 +1,33 @@
 import { NextResponse } from "next/server";
-import { getSupabase } from "@/lib/supabase";
+import { query } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
 
+interface CountRow {
+  subject_id: string;
+  cnt: number;
+}
+
+interface ClosedRow {
+  subject_id: string;
+}
+
 export async function GET() {
   try {
-    const supabase = getSupabase();
+    const countRows = await query<CountRow>(
+      "SELECT subject_id, COUNT(*) as cnt FROM applicant_subjects GROUP BY subject_id"
+    );
 
-    const [countsResult, closedResult] = await Promise.all([
-      supabase.from("applicant_subjects").select("subject_id"),
-      supabase.from("closed_subjects").select("subject_id"),
-    ]);
+    const closedRows = await query<ClosedRow>(
+      "SELECT subject_id FROM closed_subjects"
+    );
 
     const counts: Record<string, number> = {};
-    for (const row of countsResult.data || []) {
-      counts[row.subject_id] = (counts[row.subject_id] || 0) + 1;
+    for (const row of countRows) {
+      counts[row.subject_id] = row.cnt;
     }
 
-    const closedIds = (closedResult.data || []).map((r) => r.subject_id);
+    const closedIds = closedRows.map((r) => r.subject_id);
 
     return NextResponse.json({ data: counts, closedIds });
   } catch {

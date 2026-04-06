@@ -1,0 +1,547 @@
+{
+  "version": "2.0",
+  "lastUpdated": "2026-04-06T15:57:49.336Z",
+  "activeFeatures": [
+    "camp9in",
+    "apply",
+    "complete",
+    "applicants",
+    "[id]",
+    "auth",
+    "export",
+    "admin",
+    "dashboard",
+    "counts",
+    "close"
+  ],
+  "primaryFeature": "camp9in",
+  "features": {
+    "camp9in": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-04-06T10:12:23.986Z",
+        "lastUpdated": "2026-04-06T15:57:18.161Z"
+      },
+      "lastFile": "C:/vibecoding/camp9in/src/lib/db.ts"
+    },
+    "apply": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-04-06T10:16:12.886Z",
+        "lastUpdated": "2026-04-06T15:25:00.876Z"
+      },
+      "lastFile": "C:/vibecoding/camp9in/src/app/apply/page.tsx"
+    },
+    "complete": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-04-06T10:16:20.667Z",
+        "lastUpdated": "2026-04-06T10:16:20.667Z"
+      },
+      "lastFile": "C:/vibecoding/camp9in/src/app/apply/complete/page.tsx"
+    },
+    "applicants": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-04-06T10:16:56.937Z",
+        "lastUpdated": "2026-04-06T15:57:49.336Z"
+      },
+      "lastFile": "C:/vibecoding/camp9in/src/app/api/applicants/route.ts"
+    },
+    "[id]": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-04-06T10:17:08.749Z",
+        "lastUpdated": "2026-04-06T15:55:59.550Z"
+      },
+      "lastFile": "C:/vibecoding/camp9in/src/app/api/applicants/[id]/route.ts"
+    },
+    "auth": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-04-06T10:17:12.973Z",
+        "lastUpdated": "2026-04-06T10:17:12.973Z"
+      },
+      "lastFile": "C:/vibecoding/camp9in/src/app/api/auth/route.ts"
+    },
+    "export": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-04-06T10:17:24.976Z",
+        "lastUpdated": "2026-04-06T15:56:21.906Z"
+      },
+      "lastFile": "C:/vibecoding/camp9in/src/app/api/applicants/export/route.ts"
+    },
+    "admin": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-04-06T10:17:59.471Z",
+        "lastUpdated": "2026-04-06T10:17:59.471Z"
+      },
+      "lastFile": "C:/vibecoding/camp9in/src/app/admin/page.tsx"
+    },
+    "dashboard": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-04-06T10:18:37.053Z",
+        "lastUpdated": "2026-04-06T15:25:58.853Z"
+      },
+      "lastFile": "C:/vibecoding/camp9in/src/app/admin/dashboard/page.tsx"
+    },
+    "counts": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-04-06T15:15:48.765Z",
+        "lastUpdated": "2026-04-06T15:56:06.917Z"
+      },
+      "lastFile": "C:/vibecoding/camp9in/src/app/api/applicants/counts/route.ts"
+    },
+    "close": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-04-06T15:23:33.554Z",
+        "lastUpdated": "2026-04-06T15:56:31.512Z"
+      },
+      "lastFile": "C:/vibecoding/camp9in/src/app/api/subjects/close/route.ts"
+    }
+  },
+  "pipeline": {
+    "currentPhase": 1,
+    "level": "Dynamic",
+    "phaseHistory": []
+  },
+  "session": {
+    "startedAt": "2026-04-06T10:06:46.718Z",
+    "onboardingCompleted": false,
+    "lastActivity": "2026-04-06T15:57:49.336Z"
+  },
+  "history": [
+    {
+      "timestamp": "2026-04-06T10:12:23.986Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T10:12:39.807Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T10:12:47.270Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T10:13:34.017Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T10:15:00.206Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T10:16:12.886Z",
+      "feature": "apply",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T10:16:20.667Z",
+      "feature": "complete",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T10:16:56.937Z",
+      "feature": "applicants",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T10:17:08.749Z",
+      "feature": "[id]",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T10:17:12.973Z",
+      "feature": "auth",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T10:17:24.976Z",
+      "feature": "export",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T10:17:59.471Z",
+      "feature": "admin",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T10:18:05.733Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T10:18:37.053Z",
+      "feature": "dashboard",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T10:19:23.002Z",
+      "feature": "applicants",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T10:20:16.141Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T10:20:40.001Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T10:20:47.648Z",
+      "feature": "applicants",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T10:20:52.705Z",
+      "feature": "applicants",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T10:20:56.797Z",
+      "feature": "applicants",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T10:58:29.977Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T10:58:34.599Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T10:58:43.256Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:08:57.479Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:09:15.413Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:09:25.130Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:09:34.563Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:09:42.160Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:11:01.568Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:11:29.509Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:11:51.511Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:12:15.585Z",
+      "feature": "apply",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:14:09.615Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:15:48.765Z",
+      "feature": "counts",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:16:07.936Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:16:28.984Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:16:41.030Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:16:55.216Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:17:06.181Z",
+      "feature": "apply",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:17:17.532Z",
+      "feature": "apply",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:17:37.189Z",
+      "feature": "apply",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:18:32.480Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:21:28.993Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:21:33.815Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:22:35.180Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:23:33.554Z",
+      "feature": "close",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:23:44.667Z",
+      "feature": "counts",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:24:05.630Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:24:11.138Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:24:36.242Z",
+      "feature": "apply",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:25:00.876Z",
+      "feature": "apply",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:25:15.719Z",
+      "feature": "dashboard",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:25:25.894Z",
+      "feature": "dashboard",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:25:58.853Z",
+      "feature": "dashboard",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:54:55.271Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:55:51.610Z",
+      "feature": "applicants",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:55:59.550Z",
+      "feature": "[id]",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:56:06.917Z",
+      "feature": "counts",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:56:21.906Z",
+      "feature": "export",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:56:31.512Z",
+      "feature": "close",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:57:18.161Z",
+      "feature": "camp9in",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-04-06T15:57:49.336Z",
+      "feature": "applicants",
+      "phase": "do",
+      "action": "updated"
+    }
+  ]
+}
