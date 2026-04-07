@@ -170,10 +170,10 @@ export default function Home() {
                           }
                         ).gradeSchedule && (
                           <div className="mt-5 pt-5 border-t border-white/15 relative z-10">
-                            <p className="text-xs text-white/50 font-semibold uppercase tracking-wider mb-3">
+                            <p className="text-xs text-white/50 font-semibold uppercase tracking-wider mb-2">
                               학년별 일정
                             </p>
-                            <div className="grid grid-cols-2 gap-2">
+                            <div className="grid grid-cols-3 gap-1.5">
                               {(
                                 school as typeof school & {
                                   gradeSchedule: {
@@ -184,12 +184,12 @@ export default function Home() {
                               ).gradeSchedule.map((gs) => (
                                 <div
                                   key={gs.grade}
-                                  className="flex items-center gap-2 bg-white/10 rounded-lg px-3 py-1.5 text-sm"
+                                  className="bg-white/10 rounded-lg px-2 py-1.5 text-center"
                                 >
-                                  <span className="font-semibold text-amber-300 w-14 shrink-0">
+                                  <span className="block font-semibold text-amber-300 text-xs">
                                     {gs.grade}
                                   </span>
-                                  <span className="text-white/80 text-xs">
+                                  <span className="block text-white/70 text-[10px] leading-tight mt-0.5">
                                     {gs.period}
                                   </span>
                                 </div>
