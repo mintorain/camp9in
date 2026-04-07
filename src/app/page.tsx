@@ -4,15 +4,15 @@ import {
   Clock,
   Users,
   ChevronRight,
-  Sparkles,
 } from "lucide-react";
 import { SCHOOLS } from "@/lib/constants";
 import TiltCard from "@/components/TiltCard";
-import FloatingParticles from "@/components/FloatingParticles";
 import ScrollReveal from "@/components/ScrollReveal";
 import AnimatedCounter from "@/components/AnimatedCounter";
 import GlowButton from "@/components/GlowButton";
 import SubjectGrid from "@/components/SubjectGrid";
+import ScrollHero from "@/components/ScrollHero";
+import ParallaxText from "@/components/ParallaxText";
 
 export default function Home() {
   return (
@@ -33,66 +33,8 @@ export default function Home() {
       </header>
 
       <main id="main-content">
-        {/* 히어로 - 3D 파티클 배경 */}
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-950">
-          <FloatingParticles />
-
-          {/* 그라디언트 오브 */}
-          <div
-            className="absolute top-1/4 -left-32 w-96 h-96 bg-indigo-500/30 rounded-full blur-3xl animate-pulse"
-            aria-hidden="true"
-          />
-          <div
-            className="absolute bottom-1/4 -right-32 w-96 h-96 bg-purple-500/30 rounded-full blur-3xl animate-pulse"
-            style={{ animationDelay: "1s" }}
-            aria-hidden="true"
-          />
-          <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/10 rounded-full blur-3xl"
-            aria-hidden="true"
-          />
-
-          <div className="relative z-10 max-w-6xl mx-auto px-4 text-center pt-20">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-indigo-300 text-sm mb-8">
-              <Sparkles className="w-4 h-4" aria-hidden="true" />
-              두온교육(주) 캠프사업부
-            </div>
-
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-8">
-              <span className="text-white">AI로 만나는</span>
-              <br />
-              <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                미래 교육 체험 캠프
-              </span>
-              <br />
-              <span className="bg-gradient-to-r from-amber-300 to-orange-400 bg-clip-text text-transparent">
-                강사 모집
-              </span>
-            </h1>
-
-            <p className="text-indigo-200/80 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
-              초등학생들에게 AI 시대의 창의력과 문제해결력을 키워줄
-              <br className="hidden md:block" />
-              열정 있는 강사를 찾습니다.
-            </p>
-
-            <GlowButton
-              href="/apply"
-              className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white px-10 py-5 rounded-2xl text-lg font-bold transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-amber-500/30 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2 focus:ring-offset-slate-900"
-            >
-              강사 지원하기
-              <ChevronRight className="w-5 h-5" aria-hidden="true" />
-            </GlowButton>
-
-            {/* 스크롤 인디케이터 */}
-            <div className="mt-16 flex flex-col items-center gap-2 text-indigo-400/50">
-              <span className="text-xs">Scroll</span>
-              <div className="w-5 h-8 border-2 border-indigo-400/30 rounded-full flex justify-center pt-1">
-                <div className="w-1 h-2 bg-indigo-400/50 rounded-full animate-bounce" />
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* 히어로 - 3D 스크롤 기반 */}
+        <ScrollHero />
 
         {/* 숫자 하이라이트 */}
         <section className="py-16 bg-white border-b border-gray-100">
@@ -123,7 +65,7 @@ export default function Home() {
         {/* 캠프 소개 */}
         <section className="py-20 bg-gray-50" aria-labelledby="about-heading">
           <div className="max-w-6xl mx-auto px-4 text-center">
-            <ScrollReveal>
+            <ParallaxText scaleRange={[0.8, 1.05]}>
               <h2
                 id="about-heading"
                 className="text-2xl md:text-4xl font-bold text-gray-900 mb-6"
@@ -139,14 +81,14 @@ export default function Home() {
                 프로그램입니다. 각 부스에서 전문 강사가 학생들의 창의적 체험을
                 이끌어주게 됩니다.
               </p>
-            </ScrollReveal>
+            </ParallaxText>
           </div>
         </section>
 
         {/* 일정 및 장소 - 3D 틸트 카드 */}
         <section className="py-20 bg-white" aria-labelledby="schedule-heading">
           <div className="max-w-6xl mx-auto px-4">
-            <ScrollReveal>
+            <ParallaxText scaleRange={[0.8, 1.05]}>
               <h2
                 id="schedule-heading"
                 className="text-2xl md:text-4xl font-bold text-gray-900 text-center mb-4"
@@ -156,7 +98,7 @@ export default function Home() {
               <p className="text-gray-500 text-center mb-12">
                 카드 위에 마우스를 올려보세요
               </p>
-            </ScrollReveal>
+            </ParallaxText>
 
             <div className="grid md:grid-cols-2 gap-8">
               {SCHOOLS.map((school, i) => (
@@ -233,7 +175,7 @@ export default function Home() {
           aria-labelledby="subjects-heading"
         >
           <div className="max-w-6xl mx-auto px-4">
-            <ScrollReveal>
+            <ParallaxText scaleRange={[0.8, 1.05]}>
               <h2
                 id="subjects-heading"
                 className="text-2xl md:text-4xl font-bold text-gray-900 text-center mb-4"
@@ -243,7 +185,7 @@ export default function Home() {
               <p className="text-gray-500 text-center mb-12">
                 8개 체험 부스별 전문 강사를 모집합니다
               </p>
-            </ScrollReveal>
+            </ParallaxText>
 
             <SubjectGrid />
           </div>
@@ -255,14 +197,14 @@ export default function Home() {
           aria-labelledby="process-heading"
         >
           <div className="max-w-6xl mx-auto px-4">
-            <ScrollReveal>
+            <ParallaxText scaleRange={[0.8, 1.05]}>
               <h2
                 id="process-heading"
                 className="text-2xl md:text-4xl font-bold text-gray-900 text-center mb-12"
               >
                 지원 절차
               </h2>
-            </ScrollReveal>
+            </ParallaxText>
 
             <div className="grid md:grid-cols-3 gap-8">
               {[
@@ -328,7 +270,7 @@ export default function Home() {
           />
 
           <div className="relative z-10 max-w-6xl mx-auto px-4">
-            <ScrollReveal>
+            <ParallaxText scaleRange={[0.85, 1.1]}>
               <h2 className="text-3xl md:text-5xl font-extrabold mb-6">
                 AI캠프 강사로
                 <br />
@@ -346,7 +288,7 @@ export default function Home() {
                 지금 지원하기
                 <ChevronRight className="w-5 h-5" aria-hidden="true" />
               </GlowButton>
-            </ScrollReveal>
+            </ParallaxText>
           </div>
         </section>
       </main>
