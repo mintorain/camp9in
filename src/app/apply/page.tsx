@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { applicantSchema, type ApplicantFormData } from "@/lib/schema";
-import { SCHOOLS, SUBJECTS, EDUCATION_OPTIONS, SUBJECT_CLOSE_THRESHOLD } from "@/lib/constants";
+import { SCHOOLS, SUBJECTS, EDUCATION_OPTIONS } from "@/lib/constants";
 
 function formatPhone(value: string) {
   const digits = value.replace(/\D/g, "").slice(0, 11);
@@ -50,8 +50,7 @@ export default function ApplyPage() {
   }, []);
 
   function isSubjectClosed(subjectId: string) {
-    if (dbClosedIds.includes(subjectId)) return true;
-    return (counts[subjectId] || 0) >= SUBJECT_CLOSE_THRESHOLD;
+    return dbClosedIds.includes(subjectId);
   }
 
   const selectedSchools = watch("schools") || [];
@@ -319,7 +318,7 @@ export default function ApplyPage() {
                         )}
                         {!closed && count > 0 && (
                           <span className="absolute top-1 right-1 px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-600 text-[10px] font-bold">
-                            {count}/{SUBJECT_CLOSE_THRESHOLD}
+                            {count}명 지원
                           </span>
                         )}
                         <span className="text-lg">{subject.icon}</span>
