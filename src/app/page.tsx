@@ -41,9 +41,9 @@ export default function Home() {
           <div className="max-w-6xl mx-auto px-4">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
               {[
-                { value: 2, suffix: "개교", label: "참여 학교" },
+                { value: 3, suffix: "개교", label: "참여 학교" },
                 { value: 8, suffix: "개", label: "체험 분야" },
-                { value: 16, suffix: "명", label: "모집 강사" },
+                { value: 26, suffix: "명", label: "모집 강사" },
                 { value: 3, suffix: "시간", label: "캠프 운영" },
               ].map((stat, i) => (
                 <ScrollReveal key={stat.label} delay={i * 100} direction="up">
