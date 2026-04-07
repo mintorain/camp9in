@@ -4,7 +4,10 @@ import { useEffect, useRef, useState } from "react";
 
 export default function ScrollHero() {
   const sectionRef = useRef<HTMLElement>(null);
+  const titleRef = useRef<HTMLDivElement>(null);
   const [scroll, setScroll] = useState(0);
+  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+  const [time, setTime] = useState(0);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
@@ -21,7 +24,27 @@ export default function ScrollHero() {
     }
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    function handleMouseMove(e: MouseEvent) {
+      const x = (e.clientX / window.innerWidth - 0.5) * 2;
+      const y = (e.clientY / window.innerHeight - 0.5) * 2;
+      setMouse({ x, y });
+    }
+
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+
+    let animId: number;
+    function animate() {
+      setTime((t) => t + 0.015);
+      animId = requestAnimationFrame(animate);
+    }
+    animId = requestAnimationFrame(animate);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("mousemove", handleMouseMove);
+      cancelAnimationFrame(animId);
+    };
   }, []);
 
   const titleScale = 1 + scroll * 0.3;
@@ -114,31 +137,74 @@ export default function ScrollHero() {
             </span>
           </div>
 
-          {/* 메인 타이틀 - 스크롤 시 확대 */}
+          {/* 메인 타이틀 - 3D 마우스 추적 + 부유 애니메이션 */}
           <div
-            className="transition-transform duration-100 mt-6"
+            ref={titleRef}
+            className="mt-6"
             style={{
-              transform: `scale(${titleScale}) translateZ(0)`,
+              perspective: "1000px",
               opacity: Math.max(0, titleOpacity),
             }}
           >
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.1] tracking-tight">
-              <span className="block text-white mb-2">AI로 만나는</span>
-              <span className="block bg-gradient-to-r from-indigo-400 via-violet-400 to-fuchsia-400 bg-clip-text text-transparent">
+            <h1
+              className="text-4xl md:text-6xl lg:text-7xl font-black leading-[1.1] tracking-tight"
+              style={{
+                transform: `
+                  scale(${titleScale})
+                  rotateX(${mouse.y * -5 + Math.sin(time) * 2}deg)
+                  rotateY(${mouse.x * 5 + Math.cos(time * 0.7) * 2}deg)
+                  translateZ(${30 + Math.sin(time * 0.5) * 10}px)
+                `,
+                transformStyle: "preserve-3d",
+                transition: "transform 0.15s ease-out",
+              }}
+            >
+              <span
+                className="block text-white mb-2"
+                style={{
+                  transform: `translateZ(${40 + Math.sin(time * 0.8) * 8}px)`,
+                  textShadow: `
+                    0 0 40px rgba(99,102,241,0.3),
+                    0 ${5 + Math.sin(time) * 3}px ${15 + Math.sin(time) * 5}px rgba(0,0,0,0.4)
+                  `,
+                }}
+              >
+                AI로 만나는
+              </span>
+              <span
+                className="block bg-gradient-to-r from-indigo-400 via-violet-400 to-fuchsia-400 bg-clip-text text-transparent"
+                style={{
+                  transform: `translateZ(${20 + Math.cos(time * 0.6) * 8}px)`,
+                  filter: `drop-shadow(0 ${8 + Math.sin(time * 0.9) * 4}px ${20 + Math.sin(time * 0.9) * 5}px rgba(99,102,241,0.25))`,
+                }}
+              >
                 미래 교육 체험 캠프
               </span>
             </h1>
           </div>
 
-          {/* 강사 모집 텍스트 - 반대 방향으로 움직임 */}
+          {/* 강사 모집 텍스트 - 3D 부유 */}
           <div
-            className="transition-transform duration-100 mt-6"
+            className="mt-6"
             style={{
-              transform: `translateY(${subtitleY}px) scale(${1 + scroll * 0.5})`,
+              perspective: "800px",
               opacity: Math.max(0, 1 - scroll * 2),
             }}
           >
-            <p className="text-3xl md:text-5xl font-black bg-gradient-to-r from-amber-300 via-orange-400 to-red-400 bg-clip-text text-transparent">
+            <p
+              className="text-3xl md:text-5xl font-black bg-gradient-to-r from-amber-300 via-orange-400 to-red-400 bg-clip-text text-transparent"
+              style={{
+                transform: `
+                  translateY(${subtitleY}px)
+                  scale(${1 + scroll * 0.5})
+                  rotateX(${mouse.y * -3 + Math.cos(time * 1.2) * 1.5}deg)
+                  rotateY(${mouse.x * 3 + Math.sin(time * 0.9) * 1.5}deg)
+                  translateZ(${20 + Math.sin(time * 0.7) * 10}px)
+                `,
+                transition: "transform 0.15s ease-out",
+                filter: `drop-shadow(0 ${6 + Math.sin(time) * 3}px ${15 + Math.sin(time) * 5}px rgba(245,158,11,0.2))`,
+              }}
+            >
               강사 모집
             </p>
           </div>
