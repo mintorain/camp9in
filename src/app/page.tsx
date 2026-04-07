@@ -13,6 +13,7 @@ import GlowButton from "@/components/GlowButton";
 import SubjectGrid from "@/components/SubjectGrid";
 import ScrollHero from "@/components/ScrollHero";
 import ParallaxText from "@/components/ParallaxText";
+import SecretAdminLink from "@/components/SecretAdminLink";
 
 export default function Home() {
   return (
@@ -331,9 +332,7 @@ export default function Home() {
 
       <footer className="bg-slate-950 text-gray-500 py-10 border-t border-white/5">
         <div className="max-w-6xl mx-auto px-4 text-center text-sm">
-          <p className="font-semibold text-gray-400 mb-2">
-            두온교육(주) 캠프사업부
-          </p>
+          <SecretAdminLink />
           <p>
             이메일:{" "}
             <a href="mailto:duonedu@duonedu.net" className="hover:text-gray-300 transition-colors">
