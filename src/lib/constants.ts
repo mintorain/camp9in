@@ -113,22 +113,6 @@ export const SUBJECTS = [
     closed: false,
   },
   {
-    id: "halocode",
-    name: "할로코드 무드등",
-    description: "LED 제어 코딩으로 나만의 무드등 제작",
-    skills: "코딩교육, 할로코드/센서",
-    icon: "💡",
-    closed: false,
-  },
-  {
-    id: "ai-music",
-    name: "AI 음악 코딩",
-    description: "블록코딩을 활용한 리듬 및 나만의 음악 제작",
-    skills: "음악교육, 블록코딩",
-    icon: "🎹",
-    closed: false,
-  },
-  {
     id: "ai-art",
     name: "AI 그림 생성",
     description: "프롬프트 작성을 통한 AI 이미지 생성 체험",
