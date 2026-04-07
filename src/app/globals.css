@@ -43,41 +43,53 @@ body {
   50% { opacity: 0.25; }
 }
 @keyframes glow-pulse {
-  0%, 100% { text-shadow:
-    0 0 20px rgba(99,102,241,0.3),
-    0 4px 8px rgba(0,0,0,0.5),
-    1px 1px 0 rgba(99,102,241,0.15),
-    2px 2px 0 rgba(99,102,241,0.1),
-    3px 3px 0 rgba(99,102,241,0.05);
-  }
-  50% { text-shadow:
-    0 0 40px rgba(99,102,241,0.5),
-    0 6px 12px rgba(0,0,0,0.6),
-    1px 1px 0 rgba(99,102,241,0.2),
-    2px 2px 0 rgba(99,102,241,0.15),
-    3px 3px 0 rgba(99,102,241,0.1);
-  }
+  0%, 100% { opacity: 0.9; }
+  50% { opacity: 1; }
 }
 
-/* 글자는 흔들리지 않음 - 3D 입체 텍스트 스타일만 적용 */
+/* 3D 돌출 텍스트 - text-shadow 다중 레이어로 깊이감 */
 .hero-title {
   transform-style: preserve-3d;
 }
+
+/* "AI로 만나는" - 흰색 글자 + 아래쪽으로 돌출된 3D */
 .hero-line1 {
-  animation: glow-pulse 8s ease-in-out infinite;
+  animation: glow-pulse 10s ease-in-out infinite;
   text-shadow:
-    0 0 20px rgba(99,102,241,0.3),
-    0 4px 8px rgba(0,0,0,0.5),
-    1px 1px 0 rgba(255,255,255,0.1),
-    2px 2px 0 rgba(99,102,241,0.08),
-    3px 3px 0 rgba(99,102,241,0.05),
-    4px 4px 10px rgba(0,0,0,0.3);
+    /* 돌출 레이어 (1px씩 아래로) */
+    0 1px 0 rgba(200,200,220,0.8),
+    0 2px 0 rgba(180,180,200,0.7),
+    0 3px 0 rgba(160,160,185,0.6),
+    0 4px 0 rgba(140,140,170,0.5),
+    0 5px 0 rgba(120,120,155,0.4),
+    0 6px 0 rgba(100,100,140,0.3),
+    0 7px 0 rgba(80,80,125,0.2),
+    0 8px 0 rgba(60,60,110,0.15),
+    /* 바닥 그림자 */
+    0 10px 20px rgba(0,0,0,0.4),
+    0 15px 40px rgba(0,0,0,0.2),
+    /* 글로우 */
+    0 0 30px rgba(99,102,241,0.15);
 }
+
+/* "미래 교육 체험 캠프" - 그라디언트 텍스트라 text-shadow 대신 drop-shadow */
 .hero-line2 {
-  filter: drop-shadow(0 6px 15px rgba(99,102,241,0.3));
+  filter:
+    drop-shadow(0 2px 0 rgba(99,60,180,0.5))
+    drop-shadow(0 4px 0 rgba(80,50,160,0.35))
+    drop-shadow(0 6px 0 rgba(60,40,140,0.2))
+    drop-shadow(0 10px 15px rgba(0,0,0,0.3))
+    drop-shadow(0 0 20px rgba(99,102,241,0.2));
 }
+
+/* "강사 모집" - 주황 그라디언트 + 아래쪽 돌출 */
 .hero-line3 {
-  filter: drop-shadow(0 4px 12px rgba(245,158,11,0.25));
+  filter:
+    drop-shadow(0 2px 0 rgba(180,100,20,0.5))
+    drop-shadow(0 4px 0 rgba(160,80,10,0.35))
+    drop-shadow(0 6px 0 rgba(140,60,0,0.2))
+    drop-shadow(0 10px 15px rgba(0,0,0,0.3))
+    drop-shadow(0 0 15px rgba(245,158,11,0.15));
 }
 .hero-orb-1 { animation: orb-drift-1 30s ease-in-out infinite; }
 .hero-orb-2 { animation: orb-drift-2 35s ease-in-out infinite; }
