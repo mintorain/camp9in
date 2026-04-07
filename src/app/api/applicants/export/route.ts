@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { query } from "@/lib/db";
 import { SCHOOLS, SUBJECTS, STATUS_OPTIONS } from "@/lib/constants";
+import { verifyAdmin } from "@/lib/auth-server";
 
 interface ApplicantRow {
   id: number;
@@ -24,8 +25,8 @@ interface RelationRow {
 }
 
 export async function GET(request: NextRequest) {
-  const authHeader = request.headers.get("authorization");
-  if (authHeader !== `Bearer ${process.env.ADMIN_PASSWORD}`) {
+  const isAdmin = await verifyAdmin(request.headers.get("authorization"));
+  if (!isAdmin) {
     return NextResponse.json({ error: "인증이 필요합니다" }, { status: 401 });
   }
 

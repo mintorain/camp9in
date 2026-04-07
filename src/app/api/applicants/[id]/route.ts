@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { query } from "@/lib/db";
+import { verifyAdmin } from "@/lib/auth-server";
 
 export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const authHeader = request.headers.get("authorization");
-  if (authHeader !== `Bearer ${process.env.ADMIN_PASSWORD}`) {
+  const isAdmin = await verifyAdmin(request.headers.get("authorization"));
+  if (!isAdmin) {
     return NextResponse.json({ error: "인증이 필요합니다" }, { status: 401 });
   }
 

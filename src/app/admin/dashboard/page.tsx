@@ -42,6 +42,40 @@ export default function DashboardPage() {
     total: { visitors: number; views: number };
   } | null>(null);
 
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [passwordSuccess, setPasswordSuccess] = useState("");
+
+  async function handleChangePassword() {
+    setPasswordError("");
+    setPasswordSuccess("");
+    if (newPassword.length < 4) {
+      setPasswordError("비밀번호는 4자 이상이어야 합니다");
+      return;
+    }
+    try {
+      const res = await adminFetch("/api/auth", {
+        method: "POST",
+        body: JSON.stringify({ action: "change-password", newPassword }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        setPasswordError(data.error || "변경 실패");
+        return;
+      }
+      setPasswordSuccess("비밀번호가 변경되었습니다. 다시 로그인해주세요.");
+      sessionStorage.setItem("admin_token", newPassword);
+      setTimeout(() => {
+        setShowPasswordModal(false);
+        setNewPassword("");
+        setPasswordSuccess("");
+      }, 2000);
+    } catch {
+      setPasswordError("변경에 실패했습니다");
+    }
+  }
+
   useEffect(() => {
     if (!getAdminToken()) {
       router.push("/admin");
@@ -162,6 +196,12 @@ export default function DashboardPage() {
               CSV 내보내기
             </button>
             <button
+              onClick={() => setShowPasswordModal(true)}
+              className="inline-flex items-center gap-1.5 text-sm text-gray-600 hover:text-gray-900 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+            >
+              비밀번호 변경
+            </button>
+            <button
               onClick={handleLogout}
               className="inline-flex items-center gap-1.5 text-sm text-gray-600 hover:text-gray-900 px-3 py-2 rounded-lg hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
             >
@@ -171,6 +211,39 @@ export default function DashboardPage() {
           </div>
         </nav>
       </header>
+
+      {/* 비밀번호 변경 모달 */}
+      {showPasswordModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true">
+          <div className="absolute inset-0 bg-black/50" onClick={() => setShowPasswordModal(false)} />
+          <div className="relative bg-white rounded-2xl p-6 w-full max-w-sm shadow-xl">
+            <h2 className="text-lg font-bold text-gray-900 mb-4">관리자 비밀번호 변경</h2>
+            <input
+              type="password"
+              placeholder="새 비밀번호 (4자 이상)"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm mb-3 focus:ring-2 focus:ring-primary focus:border-primary"
+            />
+            {passwordError && <p className="text-red-500 text-sm mb-3">{passwordError}</p>}
+            {passwordSuccess && <p className="text-green-500 text-sm mb-3">{passwordSuccess}</p>}
+            <div className="flex gap-2">
+              <button
+                onClick={() => setShowPasswordModal(false)}
+                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+              >
+                취소
+              </button>
+              <button
+                onClick={handleChangePassword}
+                className="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark"
+              >
+                변경
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <main className="max-w-7xl mx-auto px-4 py-8 space-y-8">
         {/* 접속자 현황 */}
