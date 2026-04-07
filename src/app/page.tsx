@@ -358,6 +358,15 @@ export default function Home() {
             >
               vibe.duonedu.net
             </a>
+            {" "}| 카카오채널:{" "}
+            <a
+              href="http://pf.kakao.com/_QVXFj/chat"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-gray-300 transition-colors"
+            >
+              두온교육(주)
+            </a>
           </p>
           <p className="mt-4 text-gray-600">
             &copy; 2026 두온교육(주). All rights reserved.
