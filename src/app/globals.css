@@ -28,67 +28,62 @@ body {
 
 /* 히어로 3D 애니메이션 */
 @layer base {
-@keyframes float-line1 {
-  0%, 100% { transform: translateY(0px) rotateX(0deg); }
-  50% { transform: translateY(-6px) rotateX(0.8deg); }
-}
-@keyframes float-line2 {
-  0%, 100% { transform: translateY(0px) rotateX(0deg); }
-  50% { transform: translateY(-8px) rotateX(-0.6deg); }
-}
-@keyframes float-line3 {
-  0%, 100% { transform: translateY(0px) rotateY(0deg); }
-  50% { transform: translateY(-5px) rotateY(1deg); }
-}
-@keyframes title-rotate {
-  0%, 100% { transform: scale(var(--title-scale, 1)) rotateX(0deg) rotateY(0deg); }
-  50% { transform: scale(var(--title-scale, 1)) rotateX(1deg) rotateY(1.5deg); }
-}
-@keyframes shadow-dance {
-  0%, 100% { text-shadow: 0 0 30px rgba(99,102,241,0.2), 0 4px 12px rgba(0,0,0,0.3); }
-  50% { text-shadow: 0 0 50px rgba(99,102,241,0.4), 0 6px 20px rgba(0,0,0,0.4); }
-}
+
+/* 배경 오브만 아주 천천히 움직임 */
 @keyframes orb-drift-1 {
-  0%, 100% { transform: translate(0px, 0px) scale(1); }
-  33% { transform: translate(30px, -20px) scale(1.1); }
-  66% { transform: translate(-20px, 15px) scale(0.95); }
+  0%, 100% { transform: translate(0px, 0px); }
+  50% { transform: translate(20px, -15px); }
 }
 @keyframes orb-drift-2 {
-  0%, 100% { transform: translate(0px, 0px) scale(1); }
-  40% { transform: translate(-25px, 20px) scale(1.05); }
-  70% { transform: translate(15px, -25px) scale(0.9); }
+  0%, 100% { transform: translate(0px, 0px); }
+  50% { transform: translate(-15px, 12px); }
 }
 @keyframes orb-breathe {
-  0%, 100% { transform: scale(1); opacity: 0.15; }
-  50% { transform: scale(1.2); opacity: 0.25; }
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.25; }
 }
-@keyframes grid-wave {
-  0%, 100% { transform: rotateX(60deg) translateY(-50%); }
-  50% { transform: rotateX(65deg) translateY(-48%); }
+@keyframes glow-pulse {
+  0%, 100% { text-shadow:
+    0 0 20px rgba(99,102,241,0.3),
+    0 4px 8px rgba(0,0,0,0.5),
+    1px 1px 0 rgba(99,102,241,0.15),
+    2px 2px 0 rgba(99,102,241,0.1),
+    3px 3px 0 rgba(99,102,241,0.05);
+  }
+  50% { text-shadow:
+    0 0 40px rgba(99,102,241,0.5),
+    0 6px 12px rgba(0,0,0,0.6),
+    1px 1px 0 rgba(99,102,241,0.2),
+    2px 2px 0 rgba(99,102,241,0.15),
+    3px 3px 0 rgba(99,102,241,0.1);
+  }
 }
 
+/* 글자는 흔들리지 않음 - 3D 입체 텍스트 스타일만 적용 */
 .hero-title {
-  animation: title-rotate 16s ease-in-out infinite;
   transform-style: preserve-3d;
 }
 .hero-line1 {
-  animation: float-line1 12s ease-in-out infinite, shadow-dance 10s ease-in-out infinite;
-  transform-style: preserve-3d;
+  animation: glow-pulse 8s ease-in-out infinite;
+  text-shadow:
+    0 0 20px rgba(99,102,241,0.3),
+    0 4px 8px rgba(0,0,0,0.5),
+    1px 1px 0 rgba(255,255,255,0.1),
+    2px 2px 0 rgba(99,102,241,0.08),
+    3px 3px 0 rgba(99,102,241,0.05),
+    4px 4px 10px rgba(0,0,0,0.3);
 }
 .hero-line2 {
-  animation: float-line2 14s ease-in-out infinite;
-  filter: drop-shadow(0 8px 20px rgba(99,102,241,0.25));
-  transform-style: preserve-3d;
+  filter: drop-shadow(0 6px 15px rgba(99,102,241,0.3));
 }
 .hero-line3 {
-  animation: float-line3 10s ease-in-out infinite;
-  filter: drop-shadow(0 6px 15px rgba(245,158,11,0.2));
-  transform-style: preserve-3d;
+  filter: drop-shadow(0 4px 12px rgba(245,158,11,0.25));
 }
-.hero-orb-1 { animation: orb-drift-1 25s ease-in-out infinite; }
-.hero-orb-2 { animation: orb-drift-2 30s ease-in-out infinite; }
-.hero-orb-3 { animation: orb-breathe 20s ease-in-out infinite; }
-.hero-grid { animation: grid-wave 20s ease-in-out infinite; }
+.hero-orb-1 { animation: orb-drift-1 30s ease-in-out infinite; }
+.hero-orb-2 { animation: orb-drift-2 35s ease-in-out infinite; }
+.hero-orb-3 { animation: orb-breathe 25s ease-in-out infinite; }
+.hero-grid { /* 정지 - 흔들림 없음 */ }
+
 } /* end @layer base */
 
 @media (prefers-reduced-motion: reduce) {

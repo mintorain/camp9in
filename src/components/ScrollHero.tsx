@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 
 export default function ScrollHero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const heroRef = useRef<HTMLDivElement>(null);
   const [scroll, setScroll] = useState(0);
 
   useEffect(() => {
@@ -21,41 +20,22 @@ export default function ScrollHero() {
       setScroll(progress);
     }
 
-    function handleMouseMove(e: MouseEvent) {
-      if (!heroRef.current) return;
-      const x = (e.clientX / window.innerWidth - 0.5) * 2;
-      const y = (e.clientY / window.innerHeight - 0.5) * 2;
-      heroRef.current.style.setProperty("--mx", String(x));
-      heroRef.current.style.setProperty("--my", String(y));
-    }
-
     window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const titleScale = 1 + scroll * 0.3;
   const titleOpacity = 1 - scroll * 1.5;
   const subtitleY = scroll * -60;
   const badgeScale = 1 - scroll * 0.3;
-  const orb1X = scroll * 120;
-  const orb1Y = scroll * -80;
-  const orb2X = scroll * -100;
-  const orb2Y = scroll * 60;
-  const orb3Scale = 1 + scroll * 0.5;
   const ctaY = scroll * -40;
-  const gridRotateX = scroll * 15;
 
   return (
     <section
       ref={sectionRef}
       className="relative min-h-[140vh] overflow-hidden bg-slate-950"
     >
-      {/* 움직이는 그라디언트 배경 */}
+      {/* 배경 그라디언트 오브 - 아주 천천히 움직임 */}
       <div className="absolute inset-0">
         <div
           className="absolute w-[500px] h-[500px] rounded-full blur-[120px] hero-orb-1"
@@ -64,7 +44,6 @@ export default function ScrollHero() {
               "radial-gradient(circle, rgba(99,102,241,0.4) 0%, transparent 70%)",
             top: "10%",
             left: "10%",
-            translate: `${orb1X}px ${orb1Y}px`,
           }}
           aria-hidden="true"
         />
@@ -75,7 +54,6 @@ export default function ScrollHero() {
               "radial-gradient(circle, rgba(168,85,247,0.35) 0%, transparent 70%)",
             bottom: "20%",
             right: "10%",
-            translate: `${orb2X}px ${orb2Y}px`,
           }}
           aria-hidden="true"
         />
@@ -86,27 +64,26 @@ export default function ScrollHero() {
               "radial-gradient(circle, rgba(245,158,11,0.15) 0%, transparent 70%)",
             top: "40%",
             left: "35%",
-            scale: `${orb3Scale}`,
           }}
           aria-hidden="true"
         />
       </div>
 
-      {/* 3D 그리드 배경 */}
+      {/* 3D 그리드 배경 - 정지 */}
       <div
-        className="absolute inset-0 overflow-hidden opacity-20"
+        className="absolute inset-0 overflow-hidden opacity-15"
         style={{ perspective: "800px" }}
         aria-hidden="true"
       >
         <div
-          className="absolute inset-0 hero-grid"
+          className="absolute inset-0"
           style={{
             backgroundImage: `
               linear-gradient(rgba(99,102,241,0.3) 1px, transparent 1px),
               linear-gradient(90deg, rgba(99,102,241,0.3) 1px, transparent 1px)
             `,
             backgroundSize: "60px 60px",
-            transform: `rotateX(${60 + gridRotateX}deg) translateY(-50%)`,
+            transform: "rotateX(60deg) translateY(-50%)",
             transformOrigin: "center bottom",
           }}
         />
@@ -114,23 +91,13 @@ export default function ScrollHero() {
 
       {/* 고정 콘텐츠 영역 */}
       <div className="sticky top-0 h-screen flex items-center justify-center pt-16">
-        <div
-          ref={heroRef}
-          className="relative z-10 max-w-6xl mx-auto px-4 text-center"
-          style={
-            {
-              "--mx": "0",
-              "--my": "0",
-              "--title-scale": String(titleScale),
-            } as React.CSSProperties
-          }
-        >
+        <div className="relative z-10 max-w-6xl mx-auto px-4 text-center">
           {/* 배지 */}
           <div
-            className="transition-transform duration-100"
             style={{
               transform: `scale(${Math.max(0, badgeScale)})`,
               opacity: Math.max(0, titleOpacity + 0.3),
+              transition: "transform 0.3s ease-out, opacity 0.3s ease-out",
             }}
           >
             <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-indigo-300 text-sm mb-8">
@@ -139,15 +106,22 @@ export default function ScrollHero() {
             </span>
           </div>
 
-          {/* 메인 타이틀 - CSS 3D 애니메이션 */}
+          {/* 메인 타이틀 - 3D 입체 텍스트 (글자 자체는 안 움직임) */}
           <div
             className="mt-6"
             style={{
               perspective: "1200px",
               opacity: Math.max(0, titleOpacity),
+              transition: "opacity 0.3s ease-out",
             }}
           >
-            <h1 className="hero-title text-4xl md:text-6xl lg:text-7xl font-black leading-[1.1] tracking-tight">
+            <h1
+              className="hero-title text-4xl md:text-6xl lg:text-7xl font-black leading-[1.1] tracking-tight"
+              style={{
+                transform: `scale(${titleScale})`,
+                transition: "transform 0.3s ease-out",
+              }}
+            >
               <span className="hero-line1 block text-white mb-2">
                 AI로 만나는
               </span>
@@ -161,14 +135,15 @@ export default function ScrollHero() {
           <div
             className="mt-6"
             style={{
-              perspective: "800px",
               opacity: Math.max(0, 1 - scroll * 2),
+              transition: "opacity 0.3s ease-out",
             }}
           >
             <p
               className="hero-line3 text-3xl md:text-5xl font-black bg-gradient-to-r from-amber-300 via-orange-400 to-red-400 bg-clip-text text-transparent"
               style={{
                 transform: `translateY(${subtitleY}px) scale(${1 + scroll * 0.5})`,
+                transition: "transform 0.3s ease-out",
               }}
             >
               강사 모집
@@ -177,10 +152,11 @@ export default function ScrollHero() {
 
           {/* 설명 텍스트 */}
           <div
-            className="transition-all duration-100 mt-8"
+            className="mt-8"
             style={{
               transform: `translateY(${scroll * -30}px)`,
               opacity: Math.max(0, 1 - scroll * 1.8),
+              transition: "transform 0.3s ease-out, opacity 0.3s ease-out",
             }}
           >
             <p className="text-indigo-200/70 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
@@ -192,10 +168,11 @@ export default function ScrollHero() {
 
           {/* CTA 버튼 */}
           <div
-            className="transition-all duration-100 mt-10"
+            className="mt-10"
             style={{
               transform: `translateY(${ctaY}px)`,
               opacity: Math.max(0, 1 - scroll * 1.5),
+              transition: "transform 0.3s ease-out, opacity 0.3s ease-out",
             }}
           >
             <a
@@ -223,8 +200,11 @@ export default function ScrollHero() {
 
           {/* 스크롤 안내 */}
           <div
-            className="mt-16 transition-opacity duration-300"
-            style={{ opacity: Math.max(0, 1 - scroll * 5) }}
+            className="mt-16"
+            style={{
+              opacity: Math.max(0, 1 - scroll * 5),
+              transition: "opacity 0.3s ease-out",
+            }}
           >
             <div className="flex flex-col items-center gap-2 text-indigo-400/40">
               <span className="text-xs tracking-widest uppercase">
