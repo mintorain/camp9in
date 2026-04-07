@@ -154,6 +154,11 @@ export default function Home() {
                             <Users className="w-5 h-5" aria-hidden="true" />
                           </div>
                           <span className="text-white/90">
+                            {"target" in school && (
+                              <span className="text-amber-300 font-semibold">
+                                {(school as typeof school & { target: string }).target} ·{" "}
+                              </span>
+                            )}
                             각 분야별{" "}
                             <strong className="text-amber-300">
                               {school.capacityPerSubject}명
