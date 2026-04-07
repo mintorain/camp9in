@@ -56,6 +56,58 @@ export default function ApplyPage() {
   const selectedSchools = watch("schools") || [];
   const selectedSubjects = watch("subjects") || [];
 
+  // 선택된 학교들의 과목 합집합
+  const availableSubjectIds: string[] = selectedSchools.length > 0
+    ? [
+        ...new Set(
+          selectedSchools.flatMap((schoolId) => {
+            const school = SCHOOLS.find((s) => s.id === schoolId);
+            return (school?.subjects as readonly string[] | undefined) ?? SUBJECTS.map((s) => s.id);
+          })
+        ),
+      ]
+    : SUBJECTS.map((s) => s.id);
+
+  const availableSubjects = SUBJECTS.filter((s) =>
+    availableSubjectIds.includes(s.id)
+  );
+
+  function handleSchoolToggle(schoolId: string) {
+    const current = selectedSchools;
+    let newSchools: string[];
+    if (current.includes(schoolId)) {
+      newSchools = current.filter((v) => v !== schoolId);
+    } else {
+      newSchools = [...current, schoolId];
+    }
+    setValue("schools", newSchools as ApplicantFormData["schools"], {
+      shouldValidate: true,
+    });
+
+    // 학교 변경 후 해당하지 않는 과목 제거
+    const newAvailableIds: string[] = newSchools.length > 0
+      ? [
+          ...new Set(
+            newSchools.flatMap((sid) => {
+              const school = SCHOOLS.find((s) => s.id === sid);
+              return (school?.subjects as readonly string[] | undefined) ?? SUBJECTS.map((s) => s.id);
+            })
+          ),
+        ]
+      : SUBJECTS.map((s) => s.id);
+
+    const filteredSubjects = selectedSubjects.filter((sid) =>
+      newAvailableIds.includes(sid)
+    );
+    if (filteredSubjects.length !== selectedSubjects.length) {
+      setValue(
+        "subjects",
+        filteredSubjects as ApplicantFormData["subjects"],
+        { shouldValidate: true }
+      );
+    }
+  }
+
   function toggleArrayValue(
     field: "schools" | "subjects",
     value: string,
@@ -249,13 +301,7 @@ export default function ApplyPage() {
                     <button
                       key={school.id}
                       type="button"
-                      onClick={() =>
-                        toggleArrayValue(
-                          "schools",
-                          school.id,
-                          selectedSchools
-                        )
-                      }
+                      onClick={() => handleSchoolToggle(school.id)}
                       className={`px-4 py-2.5 rounded-lg border text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-primary ${
                         selectedSchools.includes(school.id)
                           ? "bg-primary text-white border-primary"
@@ -280,8 +326,13 @@ export default function ApplyPage() {
                   지원 과목 (최대 3개){" "}
                   <span className="text-red-500">*</span>
                 </p>
+                {selectedSchools.length === 0 && (
+                  <p className="text-amber-600 text-xs mb-3 bg-amber-50 px-3 py-2 rounded-lg">
+                    먼저 지원할 학교를 선택하면 해당 학교의 과목이 표시됩니다.
+                  </p>
+                )}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                  {SUBJECTS.map((subject) => {
+                  {availableSubjects.map((subject) => {
                     const closed = isSubjectClosed(subject.id);
                     const count = counts[subject.id] || 0;
 

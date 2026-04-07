@@ -8,6 +8,7 @@ export const SCHOOLS = [
     time: "오전 9:00 ~ 12:20",
     location: "미금초등학교 교실 및 강당",
     capacityPerSubject: 10,
+    subjects: ["dash-robot", "turtle-bot", "drone", "vibe-coding", "ai-story", "ai-art", "ai-orchestra", "cooking"],
     gradeSchedule: [
       { grade: "1학년", period: "4/20(월)~4/21(화)" },
       { grade: "2학년", period: "4/23(수)~4/24(목)" },
@@ -26,6 +27,7 @@ export const SCHOOLS = [
     time: "오전 9:00 ~ 12:00",
     location: "정림초등학교 강당",
     capacityPerSubject: 8,
+    subjects: ["vibe-coding", "ai-story", "turtle-bot", "dash-robot", "ai-orchestra", "reactive-robot", "ai-image", "cooking"],
   },
   {
     id: "cheongwon",
@@ -36,6 +38,7 @@ export const SCHOOLS = [
     time: "오전 9:00 ~ 12:00",
     location: "청원초등학교 강당",
     capacityPerSubject: 8,
+    subjects: ["vibe-coding", "ai-story", "turtle-bot", "dash-robot", "ai-orchestra", "reactive-robot", "ai-image", "cooking"],
   },
 ] as const;
 
