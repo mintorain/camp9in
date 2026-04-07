@@ -11,6 +11,10 @@ import {
   LogOut,
   Loader2,
   BarChart3,
+  Eye,
+  Activity,
+  TrendingUp,
+  Monitor,
 } from "lucide-react";
 import { SCHOOLS, SUBJECTS, STATUS_OPTIONS, SUBJECT_CLOSE_THRESHOLD } from "@/lib/constants";
 import { adminFetch, getAdminToken } from "@/lib/admin";
@@ -30,6 +34,13 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [closedIds, setClosedIds] = useState<string[]>([]);
   const [togglingSubject, setTogglingSubject] = useState<string | null>(null);
+  const [analytics, setAnalytics] = useState<{
+    realtime: number;
+    today: { visitors: number; views: number };
+    daily: { date: string; visitors: number; views: number }[];
+    pages: { page: string; views: number; visitors: number }[];
+    total: { visitors: number; views: number };
+  } | null>(null);
 
   useEffect(() => {
     if (!getAdminToken()) {
@@ -38,6 +49,10 @@ export default function DashboardPage() {
     }
     fetchData();
     fetchClosedSubjects();
+    fetchAnalytics();
+    // 실시간 접속자 30초마다 갱신
+    const interval = setInterval(fetchAnalytics, 30000);
+    return () => clearInterval(interval);
   }, [router]);
 
   async function fetchData() {
@@ -49,6 +64,16 @@ export default function DashboardPage() {
       router.push("/admin");
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function fetchAnalytics() {
+    try {
+      const res = await adminFetch("/api/analytics");
+      const data = await res.json();
+      setAnalytics(data);
+    } catch {
+      /* ignore */
     }
   }
 
@@ -148,6 +173,130 @@ export default function DashboardPage() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 py-8 space-y-8">
+        {/* 접속자 현황 */}
+        {analytics && (
+          <section aria-labelledby="analytics-heading">
+            <h2
+              id="analytics-heading"
+              className="text-lg font-bold text-gray-900 mb-4"
+            >
+              접속자 현황
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+              <div className="bg-white rounded-xl border border-gray-200 p-5">
+                <div className="flex items-center gap-3 mb-2">
+                  <Activity className="w-5 h-5 text-green-500" aria-hidden="true" />
+                  <span className="text-sm text-gray-500">실시간 접속</span>
+                </div>
+                <p className="text-3xl font-bold text-gray-900">
+                  {analytics.realtime}
+                  <span className="text-sm font-normal text-gray-400 ml-1">명</span>
+                </p>
+                <p className="text-xs text-gray-400 mt-1">최근 5분</p>
+              </div>
+              <div className="bg-white rounded-xl border border-gray-200 p-5">
+                <div className="flex items-center gap-3 mb-2">
+                  <Eye className="w-5 h-5 text-blue-500" aria-hidden="true" />
+                  <span className="text-sm text-gray-500">오늘 방문자</span>
+                </div>
+                <p className="text-3xl font-bold text-gray-900">
+                  {analytics.today.visitors}
+                  <span className="text-sm font-normal text-gray-400 ml-1">명</span>
+                </p>
+                <p className="text-xs text-gray-400 mt-1">
+                  페이지뷰 {analytics.today.views}회
+                </p>
+              </div>
+              <div className="bg-white rounded-xl border border-gray-200 p-5">
+                <div className="flex items-center gap-3 mb-2">
+                  <TrendingUp className="w-5 h-5 text-purple-500" aria-hidden="true" />
+                  <span className="text-sm text-gray-500">누적 방문자</span>
+                </div>
+                <p className="text-3xl font-bold text-gray-900">
+                  {analytics.total.visitors}
+                  <span className="text-sm font-normal text-gray-400 ml-1">명</span>
+                </p>
+                <p className="text-xs text-gray-400 mt-1">
+                  총 {analytics.total.views}회 조회
+                </p>
+              </div>
+              <div className="bg-white rounded-xl border border-gray-200 p-5">
+                <div className="flex items-center gap-3 mb-2">
+                  <Monitor className="w-5 h-5 text-amber-500" aria-hidden="true" />
+                  <span className="text-sm text-gray-500">지원서 페이지</span>
+                </div>
+                <p className="text-3xl font-bold text-gray-900">
+                  {analytics.pages.find((p) => p.page === "/apply")?.views || 0}
+                  <span className="text-sm font-normal text-gray-400 ml-1">회</span>
+                </p>
+                <p className="text-xs text-gray-400 mt-1">
+                  오늘 {analytics.pages.find((p) => p.page === "/apply")?.visitors || 0}명 방문
+                </p>
+              </div>
+            </div>
+
+            {/* 일별 통계 + 페이지별 조회 */}
+            <div className="grid md:grid-cols-2 gap-4">
+              {/* 최근 7일 통계 */}
+              <div className="bg-white rounded-xl border border-gray-200 p-5">
+                <h3 className="text-sm font-bold text-gray-700 mb-3">최근 7일 방문 현황</h3>
+                {analytics.daily.length === 0 ? (
+                  <p className="text-sm text-gray-400">데이터 없음</p>
+                ) : (
+                  <div className="space-y-2">
+                    {analytics.daily.map((day) => {
+                      const maxViews = Math.max(...analytics.daily.map((d) => d.views), 1);
+                      return (
+                        <div key={day.date} className="flex items-center gap-3">
+                          <span className="text-xs text-gray-500 w-20 shrink-0">
+                            {day.date.slice(5)}
+                          </span>
+                          <div className="flex-1 bg-gray-100 rounded-full h-5 overflow-hidden">
+                            <div
+                              className="bg-blue-500 h-full rounded-full"
+                              style={{ width: `${(day.views / maxViews) * 100}%`, minWidth: day.views > 0 ? "1rem" : "0" }}
+                            />
+                          </div>
+                          <span className="text-xs font-bold text-gray-700 w-16 text-right">
+                            {day.visitors}명/{day.views}뷰
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+
+              {/* 페이지별 조회 수 */}
+              <div className="bg-white rounded-xl border border-gray-200 p-5">
+                <h3 className="text-sm font-bold text-gray-700 mb-3">오늘 페이지별 조회 수</h3>
+                {analytics.pages.length === 0 ? (
+                  <p className="text-sm text-gray-400">데이터 없음</p>
+                ) : (
+                  <div className="space-y-2">
+                    {analytics.pages.map((p) => {
+                      const pageName =
+                        p.page === "/" ? "메인페이지" :
+                        p.page === "/apply" ? "지원서 작성" :
+                        p.page === "/apply/complete" ? "지원 완료" :
+                        p.page;
+                      return (
+                        <div key={p.page} className="flex items-center justify-between py-1 border-b border-gray-50 last:border-0">
+                          <span className="text-sm text-gray-700">{pageName}</span>
+                          <div className="flex items-center gap-3 text-xs">
+                            <span className="text-gray-500">{p.visitors}명</span>
+                            <span className="font-bold text-gray-900">{p.views}뷰</span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* 요약 카드 */}
         <section aria-labelledby="summary-heading">
           <h2 id="summary-heading" className="sr-only">
