@@ -14,7 +14,7 @@ export const SCHOOLS = [
     name: "성남 미금초등학교",
     shortName: "미금초",
     date: "2026-04-20",
-    dateLabel: "2026년 4월 20일~23일 (월~수)",
+    dateLabel: "2026년 4월 20일~24일 (월~목)",
     time: "오전 9:00 ~ 12:20",
     location: "미금초등학교 교실 및 강당",
     capacityPerSubject: 10,
