@@ -99,7 +99,7 @@ export async function GET(request: NextRequest) {
   const status = searchParams.get("status");
   const search = searchParams.get("search");
 
-  let sql = "SELECT * FROM applicants WHERE 1=1";
+  let sql = "SELECT *, DATE_FORMAT(birth_date, '%Y-%m-%d') as birth_date, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at FROM applicants WHERE 1=1";
   const params: (string | number | boolean | null)[] = [];
 
   if (status) {

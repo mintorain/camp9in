@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
 
   try {
     const applicants = await query<ApplicantRow>(
-      "SELECT * FROM applicants ORDER BY created_at DESC"
+      "SELECT *, DATE_FORMAT(birth_date, '%Y-%m-%d') as birth_date, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at FROM applicants ORDER BY created_at DESC"
     );
     const schoolRows = await query<RelationRow>(
       "SELECT applicant_id, school_id FROM applicant_schools"
