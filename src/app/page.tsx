@@ -161,6 +161,42 @@ export default function Home() {
                           </span>
                         </li>
                       </ul>
+
+                      {/* 학년별 일정 (미금초) */}
+                      {"gradeSchedule" in school &&
+                        (
+                          school as typeof school & {
+                            gradeSchedule: { grade: string; period: string }[];
+                          }
+                        ).gradeSchedule && (
+                          <div className="mt-5 pt-5 border-t border-white/15 relative z-10">
+                            <p className="text-xs text-white/50 font-semibold uppercase tracking-wider mb-3">
+                              학년별 일정
+                            </p>
+                            <div className="grid grid-cols-2 gap-2">
+                              {(
+                                school as typeof school & {
+                                  gradeSchedule: {
+                                    grade: string;
+                                    period: string;
+                                  }[];
+                                }
+                              ).gradeSchedule.map((gs) => (
+                                <div
+                                  key={gs.grade}
+                                  className="flex items-center gap-2 bg-white/10 rounded-lg px-3 py-1.5 text-sm"
+                                >
+                                  <span className="font-semibold text-amber-300 w-14 shrink-0">
+                                    {gs.grade}
+                                  </span>
+                                  <span className="text-white/80 text-xs">
+                                    {gs.period}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
                     </article>
                   </TiltCard>
                 </ScrollReveal>
