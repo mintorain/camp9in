@@ -1,15 +1,5 @@
 export const SCHOOLS = [
   {
-    id: "jeonglim",
-    name: "화성 정림초등학교",
-    shortName: "정림초",
-    date: "2026-04-29",
-    dateLabel: "2026년 4월 29일 (수)",
-    time: "오전 9:00 ~ 12:00",
-    location: "정림초등학교 강당",
-    capacityPerSubject: 8,
-  },
-  {
     id: "migeum",
     name: "성남 미금초등학교",
     shortName: "미금초",
@@ -26,6 +16,16 @@ export const SCHOOLS = [
       { grade: "5학년", period: "4/21(월)" },
       { grade: "6학년", period: "4/21(월)" },
     ],
+  },
+  {
+    id: "jeonglim",
+    name: "화성 정림초등학교",
+    shortName: "정림초",
+    date: "2026-04-29",
+    dateLabel: "2026년 4월 29일 (수)",
+    time: "오전 9:00 ~ 12:00",
+    location: "정림초등학교 강당",
+    capacityPerSubject: 8,
   },
   {
     id: "cheongwon",
