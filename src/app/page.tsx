@@ -234,6 +234,63 @@ export default function Home() {
           </div>
         </section>
 
+        {/* 강사료 지급 규정 */}
+        <section className="py-16 bg-white" aria-labelledby="pay-heading">
+          <div className="max-w-4xl mx-auto px-4">
+            <ScrollReveal direction="up">
+              <h2
+                id="pay-heading"
+                className="text-2xl md:text-3xl font-bold text-center text-gray-900 mb-10"
+              >
+                강사료 지급 규정
+              </h2>
+            </ScrollReveal>
+            <div className="grid md:grid-cols-2 gap-6">
+              <ScrollReveal delay={100} direction="left">
+                <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-6 border border-indigo-100">
+                  <h3 className="font-bold text-lg text-indigo-900 mb-3">
+                    🏫 미금초등학교
+                  </h3>
+                  <p className="text-sm text-gray-600 mb-4">
+                    1일 4차시 운영
+                  </p>
+                  <div className="bg-white rounded-xl p-4 text-center">
+                    <p className="text-sm text-gray-500">차시당</p>
+                    <p className="text-3xl font-bold text-indigo-600 mt-1">
+                      40,000<span className="text-lg font-medium">원</span>
+                    </p>
+                    <p className="text-xs text-gray-400 mt-2">
+                      1일 기준 160,000원 (4차시)
+                    </p>
+                  </div>
+                </div>
+              </ScrollReveal>
+              <ScrollReveal delay={200} direction="right">
+                <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-100">
+                  <h3 className="font-bold text-lg text-amber-900 mb-3">
+                    🏫 정림초 · 청원초
+                  </h3>
+                  <p className="text-sm text-gray-600 mb-4">
+                    1일 체험캠프 운영
+                  </p>
+                  <div className="bg-white rounded-xl p-4 text-center">
+                    <p className="text-sm text-gray-500">1일</p>
+                    <p className="text-3xl font-bold text-amber-600 mt-1">
+                      150,000<span className="text-lg font-medium">원</span>
+                    </p>
+                    <p className="text-xs text-gray-400 mt-2">
+                      체험캠프 전체 운영 기준
+                    </p>
+                  </div>
+                </div>
+              </ScrollReveal>
+            </div>
+            <p className="text-center text-xs text-gray-400 mt-6">
+              * 강사료는 원천징수 후 지급됩니다.
+            </p>
+          </div>
+        </section>
+
         {/* 모집 분야 - 3D 틸트 그리드 */}
         <section
           className="py-20 bg-gray-50"
