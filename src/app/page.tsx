@@ -36,11 +36,6 @@ export default function Home() {
               </a>
             </li>
             <li>
-              <a href="#pay" className="px-3 py-2 rounded-lg text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">
-                강사료
-              </a>
-            </li>
-            <li>
               <a href="#subjects" className="px-3 py-2 rounded-lg text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">
                 모집분야
               </a>
@@ -330,67 +325,6 @@ export default function Home() {
             </div>
             <p className="text-center text-sm text-gray-400 mt-6">
               * 학교 사정에 의해 일정은 변경될 수 있습니다.
-            </p>
-          </div>
-        </section>
-
-        {/* 강사료 지급 규정 */}
-        <section id="pay" className="py-24 bg-white scroll-mt-20" aria-labelledby="pay-heading">
-          <div className="max-w-4xl mx-auto px-4">
-            <ScrollReveal direction="up">
-              <h2
-                id="pay-heading"
-                className="text-2xl md:text-3xl font-bold text-center text-gray-900 mb-10"
-              >
-                강사료 지급 규정
-              </h2>
-            </ScrollReveal>
-            <div className="grid md:grid-cols-2 gap-6">
-              <ScrollReveal delay={100} direction="left">
-                <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-6 border border-indigo-100">
-                  <h3 className="font-bold text-lg text-indigo-900 mb-4">
-                    🏫 미금초등학교
-                  </h3>
-                  <div className="space-y-3">
-                    <div className="bg-white rounded-xl p-4 text-center">
-                      <p className="text-xs font-semibold text-indigo-500 mb-1">1~4학년</p>
-                      <p className="text-sm text-gray-500">80분 기준</p>
-                      <p className="text-3xl font-bold text-indigo-600 mt-1">
-                        80,000<span className="text-lg font-medium">원</span>
-                      </p>
-                    </div>
-                    <div className="bg-white rounded-xl p-4 text-center">
-                      <p className="text-xs font-semibold text-indigo-500 mb-1">5~6학년</p>
-                      <p className="text-sm text-gray-500">1일 캠프 운영</p>
-                      <p className="text-3xl font-bold text-indigo-600 mt-1">
-                        150,000<span className="text-lg font-medium">원</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </ScrollReveal>
-              <ScrollReveal delay={200} direction="right">
-                <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-100">
-                  <h3 className="font-bold text-lg text-amber-900 mb-3">
-                    🏫 정림초 · 청원초
-                  </h3>
-                  <p className="text-sm text-gray-600 mb-4">
-                    1일 체험캠프 운영
-                  </p>
-                  <div className="bg-white rounded-xl p-4 text-center">
-                    <p className="text-sm text-gray-500">1일</p>
-                    <p className="text-3xl font-bold text-amber-600 mt-1">
-                      150,000<span className="text-lg font-medium">원</span>
-                    </p>
-                    <p className="text-xs text-gray-400 mt-2">
-                      체험캠프 전체 운영 기준
-                    </p>
-                  </div>
-                </div>
-              </ScrollReveal>
-            </div>
-            <p className="text-center text-xs text-gray-400 mt-6">
-              * 강사료는 원천징수 후 지급됩니다.
             </p>
           </div>
         </section>

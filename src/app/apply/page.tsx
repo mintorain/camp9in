@@ -507,6 +507,27 @@ export default function ApplyPage() {
             </div>
           </fieldset>
 
+          {/* 강사료 지급 규정 */}
+          <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl border border-indigo-100 p-6">
+            <h3 className="text-lg font-bold text-gray-900 mb-4">강사료 지급 규정</h3>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-white rounded-lg p-4">
+                <p className="font-semibold text-indigo-700 text-sm mb-2">미금초등학교</p>
+                <div className="space-y-1 text-sm text-gray-600">
+                  <p>1~4학년 (교실수업): 80분 기준 <strong className="text-indigo-600">80,000원</strong></p>
+                  <p>5~6학년 (강당 체험부스): 1일 <strong className="text-indigo-600">150,000원</strong></p>
+                </div>
+              </div>
+              <div className="bg-white rounded-lg p-4">
+                <p className="font-semibold text-amber-700 text-sm mb-2">정림초 · 청원초</p>
+                <div className="space-y-1 text-sm text-gray-600">
+                  <p>1일 체험캠프 운영: <strong className="text-amber-600">150,000원</strong></p>
+                </div>
+              </div>
+            </div>
+            <p className="text-xs text-gray-400 mt-3">* 강사료는 원천징수 후 지급됩니다.</p>
+          </div>
+
           {/* 개인정보 동의 */}
           <fieldset className="bg-white rounded-xl border border-gray-200 p-6">
             <legend className="text-lg font-bold text-gray-900 px-2">
