@@ -352,10 +352,12 @@ export default function ApplicantsPage() {
                             {statusOption?.label || applicant.status}
                           </span>
                         </td>
-                        <td className="px-4 py-3 text-gray-500 hidden lg:table-cell">
-                          {new Date(
-                            applicant.created_at
-                          ).toLocaleDateString("ko-KR")}
+                        <td className="px-4 py-3 text-gray-500 hidden lg:table-cell text-xs">
+                          {new Date(applicant.created_at).toLocaleDateString("ko-KR")}
+                          <br />
+                          <span className="text-gray-400">
+                            {new Date(applicant.created_at).toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit" })}
+                          </span>
                         </td>
                         <td className="px-4 py-3">
                           <button
