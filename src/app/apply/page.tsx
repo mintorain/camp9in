@@ -38,6 +38,7 @@ export default function ApplyPage() {
 
   const [counts, setCounts] = useState<Record<string, number>>({});
   const [dbClosedIds, setDbClosedIds] = useState<string[]>([]);
+  const [showCounts, setShowCounts] = useState(true);
 
   useEffect(() => {
     fetch("/api/applicants/counts")
@@ -45,6 +46,14 @@ export default function ApplyPage() {
       .then((json) => {
         setCounts(json.data || {});
         setDbClosedIds(json.closedIds || []);
+      })
+      .catch(() => {});
+    fetch("/api/settings")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.data?.show_counts !== undefined) {
+          setShowCounts(json.data.show_counts !== "false");
+        }
       })
       .catch(() => {});
   }, []);
@@ -367,7 +376,7 @@ export default function ApplyPage() {
                             마감
                           </span>
                         )}
-                        {!closed && count > 0 && (
+                        {!closed && count > 0 && showCounts && (
                           <span className="absolute top-1 right-1 px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-600 text-[10px] font-bold">
                             {count}명 지원
                           </span>

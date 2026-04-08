@@ -42,6 +42,9 @@ export default function DashboardPage() {
     total: { visitors: number; views: number };
   } | null>(null);
 
+  const [showCounts, setShowCounts] = useState(true);
+  const [togglingCounts, setTogglingCounts] = useState(false);
+
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [newPassword, setNewPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -84,6 +87,7 @@ export default function DashboardPage() {
     fetchData();
     fetchClosedSubjects();
     fetchAnalytics();
+    fetchSettings();
     // 실시간 접속자 30초마다 갱신
     const interval = setInterval(fetchAnalytics, 30000);
     return () => clearInterval(interval);
@@ -108,6 +112,34 @@ export default function DashboardPage() {
       setAnalytics(data);
     } catch {
       /* ignore */
+    }
+  }
+
+  async function fetchSettings() {
+    try {
+      const res = await fetch("/api/settings");
+      const { data } = await res.json();
+      if (data?.show_counts !== undefined) {
+        setShowCounts(data.show_counts !== "false");
+      }
+    } catch {
+      /* ignore */
+    }
+  }
+
+  async function toggleShowCounts() {
+    setTogglingCounts(true);
+    const newValue = !showCounts;
+    try {
+      await adminFetch("/api/settings", {
+        method: "POST",
+        body: JSON.stringify({ key: "show_counts", value: String(newValue) }),
+      });
+      setShowCounts(newValue);
+    } catch {
+      /* ignore */
+    } finally {
+      setTogglingCounts(false);
     }
   }
 
@@ -451,12 +483,26 @@ export default function DashboardPage() {
 
         {/* 과목별 현황 + 마감 관리 */}
         <section aria-labelledby="subject-heading">
-          <h2
-            id="subject-heading"
-            className="text-lg font-bold text-gray-900 mb-4"
-          >
-            과목별 지원 현황 및 마감 관리
-          </h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2
+              id="subject-heading"
+              className="text-lg font-bold text-gray-900"
+            >
+              과목별 지원 현황 및 마감 관리
+            </h2>
+            <button
+              onClick={toggleShowCounts}
+              disabled={togglingCounts}
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-primary ${
+                showCounts
+                  ? "bg-primary text-white hover:bg-primary-dark"
+                  : "bg-gray-200 text-gray-600 hover:bg-gray-300"
+              } ${togglingCounts ? "opacity-50 cursor-not-allowed" : ""}`}
+            >
+              <Eye className="w-4 h-4" aria-hidden="true" />
+              {togglingCounts ? "..." : showCounts ? "인원수 공개중" : "인원수 비공개"}
+            </button>
+          </div>
           <div className="bg-white rounded-xl border border-gray-200 p-6">
             <div className="space-y-3">
               {SUBJECTS.map((subject) => {

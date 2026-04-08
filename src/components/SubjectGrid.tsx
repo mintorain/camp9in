@@ -8,6 +8,7 @@ import ScrollReveal from "./ScrollReveal";
 export default function SubjectGrid() {
   const [counts, setCounts] = useState<Record<string, number>>({});
   const [dbClosedIds, setDbClosedIds] = useState<string[]>([]);
+  const [showCounts, setShowCounts] = useState(true);
 
   useEffect(() => {
     fetch("/api/applicants/counts")
@@ -15,6 +16,14 @@ export default function SubjectGrid() {
       .then((json) => {
         setCounts(json.data || {});
         setDbClosedIds(json.closedIds || []);
+      })
+      .catch(() => {});
+    fetch("/api/settings")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.data?.show_counts !== undefined) {
+          setShowCounts(json.data.show_counts !== "false");
+        }
       })
       .catch(() => {});
   }, []);
@@ -45,7 +54,7 @@ export default function SubjectGrid() {
                     마감
                   </div>
                 )}
-                {!closed && count > 0 && (
+                {!closed && count > 0 && showCounts && (
                   <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold">
                     {count}명 지원
                   </div>
