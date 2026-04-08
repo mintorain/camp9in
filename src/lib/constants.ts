@@ -110,7 +110,7 @@ export const SUBJECTS = [
     id: "ai-cooking",
     name: "AI 요리체험",
     description: "AI 레시피로 나만의 요리 레시피 작성하기",
-    skills: "조리자격, 아동 요리교육, AI도구 활용",
+    skills: "AI 챗봇 활용",
     icon: "🍔",
     closed: false,
   },
