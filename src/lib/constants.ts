@@ -116,8 +116,8 @@ export const SUBJECTS = [
   },
   {
     id: "cooking",
-    name: "요리 체험",
-    description: "햄버거·샌드위치 만들기 체험",
+    name: "AI활용 햄버거 만들기",
+    description: "AI활용 햄버거 만들기 체험",
     skills: "조리자격, 아동 요리교육",
     icon: "🍳",
     closed: false,
