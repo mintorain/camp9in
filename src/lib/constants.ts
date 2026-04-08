@@ -135,7 +135,7 @@ export const EDUCATION_OPTIONS = [
   "박사",
 ] as const;
 
-export const SUBJECT_CLOSE_THRESHOLD = 3;
+export const SUBJECT_CLOSE_THRESHOLD = 9999;
 
 export const STATUS_OPTIONS = [
   { value: "pending", label: "접수완료", color: "bg-blue-100 text-blue-800" },

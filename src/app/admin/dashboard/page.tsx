@@ -466,7 +466,7 @@ export default function DashboardPage() {
                   1
                 );
                 const isClosed = closedIds.includes(subject.id);
-                const isAutoClose = count >= SUBJECT_CLOSE_THRESHOLD;
+                const isAutoClose = count >= SUBJECT_CLOSE_THRESHOLD && !isClosed;
                 const isToggling = togglingSubject === subject.id;
 
                 return (
@@ -488,34 +488,106 @@ export default function DashboardPage() {
                     <span className="text-sm font-bold text-gray-900 w-8 text-right">
                       {count}
                     </span>
-                    {isAutoClose && !isClosed ? (
-                      <span className="text-xs px-2 py-1 rounded-full bg-orange-100 text-orange-700 font-medium w-20 text-center">
-                        자동마감
-                      </span>
-                    ) : (
-                      <button
-                        onClick={() => toggleSubjectClose(subject.id)}
-                        disabled={isToggling}
-                        className={`text-xs px-2 py-1 rounded-full font-medium w-20 text-center transition-colors focus:outline-none focus:ring-2 focus:ring-primary ${
-                          isClosed
-                            ? "bg-red-100 text-red-700 hover:bg-red-200"
+                    <button
+                      onClick={() => toggleSubjectClose(subject.id)}
+                      disabled={isToggling}
+                      className={`text-xs px-2 py-1 rounded-full font-medium w-20 text-center transition-colors focus:outline-none focus:ring-2 focus:ring-primary ${
+                        isClosed
+                          ? "bg-red-100 text-red-700 hover:bg-red-200"
+                          : isAutoClose
+                            ? "bg-orange-100 text-orange-700 hover:bg-orange-200"
                             : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                        } ${isToggling ? "opacity-50 cursor-not-allowed" : ""}`}
-                      >
-                        {isToggling
-                          ? "..."
-                          : isClosed
-                            ? "마감중"
+                      } ${isToggling ? "opacity-50 cursor-not-allowed" : ""}`}
+                    >
+                      {isToggling
+                        ? "..."
+                        : isClosed
+                          ? "마감중"
+                          : isAutoClose
+                            ? "자동마감"
                             : "모집중"}
-                      </button>
-                    )}
+                    </button>
                   </div>
                 );
               })}
             </div>
             <p className="text-xs text-gray-400 mt-4">
-              * {SUBJECT_CLOSE_THRESHOLD}명 이상 지원 시 자동 마감 · 버튼 클릭으로 수동 마감/해제 가능
+              * {SUBJECT_CLOSE_THRESHOLD}명 이상 지원 시 자동 마감 · 모든 과목 버튼 클릭으로 마감/해제 가능 (자동마감도 해제 가능)
             </p>
+          </div>
+        </section>
+
+        {/* 학교별 과목 지원 현황 */}
+        <section aria-labelledby="school-subject-heading">
+          <h2
+            id="school-subject-heading"
+            className="text-lg font-bold text-gray-900 mb-4"
+          >
+            학교별 과목 지원 현황
+          </h2>
+          <div className="grid md:grid-cols-3 gap-4">
+            {SCHOOLS.map((school) => {
+              const schoolApplicants = applicants.filter((a) =>
+                a.applicant_schools?.some((s) => s.school_id === school.id)
+              );
+              const schoolSubjects = SUBJECTS.filter((sub) =>
+                school.subjects.includes(sub.id)
+              );
+
+              return (
+                <div
+                  key={school.id}
+                  className="bg-white rounded-xl border border-gray-200 p-5"
+                >
+                  <h3 className="text-sm font-bold text-gray-900 mb-3 flex items-center justify-between">
+                    <span>{school.shortName}</span>
+                    <span className="text-xs font-normal text-gray-400">
+                      총 {schoolApplicants.length}명
+                    </span>
+                  </h3>
+                  <div className="space-y-2">
+                    {schoolSubjects.map((subject) => {
+                      const count = schoolApplicants.filter((a) =>
+                        a.applicant_subjects?.some(
+                          (s) => s.subject_id === subject.id
+                        )
+                      ).length;
+                      const capacity = school.capacityPerSubject;
+                      const isFull = count >= capacity;
+
+                      return (
+                        <div
+                          key={subject.id}
+                          className="flex items-center gap-2"
+                        >
+                          <span className="text-xs w-24 shrink-0 text-gray-600 truncate">
+                            {subject.icon} {subject.name}
+                          </span>
+                          <div className="flex-1 bg-gray-100 rounded-full h-4 overflow-hidden">
+                            <div
+                              className={`h-full rounded-full transition-all ${
+                                isFull ? "bg-red-400" : count > 0 ? "bg-primary" : ""
+                              }`}
+                              style={{
+                                width: `${Math.min((count / capacity) * 100, 100)}%`,
+                                minWidth: count > 0 ? "1rem" : "0",
+                              }}
+                            />
+                          </div>
+                          <span
+                            className={`text-xs font-bold w-12 text-right ${
+                              isFull ? "text-red-600" : "text-gray-700"
+                            }`}
+                          >
+                            {count}/{capacity}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </section>
 

@@ -40,6 +40,7 @@ export default function ApplicantsPage() {
   const [filterSchool, setFilterSchool] = useState("");
   const [filterSubject, setFilterSubject] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
+  const [filterDuplicate, setFilterDuplicate] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const fetchData = useCallback(async () => {
@@ -76,6 +77,26 @@ export default function ApplicantsPage() {
     fetchData();
   }
 
+  // 중복 지원자 감지 (같은 이름+전화번호 또는 같은 전화번호)
+  const duplicatePhones = new Set<string>();
+  const phoneCounts = new Map<string, number>();
+  applicants.forEach((a) => {
+    const phone = a.phone.replace(/-/g, "");
+    phoneCounts.set(phone, (phoneCounts.get(phone) || 0) + 1);
+  });
+  phoneCounts.forEach((count, phone) => {
+    if (count > 1) duplicatePhones.add(phone);
+  });
+
+  const isDuplicate = (a: Applicant) =>
+    duplicatePhones.has(a.phone.replace(/-/g, ""));
+
+  const duplicateCount = applicants.filter(isDuplicate).length;
+
+  const filteredApplicants = filterDuplicate
+    ? applicants.filter(isDuplicate)
+    : applicants;
+
   const selectedApplicant = applicants.find((a) => a.id === selectedId);
 
   return (
@@ -91,7 +112,7 @@ export default function ApplicantsPage() {
           </Link>
           <h1 className="text-lg font-bold text-gray-900">지원자 목록</h1>
           <span className="ml-auto text-sm text-gray-500">
-            총 {applicants.length}명
+            {filterDuplicate ? `중복 ${filteredApplicants.length}명 / ` : ""}총 {applicants.length}명
           </span>
         </nav>
       </header>
@@ -165,6 +186,18 @@ export default function ApplicantsPage() {
                 </option>
               ))}
             </select>
+            {duplicateCount > 0 && (
+              <button
+                onClick={() => setFilterDuplicate(!filterDuplicate)}
+                className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-primary ${
+                  filterDuplicate
+                    ? "bg-amber-500 text-white"
+                    : "border border-amber-400 text-amber-600 hover:bg-amber-50"
+                }`}
+              >
+                중복 {duplicateCount}명
+              </button>
+            )}
           </div>
         </div>
 
@@ -224,7 +257,7 @@ export default function ApplicantsPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {applicants.map((applicant) => {
+                  {filteredApplicants.map((applicant) => {
                     const schools = applicant.applicant_schools
                       ?.map(
                         (s) =>
@@ -242,13 +275,17 @@ export default function ApplicantsPage() {
                     const statusOption = STATUS_OPTIONS.find(
                       (s) => s.value === applicant.status
                     );
+                    const duplicate = isDuplicate(applicant);
 
                     return (
                       <tr
                         key={applicant.id}
-                        className="border-b border-gray-100 hover:bg-gray-50"
+                        className={`border-b border-gray-100 hover:bg-gray-50 ${duplicate ? "bg-amber-50" : ""}`}
                       >
                         <td className="px-4 py-3 font-medium text-gray-900">
+                          {duplicate && (
+                            <span className="inline-block px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-200 text-amber-800 mr-1.5">중복</span>
+                          )}
                           {applicant.name}
                         </td>
                         <td className="px-4 py-3 text-gray-600">

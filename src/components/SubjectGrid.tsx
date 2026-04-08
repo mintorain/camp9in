@@ -47,7 +47,7 @@ export default function SubjectGrid() {
                 )}
                 {!closed && count > 0 && (
                   <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold">
-                    {count}/{SUBJECT_CLOSE_THRESHOLD}명
+                    {count}명 지원
                   </div>
                 )}
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-50 to-purple-50 flex items-center justify-center text-3xl mb-4">
