@@ -20,10 +20,37 @@ export default function Home() {
     <>
       {/* 글래스모피즘 헤더 */}
       <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-white/70 border-b border-white/20">
-        <nav className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+        <nav className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <span className="text-lg font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
             두온교육 AI캠프
           </span>
+          <ul className="hidden md:flex items-center gap-1 text-sm" role="list">
+            <li>
+              <a href="#about" className="px-3 py-2 rounded-lg text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">
+                캠프소개
+              </a>
+            </li>
+            <li>
+              <a href="#schedule" className="px-3 py-2 rounded-lg text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">
+                일정
+              </a>
+            </li>
+            <li>
+              <a href="#pay" className="px-3 py-2 rounded-lg text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">
+                강사료
+              </a>
+            </li>
+            <li>
+              <a href="#subjects" className="px-3 py-2 rounded-lg text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">
+                모집분야
+              </a>
+            </li>
+            <li>
+              <a href="#process" className="px-3 py-2 rounded-lg text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors">
+                지원절차
+              </a>
+            </li>
+          </ul>
           <a
             href="/apply"
             className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-5 py-2 rounded-full text-sm font-semibold hover:shadow-lg hover:shadow-indigo-500/30 transition-all duration-300 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -76,7 +103,7 @@ export default function Home() {
         </section>
 
         {/* 캠프 소개 */}
-        <section className="py-20 bg-gray-50" aria-labelledby="about-heading">
+        <section id="about" className="py-20 bg-gray-50 scroll-mt-16" aria-labelledby="about-heading">
           <div className="max-w-6xl mx-auto px-4 text-center">
             <ParallaxText scaleRange={[0.8, 1.05]}>
               <h2
@@ -99,7 +126,7 @@ export default function Home() {
         </section>
 
         {/* 일정 및 장소 - 3D 틸트 카드 */}
-        <section className="py-20 bg-white" aria-labelledby="schedule-heading">
+        <section id="schedule" className="py-20 bg-white scroll-mt-16" aria-labelledby="schedule-heading">
           <div className="max-w-6xl mx-auto px-4">
             <ParallaxText scaleRange={[0.8, 1.05]}>
               <h2
@@ -247,7 +274,7 @@ export default function Home() {
         </section>
 
         {/* 강사료 지급 규정 */}
-        <section className="py-16 bg-white" aria-labelledby="pay-heading">
+        <section id="pay" className="py-16 bg-white scroll-mt-16" aria-labelledby="pay-heading">
           <div className="max-w-4xl mx-auto px-4">
             <ScrollReveal direction="up">
               <h2
@@ -309,7 +336,8 @@ export default function Home() {
 
         {/* 모집 분야 - 3D 틸트 그리드 */}
         <section
-          className="py-20 bg-gray-50"
+          id="subjects"
+          className="py-20 bg-gray-50 scroll-mt-16"
           aria-labelledby="subjects-heading"
         >
           <div className="max-w-6xl mx-auto px-4">
@@ -331,7 +359,8 @@ export default function Home() {
 
         {/* 지원 절차 - 3D 스텝 */}
         <section
-          className="py-20 bg-gray-50"
+          id="process"
+          className="py-20 bg-gray-50 scroll-mt-16"
           aria-labelledby="process-heading"
         >
           <div className="max-w-6xl mx-auto px-4">
