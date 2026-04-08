@@ -7,7 +7,7 @@ export const SCHOOLS = [
     dateLabel: "2026년 4월 20일~24일",
     time: "오전 9:00 ~ 12:20",
     location: "미금초등학교 교실 및 강당",
-    capacityPerSubject: 10,
+    capacityPerSubject: 8,
     subjects: ["dash-robot", "turtle-bot", "drone", "vibe-coding", "ai-story", "ai-art", "ai-orchestra", "ai-cooking"],
     gradeSchedule: [
       { grade: "1학년", period: "4/20(월)~4/21(화)", subjects: ["dash-robot"] },

@@ -60,11 +60,11 @@ export default function Home() {
                       <div>
                         <p className="text-3xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
                           <AnimatedCounter
-                            target={school.subjects.length * school.capacityPerSubject}
+                            target={school.capacityPerSubject}
                             suffix="명"
                           />
                         </p>
-                        <p className="text-gray-500 text-xs mt-1">모집 강사</p>
+                        <p className="text-gray-500 text-xs mt-1">분야별 모집</p>
                       </div>
                     </div>
                     <p className="text-xs text-gray-400 mt-3">{school.dateLabel}</p>
