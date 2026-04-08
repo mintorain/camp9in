@@ -201,6 +201,9 @@ export default function Home() {
                                 </div>
                               ))}
                             </div>
+                            <p className="text-[10px] text-white/40 mt-2">
+                              * 학교 사정에 의해 일정은 변경될 수 있습니다.
+                            </p>
                           </div>
                         )}
                     </article>
@@ -208,6 +211,9 @@ export default function Home() {
                 </ScrollReveal>
               ))}
             </div>
+            <p className="text-center text-sm text-white/50 mt-6">
+              * 학교 사정에 의해 일정은 변경될 수 있습니다.
+            </p>
           </div>
         </section>
 
