@@ -512,16 +512,24 @@ export default function ApplyPage() {
             <h3 className="text-lg font-bold text-gray-900 mb-4">강사료 지급 규정</h3>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-white rounded-lg p-4">
-                <p className="font-semibold text-indigo-700 text-sm mb-2">미금초등학교</p>
-                <div className="space-y-1 text-sm text-gray-600">
-                  <p>1~4학년 (교실수업): 80분 기준 <strong className="text-indigo-600">80,000원</strong></p>
-                  <p>5~6학년 (강당 체험부스): 1일 <strong className="text-indigo-600">150,000원</strong></p>
+                <p className="font-semibold text-indigo-700 text-sm mb-3">미금초등학교</p>
+                <div className="space-y-2 text-sm text-gray-600">
+                  <div className="bg-indigo-50/50 rounded-lg p-3">
+                    <p className="font-medium text-gray-700">1~4학년 (교실수업)</p>
+                    <p className="mt-1">1개반 80분 기준 <strong className="text-indigo-600">80,000원</strong></p>
+                    <p className="text-xs text-gray-400 mt-0.5">1일 2개반 운영 (160,000원)</p>
+                  </div>
+                  <div className="bg-indigo-50/50 rounded-lg p-3">
+                    <p className="font-medium text-gray-700">5~6학년 (강당 체험부스)</p>
+                    <p className="mt-1">09:00~12:20 / 20분씩 8타임 <strong className="text-indigo-600">160,000원</strong></p>
+                  </div>
                 </div>
               </div>
               <div className="bg-white rounded-lg p-4">
-                <p className="font-semibold text-amber-700 text-sm mb-2">정림초 · 청원초</p>
-                <div className="space-y-1 text-sm text-gray-600">
-                  <p>1일 체험캠프 운영: <strong className="text-amber-600">150,000원</strong></p>
+                <p className="font-semibold text-amber-700 text-sm mb-3">정림초 · 청원초</p>
+                <div className="bg-amber-50/50 rounded-lg p-3 text-sm text-gray-600">
+                  <p className="font-medium text-gray-700">자율 체험부스 운영</p>
+                  <p className="mt-1">09:00~12:00 <strong className="text-amber-600">150,000원</strong></p>
                 </div>
               </div>
             </div>
