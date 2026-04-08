@@ -104,24 +104,79 @@ export default function Home() {
 
         {/* 캠프 소개 */}
         <section id="about" className="py-20 bg-gray-50 scroll-mt-16" aria-labelledby="about-heading">
-          <div className="max-w-6xl mx-auto px-4 text-center">
+          <div className="max-w-6xl mx-auto px-4">
             <ParallaxText scaleRange={[0.8, 1.05]}>
               <h2
                 id="about-heading"
-                className="text-2xl md:text-4xl font-bold text-gray-900 mb-6"
+                className="text-2xl md:text-4xl font-bold text-gray-900 mb-6 text-center"
               >
                 캠프 소개
               </h2>
-              <p className="text-gray-600 max-w-3xl mx-auto text-lg leading-relaxed">
-                &ldquo;AI로 만나는 미래 교육 체험 캠프&rdquo;는 초등학생들이{" "}
-                <strong className="text-indigo-600">
-                  8개 체험 부스를 순환
-                </strong>
-                하며 AI, 로봇, 코딩, 요리 등 다양한 분야를 직접 체험하는
-                프로그램입니다. 각 부스에서 전문 강사가 학생들의 창의적 체험을
-                이끌어주게 됩니다.
+              <p className="text-gray-600 max-w-3xl mx-auto text-lg leading-relaxed text-center mb-12">
+                <strong className="text-indigo-600">&ldquo;AI로 만나는 미래 교육 체험 캠프&rdquo;</strong>는
+                두온교육(주)이 주관하는 초등학교 대상 AI·미래기술 체험 프로그램입니다.
+                학생들이 다양한 체험 부스를 순환하며 AI, 로봇, 코딩, 드론, 요리 등을 직접 경험합니다.
               </p>
             </ParallaxText>
+
+            <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+              <ScrollReveal delay={0} direction="up">
+                <div className="text-center">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center text-3xl mx-auto mb-4">
+                    🎯
+                  </div>
+                  <h3 className="font-bold text-gray-900 mb-2">운영 목표</h3>
+                  <p className="text-sm text-gray-500 leading-relaxed">
+                    AI 시대를 살아갈 학생들에게 미래 기술을 체험하고 흥미를 발견할 수 있는 기회를 제공합니다.
+                  </p>
+                </div>
+              </ScrollReveal>
+              <ScrollReveal delay={150} direction="up">
+                <div className="text-center">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center text-3xl mx-auto mb-4">
+                    🔄
+                  </div>
+                  <h3 className="font-bold text-gray-900 mb-2">부스 순환 방식</h3>
+                  <p className="text-sm text-gray-500 leading-relaxed">
+                    학년별로 배정된 체험 부스를 순환하며, 각 부스에서 전문 강사의 지도 아래 실습 중심의 활동을 진행합니다.
+                  </p>
+                </div>
+              </ScrollReveal>
+              <ScrollReveal delay={300} direction="up">
+                <div className="text-center">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center text-3xl mx-auto mb-4">
+                    👨‍🏫
+                  </div>
+                  <h3 className="font-bold text-gray-900 mb-2">강사 역할</h3>
+                  <p className="text-sm text-gray-500 leading-relaxed">
+                    각 분야별 전문 강사가 체험 부스를 담당하며, 학생들의 안전하고 즐거운 체험 활동을 이끌어주게 됩니다.
+                  </p>
+                </div>
+              </ScrollReveal>
+            </div>
+
+            <ScrollReveal delay={400} direction="up">
+              <div className="mt-12 bg-white rounded-2xl border border-gray-200 p-6 max-w-3xl mx-auto">
+                <h3 className="font-bold text-gray-900 mb-4 text-center">참여 학교 및 일정</h3>
+                <div className="grid md:grid-cols-3 gap-4 text-sm">
+                  <div className="text-center p-3 bg-gray-50 rounded-xl">
+                    <p className="font-semibold text-indigo-600">성남 미금초</p>
+                    <p className="text-gray-500 mt-1">4월 20일~24일 (5일간)</p>
+                    <p className="text-xs text-gray-400 mt-1">학년별 체험 운영</p>
+                  </div>
+                  <div className="text-center p-3 bg-gray-50 rounded-xl">
+                    <p className="font-semibold text-indigo-600">화성 정림초</p>
+                    <p className="text-gray-500 mt-1">4월 29일 (1일)</p>
+                    <p className="text-xs text-gray-400 mt-1">전교생 체험캠프</p>
+                  </div>
+                  <div className="text-center p-3 bg-gray-50 rounded-xl">
+                    <p className="font-semibold text-indigo-600">화성 청원초</p>
+                    <p className="text-gray-500 mt-1">6월 12일 (1일)</p>
+                    <p className="text-xs text-gray-400 mt-1">전교생 체험캠프</p>
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
           </div>
         </section>
 
