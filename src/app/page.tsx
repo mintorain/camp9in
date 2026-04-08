@@ -37,25 +37,37 @@ export default function Home() {
         {/* 히어로 - 3D 스크롤 기반 */}
         <ScrollHero />
 
-        {/* 숫자 하이라이트 */}
+        {/* 학교별 모집 현황 */}
         <section className="py-16 bg-white border-b border-gray-100">
           <div className="max-w-6xl mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-              {[
-                { value: 3, suffix: "개교", label: "참여 학교" },
-                { value: 8, suffix: "개", label: "체험 분야" },
-                { value: 26, suffix: "명", label: "모집 강사" },
-                { value: 3, suffix: "시간", label: "캠프 운영" },
-              ].map((stat, i) => (
-                <ScrollReveal key={stat.label} delay={i * 100} direction="up">
-                  <div>
-                    <p className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                      <AnimatedCounter
-                        target={stat.value}
-                        suffix={stat.suffix}
-                      />
+            <div className="grid md:grid-cols-3 gap-6">
+              {SCHOOLS.map((school, i) => (
+                <ScrollReveal key={school.id} delay={i * 150} direction="up">
+                  <div className="text-center bg-gray-50 rounded-2xl p-6 border border-gray-100">
+                    <p className="text-lg font-bold text-gray-900 mb-4">
+                      {school.shortName}
                     </p>
-                    <p className="text-gray-500 text-sm mt-1">{stat.label}</p>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-3xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                          <AnimatedCounter
+                            target={school.subjects.length}
+                            suffix="개"
+                          />
+                        </p>
+                        <p className="text-gray-500 text-xs mt-1">체험 분야</p>
+                      </div>
+                      <div>
+                        <p className="text-3xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                          <AnimatedCounter
+                            target={school.subjects.length * school.capacityPerSubject}
+                            suffix="명"
+                          />
+                        </p>
+                        <p className="text-gray-500 text-xs mt-1">모집 강사</p>
+                      </div>
+                    </div>
+                    <p className="text-xs text-gray-400 mt-3">{school.dateLabel}</p>
                   </div>
                 </ScrollReveal>
               ))}
@@ -228,7 +240,7 @@ export default function Home() {
                 </ScrollReveal>
               ))}
             </div>
-            <p className="text-center text-sm text-white/50 mt-6">
+            <p className="text-center text-sm text-gray-400 mt-6">
               * 학교 사정에 의해 일정은 변경될 수 있습니다.
             </p>
           </div>
@@ -309,7 +321,7 @@ export default function Home() {
                 모집 분야
               </h2>
               <p className="text-gray-500 text-center mb-12">
-                8개 체험 부스별 전문 강사를 모집합니다
+                체험 부스별 전문 강사를 모집합니다
               </p>
             </ParallaxText>
 
