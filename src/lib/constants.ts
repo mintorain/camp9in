@@ -64,7 +64,7 @@ export const SUBJECTS = [
     description: "구글 제미나이로 상상을 동화책으로 제작",
     skills: "AI도구 활용, 스토리텔링",
     icon: "📖",
-    closed: true,
+    closed: false,
   },
   {
     id: "turtle-bot",
@@ -96,7 +96,7 @@ export const SUBJECTS = [
     description: "센서·모터 조립 및 코딩으로 로봇 제작",
     skills: "메이커교육, 아두이노/센서",
     icon: "⚙️",
-    closed: true,
+    closed: false,
   },
   {
     id: "ai-image",

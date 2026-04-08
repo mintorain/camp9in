@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { SUBJECTS, SUBJECT_CLOSE_THRESHOLD } from "@/lib/constants";
+import { SCHOOLS, SUBJECTS, SUBJECT_CLOSE_THRESHOLD } from "@/lib/constants";
 import TiltCard from "./TiltCard";
 import ScrollReveal from "./ScrollReveal";
 
@@ -70,13 +70,25 @@ export default function SubjectGrid() {
                 <p className="text-sm text-gray-500 mb-4 leading-relaxed">
                   {subject.description}
                 </p>
-                <div className="flex flex-wrap gap-1">
+                <div className="flex flex-wrap gap-1 mb-3">
                   {subject.skills.split(", ").map((skill) => (
                     <span
                       key={skill}
                       className="inline-block px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-600 text-xs font-medium"
                     >
                       {skill}
+                    </span>
+                  ))}
+                </div>
+                <div className="flex flex-wrap gap-1">
+                  {SCHOOLS.filter((sc) =>
+                    (sc.subjects as readonly string[]).includes(subject.id)
+                  ).map((sc) => (
+                    <span
+                      key={sc.id}
+                      className="inline-block px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 text-[10px]"
+                    >
+                      {sc.shortName}
                     </span>
                   ))}
                 </div>

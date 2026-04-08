@@ -190,12 +190,12 @@ export default function Home() {
               </p>
             </ParallaxText>
 
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-3 gap-6">
               {SCHOOLS.map((school, i) => (
                 <ScrollReveal
                   key={school.id}
                   delay={i * 200}
-                  direction={i === 0 ? "left" : "right"}
+                  direction="up"
                 >
                   <TiltCard className="rounded-2xl">
                     <article className="relative bg-gradient-to-br from-indigo-600 to-purple-700 rounded-2xl p-8 text-white overflow-hidden">
@@ -313,9 +313,6 @@ export default function Home() {
                                 );
                               })}
                             </div>
-                            <p className="text-[10px] text-white/40 mt-2">
-                              * 학교 사정에 의해 일정은 변경될 수 있습니다.
-                            </p>
                           </div>
                         )}
                     </article>
@@ -323,7 +320,7 @@ export default function Home() {
                 </ScrollReveal>
               ))}
             </div>
-            <p className="text-center text-sm text-gray-400 mt-6">
+            <p className="text-center text-xs text-gray-400 mt-6">
               * 학교 사정에 의해 일정은 변경될 수 있습니다.
             </p>
           </div>
@@ -355,7 +352,7 @@ export default function Home() {
         {/* 지원 절차 - 3D 스텝 */}
         <section
           id="process"
-          className="py-24 bg-gray-50 scroll-mt-20"
+          className="py-24 bg-white scroll-mt-20"
           aria-labelledby="process-heading"
         >
           <div className="max-w-6xl mx-auto px-4">
