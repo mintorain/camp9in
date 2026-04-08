@@ -5,7 +5,7 @@ import {
   Users,
   ChevronRight,
 } from "lucide-react";
-import { SCHOOLS } from "@/lib/constants";
+import { SCHOOLS, SUBJECTS } from "@/lib/constants";
 import TiltCard from "@/components/TiltCard";
 import ScrollReveal from "@/components/ScrollReveal";
 import AnimatedCounter from "@/components/AnimatedCounter";
@@ -177,29 +177,46 @@ export default function Home() {
                         ).gradeSchedule && (
                           <div className="mt-5 pt-5 border-t border-white/15 relative z-10">
                             <p className="text-xs text-white/50 font-semibold uppercase tracking-wider mb-2">
-                              학년별 일정
+                              학년별 일정 및 체험 과목
                             </p>
-                            <div className="grid grid-cols-3 gap-1.5">
+                            <div className="space-y-1.5">
                               {(
                                 school as typeof school & {
                                   gradeSchedule: {
                                     grade: string;
                                     period: string;
+                                    subjects: string[];
                                   }[];
                                 }
-                              ).gradeSchedule.map((gs) => (
-                                <div
-                                  key={gs.grade}
-                                  className="bg-white/10 rounded-lg px-2 py-1.5 text-center"
-                                >
-                                  <span className="block font-semibold text-amber-300 text-xs">
-                                    {gs.grade}
-                                  </span>
-                                  <span className="block text-white/70 text-[10px] leading-tight mt-0.5">
-                                    {gs.period}
-                                  </span>
-                                </div>
-                              ))}
+                              ).gradeSchedule.map((gs) => {
+                                const subjectNames = gs.subjects
+                                  .map((sid: string) => {
+                                    const sub = SUBJECTS.find((s) => s.id === sid);
+                                    return sub ? `${sub.icon} ${sub.name}` : sid;
+                                  })
+                                  .join(", ");
+                                const isMulti = gs.subjects.length > 1;
+
+                                return (
+                                  <div
+                                    key={gs.grade}
+                                    className="bg-white/10 rounded-lg px-3 py-2"
+                                  >
+                                    <div className="flex items-center justify-between">
+                                      <span className="font-semibold text-amber-300 text-xs">
+                                        {gs.grade}
+                                      </span>
+                                      <span className="text-white/50 text-[10px]">
+                                        {gs.period}
+                                      </span>
+                                    </div>
+                                    <p className={`text-white/80 mt-1 leading-relaxed ${isMulti ? "text-[10px]" : "text-xs"}`}>
+                                      {isMulti ? `${gs.subjects.length}개 체험부스: ` : ""}
+                                      {subjectNames}
+                                    </p>
+                                  </div>
+                                );
+                              })}
                             </div>
                             <p className="text-[10px] text-white/40 mt-2">
                               * 학교 사정에 의해 일정은 변경될 수 있습니다.

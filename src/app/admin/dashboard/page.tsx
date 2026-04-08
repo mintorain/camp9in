@@ -579,6 +579,10 @@ export default function DashboardPage() {
               const schoolSubjects = SUBJECTS.filter((sub) =>
                 (school.subjects as readonly string[]).includes(sub.id)
               );
+              const hasGradeSchedule = "gradeSchedule" in school;
+              const gradeSchedule = hasGradeSchedule
+                ? (school as typeof school & { gradeSchedule: { grade: string; period: string; subjects: string[] }[] }).gradeSchedule
+                : null;
 
               return (
                 <div
@@ -591,46 +595,96 @@ export default function DashboardPage() {
                       총 {schoolApplicants.length}명
                     </span>
                   </h3>
-                  <div className="space-y-2">
-                    {schoolSubjects.map((subject) => {
-                      const count = schoolApplicants.filter((a) =>
-                        a.applicant_subjects?.some(
-                          (s) => s.subject_id === subject.id
-                        )
-                      ).length;
-                      const capacity = school.capacityPerSubject;
-                      const isFull = count >= capacity;
+                  {gradeSchedule ? (
+                    <div className="space-y-3">
+                      {gradeSchedule.map((gs) => {
+                        const gradeSubjects = SUBJECTS.filter((sub) =>
+                          gs.subjects.includes(sub.id)
+                        );
+                        return (
+                          <div key={gs.grade}>
+                            <p className="text-xs font-semibold text-gray-500 mb-1">
+                              {gs.grade} <span className="font-normal text-gray-400">({gs.period})</span>
+                            </p>
+                            <div className="space-y-1">
+                              {gradeSubjects.map((subject) => {
+                                const count = schoolApplicants.filter((a) =>
+                                  a.applicant_subjects?.some(
+                                    (s) => s.subject_id === subject.id
+                                  )
+                                ).length;
+                                const capacity = school.capacityPerSubject;
+                                const isFull = count >= capacity;
 
-                      return (
-                        <div
-                          key={subject.id}
-                          className="flex items-center gap-2"
-                        >
-                          <span className="text-xs w-24 shrink-0 text-gray-600 truncate">
-                            {subject.icon} {subject.name}
-                          </span>
-                          <div className="flex-1 bg-gray-100 rounded-full h-4 overflow-hidden">
-                            <div
-                              className={`h-full rounded-full transition-all ${
-                                isFull ? "bg-red-400" : count > 0 ? "bg-primary" : ""
-                              }`}
-                              style={{
-                                width: `${Math.min((count / capacity) * 100, 100)}%`,
-                                minWidth: count > 0 ? "1rem" : "0",
-                              }}
-                            />
+                                return (
+                                  <div key={subject.id} className="flex items-center gap-2">
+                                    <span className="text-[11px] w-22 shrink-0 text-gray-600 truncate">
+                                      {subject.icon} {subject.name}
+                                    </span>
+                                    <div className="flex-1 bg-gray-100 rounded-full h-3 overflow-hidden">
+                                      <div
+                                        className={`h-full rounded-full transition-all ${
+                                          isFull ? "bg-red-400" : count > 0 ? "bg-primary" : ""
+                                        }`}
+                                        style={{
+                                          width: `${Math.min((count / capacity) * 100, 100)}%`,
+                                          minWidth: count > 0 ? "0.75rem" : "0",
+                                        }}
+                                      />
+                                    </div>
+                                    <span className={`text-[11px] font-bold w-10 text-right ${isFull ? "text-red-600" : "text-gray-700"}`}>
+                                      {count}/{capacity}
+                                    </span>
+                                  </div>
+                                );
+                              })}
+                            </div>
                           </div>
-                          <span
-                            className={`text-xs font-bold w-12 text-right ${
-                              isFull ? "text-red-600" : "text-gray-700"
-                            }`}
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      {schoolSubjects.map((subject) => {
+                        const count = schoolApplicants.filter((a) =>
+                          a.applicant_subjects?.some(
+                            (s) => s.subject_id === subject.id
+                          )
+                        ).length;
+                        const capacity = school.capacityPerSubject;
+                        const isFull = count >= capacity;
+
+                        return (
+                          <div
+                            key={subject.id}
+                            className="flex items-center gap-2"
                           >
-                            {count}/{capacity}
-                          </span>
-                        </div>
-                      );
-                    })}
-                  </div>
+                            <span className="text-xs w-24 shrink-0 text-gray-600 truncate">
+                              {subject.icon} {subject.name}
+                            </span>
+                            <div className="flex-1 bg-gray-100 rounded-full h-4 overflow-hidden">
+                              <div
+                                className={`h-full rounded-full transition-all ${
+                                  isFull ? "bg-red-400" : count > 0 ? "bg-primary" : ""
+                                }`}
+                                style={{
+                                  width: `${Math.min((count / capacity) * 100, 100)}%`,
+                                  minWidth: count > 0 ? "1rem" : "0",
+                                }}
+                              />
+                            </div>
+                            <span
+                              className={`text-xs font-bold w-12 text-right ${
+                                isFull ? "text-red-600" : "text-gray-700"
+                              }`}
+                            >
+                              {count}/{capacity}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
               );
             })}

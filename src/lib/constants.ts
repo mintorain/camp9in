@@ -10,12 +10,12 @@ export const SCHOOLS = [
     capacityPerSubject: 10,
     subjects: ["dash-robot", "turtle-bot", "drone", "vibe-coding", "ai-story", "ai-art", "ai-orchestra", "ai-cooking"],
     gradeSchedule: [
-      { grade: "1학년", period: "4/20(월)~4/21(화)" },
-      { grade: "2학년", period: "4/23(목)~4/24(금)" },
-      { grade: "3학년", period: "4/20(월)~4/21(화)" },
-      { grade: "4학년", period: "4/22(화)~4/23(수)" },
-      { grade: "5학년", period: "4/21(월)" },
-      { grade: "6학년", period: "4/21(월)" },
+      { grade: "1학년", period: "4/20(월)~4/21(화)", subjects: ["dash-robot"] },
+      { grade: "2학년", period: "4/23(목)~4/24(금)", subjects: ["turtle-bot"] },
+      { grade: "3학년", period: "4/20(월)~4/21(화)", subjects: ["drone"] },
+      { grade: "4학년", period: "4/22(화)~4/23(수)", subjects: ["dash-robot"] },
+      { grade: "5학년", period: "4/21(월)", subjects: ["ai-cooking", "ai-story", "ai-art", "vibe-coding", "ai-orchestra", "turtle-bot"] },
+      { grade: "6학년", period: "4/21(월)", subjects: ["ai-cooking", "ai-story", "ai-art", "vibe-coding", "ai-orchestra", "turtle-bot"] },
     ],
   },
   {
