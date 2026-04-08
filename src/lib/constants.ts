@@ -8,7 +8,7 @@ export const SCHOOLS = [
     time: "오전 9:00 ~ 12:20",
     location: "미금초등학교 교실 및 강당",
     capacityPerSubject: 10,
-    subjects: ["dash-robot", "turtle-bot", "drone", "vibe-coding", "ai-story", "ai-art", "ai-orchestra", "cooking"],
+    subjects: ["dash-robot", "turtle-bot", "drone", "vibe-coding", "ai-story", "ai-art", "ai-orchestra", "ai-cooking"],
     gradeSchedule: [
       { grade: "1학년", period: "4/20(월)~4/21(화)" },
       { grade: "2학년", period: "4/23(목)~4/24(금)" },
@@ -102,12 +102,20 @@ export const SUBJECTS = [
     closed: false,
   },
   {
+    id: "ai-cooking",
+    name: "AI 요리체험",
+    description: "AI 레시피로 햄버거·샌드위치 제작 (미금초)",
+    skills: "조리자격, 아동 요리교육, AI도구 활용",
+    icon: "🍔",
+    closed: false,
+  },
+  {
     id: "cooking",
     name: "요리 체험",
-    description: "AI 레시피로 햄버거·샌드위치 제작",
+    description: "햄버거·샌드위치 만들기 체험 (정림초·청원초)",
     skills: "조리자격, 아동 요리교육",
-    icon: "🍔",
-    closed: true,
+    icon: "🍳",
+    closed: false,
   },
   {
     id: "drone",
