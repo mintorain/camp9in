@@ -21,8 +21,8 @@ export const applicantSchema = z.object({
     .min(1, "지원할 학교를 1개 이상 선택해주세요"),
   subjects: z
     .array(z.enum(SUBJECTS.map((s) => s.id) as [string, ...string[]]))
-    .min(1, "지원 과목을 선택해주세요")
-    .max(1, "동시 운영 과목이므로 1개만 선택 가능합니다"),
+    .min(1, "1순위 과목을 선택해주세요")
+    .max(3, "최대 3순위까지 선택 가능합니다"),
   education: z.enum(EDUCATION_OPTIONS),
   major: z.string().optional(),
   experience: z

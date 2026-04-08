@@ -329,66 +329,67 @@ export default function ApplyPage() {
                 )}
               </div>
 
-              {/* 지원 과목 */}
+              {/* 지원 과목 - 1순위/2순위/3순위 */}
               <div>
                 <p className="text-sm font-medium text-gray-700 mb-2">
-                  지원 과목 (1개 선택){" "}
+                  지원 과목 (순위별 선택){" "}
                   <span className="text-red-500">*</span>
                 </p>
                 <p className="text-amber-600 text-xs mb-3 bg-amber-50 px-3 py-2 rounded-lg">
-                  모든 과목이 동시에 운영되므로 1개 과목만 선택 가능합니다.
+                  동시 운영 과목이므로 희망 순위별로 선택해주세요. 1순위는 필수, 2·3순위는 선택입니다.
                 </p>
                 {selectedSchools.length === 0 && (
                   <p className="text-amber-600 text-xs mb-3 bg-amber-50 px-3 py-2 rounded-lg">
                     먼저 지원할 학교를 선택하면 해당 학교의 과목이 표시됩니다.
                   </p>
                 )}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                  {availableSubjects.map((subject) => {
-                    const closed = isSubjectClosed(subject.id);
-                    const count = counts[subject.id] || 0;
+                <div className="space-y-3">
+                  {[
+                    { rank: 0, label: "1순위", required: true, color: "border-indigo-300 bg-indigo-50/30" },
+                    { rank: 1, label: "2순위", required: false, color: "border-gray-200 bg-white" },
+                    { rank: 2, label: "3순위", required: false, color: "border-gray-200 bg-white" },
+                  ].map(({ rank, label, required, color }) => {
+                    const selectedAtOtherRanks = selectedSubjects.filter(
+                      (_, idx) => idx !== rank
+                    );
+                    const currentValue = selectedSubjects[rank] || "";
 
                     return (
-                      <button
-                        key={subject.id}
-                        type="button"
-                        disabled={closed}
-                        onClick={() =>
-                          !closed &&
-                          toggleArrayValue(
-                            "subjects",
-                            subject.id,
-                            selectedSubjects,
-                            1
-                          )
-                        }
-                        className={`relative p-3 rounded-lg border text-sm text-left transition-colors focus:outline-none focus:ring-2 focus:ring-primary ${
-                          closed
-                            ? "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed opacity-60"
-                            : selectedSubjects.includes(subject.id)
-                              ? "bg-primary/5 text-primary border-primary"
-                              : "bg-white text-gray-700 border-gray-300 hover:border-primary/50"
-                        }`}
-                        aria-pressed={
-                          !closed &&
-                          selectedSubjects.includes(subject.id)
-                        }
-                      >
-                        {closed && (
-                          <span className="absolute top-1 right-1 px-1.5 py-0.5 rounded bg-red-500 text-white text-[10px] font-bold">
-                            마감
-                          </span>
-                        )}
-                        {!closed && count > 0 && showCounts && (
-                          <span className="absolute top-1 right-1 px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-600 text-[10px] font-bold">
-                            {count}명 지원
-                          </span>
-                        )}
-                        <span className="text-lg">{subject.icon}</span>
-                        <span className="block mt-1 font-medium">
-                          {subject.name}
+                      <div key={rank} className={`flex items-center gap-3 rounded-lg border p-3 ${color}`}>
+                        <span className={`text-sm font-bold shrink-0 w-14 ${rank === 0 ? "text-indigo-600" : "text-gray-400"}`}>
+                          {label}
+                          {required && <span className="text-red-500 ml-0.5">*</span>}
                         </span>
-                      </button>
+                        <label htmlFor={`subject-rank-${rank}`} className="sr-only">{label} 과목 선택</label>
+                        <select
+                          id={`subject-rank-${rank}`}
+                          value={currentValue}
+                          onChange={(e) => {
+                            const newSubjects = [...selectedSubjects];
+                            if (e.target.value === "") {
+                              newSubjects.splice(rank, 1);
+                              // 뒤 순위 당기기
+                              setValue("subjects", newSubjects.filter(Boolean) as ApplicantFormData["subjects"], { shouldValidate: true });
+                            } else {
+                              // 빈 순위 채우기
+                              while (newSubjects.length < rank) newSubjects.push("");
+                              newSubjects[rank] = e.target.value;
+                              setValue("subjects", newSubjects.filter(Boolean) as ApplicantFormData["subjects"], { shouldValidate: true });
+                            }
+                          }}
+                          className="flex-1 border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-primary focus:border-primary"
+                        >
+                          <option value="">{required ? "과목을 선택해주세요" : "선택 안함"}</option>
+                          {availableSubjects
+                            .filter((s) => !isSubjectClosed(s.id))
+                            .filter((s) => !selectedAtOtherRanks.includes(s.id))
+                            .map((subject) => (
+                              <option key={subject.id} value={subject.id}>
+                                {subject.icon} {subject.name}
+                              </option>
+                            ))}
+                        </select>
+                      </div>
                     );
                   })}
                 </div>

@@ -317,11 +317,12 @@ export default function ApplicantsPage() {
                       .join(", ");
                     const subjects = applicant.applicant_subjects
                       ?.map(
-                        (s) =>
-                          SUBJECTS.find((sub) => sub.id === s.subject_id)
-                            ?.name || s.subject_id
+                        (s, idx) => {
+                          const name = SUBJECTS.find((sub) => sub.id === s.subject_id)?.name || s.subject_id;
+                          return idx === 0 ? name : name;
+                        }
                       )
-                      .join(", ");
+                      .join(" > ");
                     const statusOption = STATUS_OPTIONS.find(
                       (s) => s.value === applicant.status
                     );
@@ -447,15 +448,19 @@ export default function ApplicantsPage() {
                 </div>
                 <div>
                   <p className="text-gray-500">지원 과목</p>
-                  <p className="font-medium">
-                    {selectedApplicant.applicant_subjects
-                      ?.map(
-                        (s) =>
-                          SUBJECTS.find((sub) => sub.id === s.subject_id)
-                            ?.name || s.subject_id
-                      )
-                      .join(", ")}
-                  </p>
+                  <div className="space-y-1 mt-1">
+                    {selectedApplicant.applicant_subjects?.map((s, idx) => {
+                      const sub = SUBJECTS.find((sub) => sub.id === s.subject_id);
+                      const rankLabel = idx === 0 ? "1순위" : idx === 1 ? "2순위" : "3순위";
+                      const rankColor = idx === 0 ? "bg-indigo-100 text-indigo-700" : "bg-gray-100 text-gray-600";
+                      return (
+                        <p key={s.subject_id} className="font-medium flex items-center gap-2">
+                          <span className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${rankColor}`}>{rankLabel}</span>
+                          {sub ? `${sub.icon} ${sub.name}` : s.subject_id}
+                        </p>
+                      );
+                    })}
+                  </div>
                 </div>
                 <div>
                   <p className="text-gray-500">최종 학력</p>

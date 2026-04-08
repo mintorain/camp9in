@@ -121,7 +121,7 @@ export async function GET(request: NextRequest) {
       "SELECT applicant_id, school_id FROM applicant_schools"
     );
     const subjectRows = await query<RelationRow>(
-      "SELECT applicant_id, subject_id FROM applicant_subjects"
+      "SELECT applicant_id, subject_id FROM applicant_subjects ORDER BY id ASC"
     );
 
     let result = applicants.map((a) => ({
