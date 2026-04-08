@@ -280,6 +280,7 @@ export default function Home() {
                                     grade: string;
                                     period: string;
                                     subjects: string[];
+                                    type?: string;
                                   }[];
                                 }
                               ).gradeSchedule.map((gs) => {
@@ -299,6 +300,11 @@ export default function Home() {
                                     <div className="flex items-center justify-between">
                                       <span className="font-semibold text-amber-300 text-xs">
                                         {gs.grade}
+                                        {gs.type && (
+                                          <span className="ml-1.5 px-1.5 py-0.5 rounded bg-white/15 text-white/60 text-[10px] font-normal">
+                                            {gs.type}
+                                          </span>
+                                        )}
                                       </span>
                                       <span className="text-white/50 text-[10px]">
                                         {gs.period}
