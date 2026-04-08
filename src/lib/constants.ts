@@ -92,9 +92,9 @@ export const SUBJECTS = [
   },
   {
     id: "reactive-robot",
-    name: "반응형 로봇 만들기",
-    description: "센서·모터 조립 및 코딩으로 로봇 제작",
-    skills: "메이커교육, 아두이노/센서",
+    name: "로봇킷트 조립",
+    description: "로봇킷트 조립하여 로봇 조종하기",
+    skills: "메이커교육, 로봇 조립/조종",
     icon: "⚙️",
     closed: false,
   },
