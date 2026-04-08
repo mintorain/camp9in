@@ -65,27 +65,18 @@ export default function ApplyPage() {
   const selectedSchools = watch("schools") || [];
   const selectedSubjects = watch("subjects") || [];
 
-  // 선택된 학교들의 과목 합집합
-  const availableSubjectIds: string[] = selectedSchools.length > 0
-    ? [
-        ...new Set(
-          selectedSchools.flatMap((schoolId) => {
-            const school = SCHOOLS.find((s) => s.id === schoolId);
-            return (school?.subjects as readonly string[] | undefined) ?? SUBJECTS.map((s) => s.id);
-          })
-        ),
-      ]
-    : SUBJECTS.map((s) => s.id);
-
-  const availableSubjects = SUBJECTS.filter((s) =>
-    availableSubjectIds.includes(s.id)
-  );
+  // 학교별 선택 과목 상태
+  const [schoolSubjectMap, setSchoolSubjectMap] = useState<Record<string, string>>({});
 
   function handleSchoolToggle(schoolId: string) {
     const current = selectedSchools;
     let newSchools: string[];
     if (current.includes(schoolId)) {
       newSchools = current.filter((v) => v !== schoolId);
+      // 해제된 학교의 과목 제거
+      const newMap = { ...schoolSubjectMap };
+      delete newMap[schoolId];
+      setSchoolSubjectMap(newMap);
     } else {
       newSchools = [...current, schoolId];
     }
@@ -93,47 +84,28 @@ export default function ApplyPage() {
       shouldValidate: true,
     });
 
-    // 학교 변경 후 해당하지 않는 과목 제거
-    const newAvailableIds: string[] = newSchools.length > 0
-      ? [
-          ...new Set(
-            newSchools.flatMap((sid) => {
-              const school = SCHOOLS.find((s) => s.id === sid);
-              return (school?.subjects as readonly string[] | undefined) ?? SUBJECTS.map((s) => s.id);
-            })
-          ),
-        ]
-      : SUBJECTS.map((s) => s.id);
-
-    const filteredSubjects = selectedSubjects.filter((sid) =>
-      newAvailableIds.includes(sid)
-    );
-    if (filteredSubjects.length !== selectedSubjects.length) {
-      setValue(
-        "subjects",
-        filteredSubjects as ApplicantFormData["subjects"],
-        { shouldValidate: true }
-      );
-    }
+    // 학교별 과목 → subjects 배열 동기화
+    const updatedMap = { ...schoolSubjectMap };
+    if (!newSchools.includes(schoolId)) delete updatedMap[schoolId];
+    syncSubjects(updatedMap);
   }
 
-  function toggleArrayValue(
-    field: "schools" | "subjects",
-    value: string,
-    current: string[],
-    max?: number
-  ) {
-    if (current.includes(value)) {
-      setValue(
-        field,
-        current.filter((v) => v !== value) as ApplicantFormData[typeof field],
-        { shouldValidate: true }
-      );
-    } else if (!max || current.length < max) {
-      setValue(field, [...current, value] as ApplicantFormData[typeof field], {
-        shouldValidate: true,
-      });
+  function handleSchoolSubjectChange(schoolId: string, subjectId: string) {
+    const newMap = { ...schoolSubjectMap };
+    if (subjectId === "") {
+      delete newMap[schoolId];
+    } else {
+      newMap[schoolId] = subjectId;
     }
+    setSchoolSubjectMap(newMap);
+    syncSubjects(newMap);
+  }
+
+  function syncSubjects(map: Record<string, string>) {
+    const uniqueSubjects = [...new Set(Object.values(map).filter(Boolean))];
+    setValue("subjects", uniqueSubjects as ApplicantFormData["subjects"], {
+      shouldValidate: true,
+    });
   }
 
   async function onSubmit(data: ApplicantFormData) {
@@ -329,70 +301,60 @@ export default function ApplyPage() {
                 )}
               </div>
 
-              {/* 지원 과목 - 1순위/2순위/3순위 */}
+              {/* 학교별 지원 과목 */}
               <div>
                 <p className="text-sm font-medium text-gray-700 mb-2">
-                  지원 과목 (순위별 선택){" "}
+                  학교별 지원 과목{" "}
                   <span className="text-red-500">*</span>
                 </p>
-                <p className="text-amber-600 text-xs mb-3 bg-amber-50 px-3 py-2 rounded-lg">
-                  동시 운영 과목이므로 희망 순위별로 선택해주세요. 1순위는 필수, 2·3순위는 선택입니다.
+                <p className="text-xs text-gray-500 mb-3">
+                  각 학교에서 동시에 과목이 운영되므로, 학교별로 1개 과목을 선택해주세요.
+                  동일 과목을 여러 학교에서 선택하면 해당 학교 모두 동일 강사가 진행합니다.
                 </p>
-                {selectedSchools.length === 0 && (
-                  <p className="text-amber-600 text-xs mb-3 bg-amber-50 px-3 py-2 rounded-lg">
-                    먼저 지원할 학교를 선택하면 해당 학교의 과목이 표시됩니다.
+                {selectedSchools.length === 0 ? (
+                  <p className="text-amber-600 text-xs bg-amber-50 px-3 py-2 rounded-lg">
+                    먼저 지원할 학교를 선택해주세요.
                   </p>
-                )}
-                <div className="space-y-3">
-                  {[
-                    { rank: 0, label: "1순위", required: true, color: "border-indigo-300 bg-indigo-50/30" },
-                    { rank: 1, label: "2순위", required: false, color: "border-gray-200 bg-white" },
-                    { rank: 2, label: "3순위", required: false, color: "border-gray-200 bg-white" },
-                  ].map(({ rank, label, required, color }) => {
-                    const selectedAtOtherRanks = selectedSubjects.filter(
-                      (_, idx) => idx !== rank
-                    );
-                    const currentValue = selectedSubjects[rank] || "";
+                ) : (
+                  <div className="space-y-3">
+                    {selectedSchools.map((schoolId) => {
+                      const school = SCHOOLS.find((s) => s.id === schoolId);
+                      if (!school) return null;
+                      const schoolSubjectList = SUBJECTS.filter((sub) =>
+                        (school.subjects as readonly string[]).includes(sub.id)
+                      ).filter((sub) => !isSubjectClosed(sub.id));
 
-                    return (
-                      <div key={rank} className={`flex items-center gap-3 rounded-lg border p-3 ${color}`}>
-                        <span className={`text-sm font-bold shrink-0 w-14 ${rank === 0 ? "text-indigo-600" : "text-gray-400"}`}>
-                          {label}
-                          {required && <span className="text-red-500 ml-0.5">*</span>}
-                        </span>
-                        <label htmlFor={`subject-rank-${rank}`} className="sr-only">{label} 과목 선택</label>
-                        <select
-                          id={`subject-rank-${rank}`}
-                          value={currentValue}
-                          onChange={(e) => {
-                            const newSubjects = [...selectedSubjects];
-                            if (e.target.value === "") {
-                              newSubjects.splice(rank, 1);
-                              // 뒤 순위 당기기
-                              setValue("subjects", newSubjects.filter(Boolean) as ApplicantFormData["subjects"], { shouldValidate: true });
-                            } else {
-                              // 빈 순위 채우기
-                              while (newSubjects.length < rank) newSubjects.push("");
-                              newSubjects[rank] = e.target.value;
-                              setValue("subjects", newSubjects.filter(Boolean) as ApplicantFormData["subjects"], { shouldValidate: true });
-                            }
-                          }}
-                          className="flex-1 border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-primary focus:border-primary"
-                        >
-                          <option value="">{required ? "과목을 선택해주세요" : "선택 안함"}</option>
-                          {availableSubjects
-                            .filter((s) => !isSubjectClosed(s.id))
-                            .filter((s) => !selectedAtOtherRanks.includes(s.id))
-                            .map((subject) => (
-                              <option key={subject.id} value={subject.id}>
-                                {subject.icon} {subject.name}
-                              </option>
-                            ))}
-                        </select>
-                      </div>
-                    );
-                  })}
-                </div>
+                      return (
+                        <div key={schoolId} className="rounded-lg border border-gray-200 bg-gray-50 p-3">
+                          <div className="flex items-center gap-3">
+                            <span className="text-sm font-bold text-indigo-600 shrink-0 w-16">
+                              {school.shortName}
+                            </span>
+                            <label htmlFor={`subject-${schoolId}`} className="sr-only">{school.shortName} 과목 선택</label>
+                            <select
+                              id={`subject-${schoolId}`}
+                              value={schoolSubjectMap[schoolId] || ""}
+                              onChange={(e) => handleSchoolSubjectChange(schoolId, e.target.value)}
+                              className="flex-1 border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-primary focus:border-primary bg-white"
+                            >
+                              <option value="">과목을 선택해주세요</option>
+                              {schoolSubjectList.map((subject) => (
+                                <option key={subject.id} value={subject.id}>
+                                  {subject.icon} {subject.name}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                          {schoolSubjectMap[schoolId] && (
+                            <p className="text-[11px] text-gray-400 mt-1.5 ml-19">
+                              {SUBJECTS.find((s) => s.id === schoolSubjectMap[schoolId])?.description}
+                            </p>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
                 {errors.subjects && (
                   <p className="text-red-500 text-xs mt-1" role="alert">
                     {errors.subjects.message}
