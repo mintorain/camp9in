@@ -14,7 +14,7 @@ export const SCHOOLS = [
       { grade: "2학년", period: "4/23(목)~4/24(금)", subjects: ["turtle-bot"], type: "교실수업" },
       { grade: "3학년", period: "4/20(월)~4/21(화)", subjects: ["drone"], type: "교실수업" },
       { grade: "4학년", period: "4/22(화)~4/23(수)", subjects: ["dash-robot"], type: "교실수업" },
-      { grade: "5~6학년", period: "4/21(월)", subjects: ["ai-cooking", "ai-story", "ai-art", "vibe-coding", "ai-orchestra", "turtle-bot"], type: "강당 체험부스" },
+      { grade: "5~6학년", period: "4/21(화)", subjects: ["ai-cooking", "ai-story", "ai-art", "vibe-coding", "ai-orchestra", "turtle-bot"], type: "강당 체험부스" },
     ],
   },
   {
