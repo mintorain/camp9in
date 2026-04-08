@@ -248,20 +248,24 @@ export default function Home() {
             <div className="grid md:grid-cols-2 gap-6">
               <ScrollReveal delay={100} direction="left">
                 <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-6 border border-indigo-100">
-                  <h3 className="font-bold text-lg text-indigo-900 mb-3">
+                  <h3 className="font-bold text-lg text-indigo-900 mb-4">
                     🏫 미금초등학교
                   </h3>
-                  <p className="text-sm text-gray-600 mb-4">
-                    1일 4차시 운영
-                  </p>
-                  <div className="bg-white rounded-xl p-4 text-center">
-                    <p className="text-sm text-gray-500">차시당</p>
-                    <p className="text-3xl font-bold text-indigo-600 mt-1">
-                      40,000<span className="text-lg font-medium">원</span>
-                    </p>
-                    <p className="text-xs text-gray-400 mt-2">
-                      1일 기준 160,000원 (4차시)
-                    </p>
+                  <div className="space-y-3">
+                    <div className="bg-white rounded-xl p-4 text-center">
+                      <p className="text-xs font-semibold text-indigo-500 mb-1">1~4학년</p>
+                      <p className="text-sm text-gray-500">80분 기준</p>
+                      <p className="text-3xl font-bold text-indigo-600 mt-1">
+                        80,000<span className="text-lg font-medium">원</span>
+                      </p>
+                    </div>
+                    <div className="bg-white rounded-xl p-4 text-center">
+                      <p className="text-xs font-semibold text-indigo-500 mb-1">5~6학년</p>
+                      <p className="text-sm text-gray-500">1일 캠프 운영</p>
+                      <p className="text-3xl font-bold text-indigo-600 mt-1">
+                        150,000<span className="text-lg font-medium">원</span>
+                      </p>
+                    </div>
                   </div>
                 </div>
               </ScrollReveal>
