@@ -577,7 +577,7 @@ export default function DashboardPage() {
                 a.applicant_schools?.some((s) => s.school_id === school.id)
               );
               const schoolSubjects = SUBJECTS.filter((sub) =>
-                school.subjects.includes(sub.id)
+                (school.subjects as readonly string[]).includes(sub.id)
               );
 
               return (
