@@ -599,7 +599,7 @@ export default function DashboardPage() {
                     <div className="space-y-3">
                       {gradeSchedule.map((gs) => {
                         const gradeSubjects = SUBJECTS.filter((sub) =>
-                          gs.subjects.includes(sub.id)
+                          (gs.subjects as readonly string[]).includes(sub.id)
                         );
                         return (
                           <div key={gs.grade}>
