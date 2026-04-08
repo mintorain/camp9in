@@ -65,7 +65,7 @@ export default function Home() {
         <ScrollHero />
 
         {/* 학교별 모집 현황 */}
-        <section className="py-16 bg-white border-b border-gray-100">
+        <section className="py-20 bg-white border-b border-gray-100">
           <div className="max-w-6xl mx-auto px-4">
             <div className="grid md:grid-cols-3 gap-6">
               {SCHOOLS.map((school, i) => (
@@ -103,7 +103,7 @@ export default function Home() {
         </section>
 
         {/* 캠프 소개 */}
-        <section id="about" className="py-20 bg-gray-50 scroll-mt-16" aria-labelledby="about-heading">
+        <section id="about" className="py-24 bg-gray-50 scroll-mt-20" aria-labelledby="about-heading">
           <div className="max-w-6xl mx-auto px-4">
             <ParallaxText scaleRange={[0.8, 1.05]}>
               <h2
@@ -181,7 +181,7 @@ export default function Home() {
         </section>
 
         {/* 일정 및 장소 - 3D 틸트 카드 */}
-        <section id="schedule" className="py-20 bg-white scroll-mt-16" aria-labelledby="schedule-heading">
+        <section id="schedule" className="py-24 bg-white scroll-mt-20" aria-labelledby="schedule-heading">
           <div className="max-w-6xl mx-auto px-4">
             <ParallaxText scaleRange={[0.8, 1.05]}>
               <h2
@@ -329,7 +329,7 @@ export default function Home() {
         </section>
 
         {/* 강사료 지급 규정 */}
-        <section id="pay" className="py-16 bg-white scroll-mt-16" aria-labelledby="pay-heading">
+        <section id="pay" className="py-24 bg-white scroll-mt-20" aria-labelledby="pay-heading">
           <div className="max-w-4xl mx-auto px-4">
             <ScrollReveal direction="up">
               <h2
@@ -392,7 +392,7 @@ export default function Home() {
         {/* 모집 분야 - 3D 틸트 그리드 */}
         <section
           id="subjects"
-          className="py-20 bg-gray-50 scroll-mt-16"
+          className="py-24 bg-gray-50 scroll-mt-20"
           aria-labelledby="subjects-heading"
         >
           <div className="max-w-6xl mx-auto px-4">
@@ -415,7 +415,7 @@ export default function Home() {
         {/* 지원 절차 - 3D 스텝 */}
         <section
           id="process"
-          className="py-20 bg-gray-50 scroll-mt-16"
+          className="py-24 bg-gray-50 scroll-mt-20"
           aria-labelledby="process-heading"
         >
           <div className="max-w-6xl mx-auto px-4">
