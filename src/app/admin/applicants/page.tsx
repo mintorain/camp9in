@@ -201,6 +201,56 @@ export default function ApplicantsPage() {
           </div>
         </div>
 
+        {/* 학교별·과목별 지원 현황 요약 */}
+        {!loading && applicants.length > 0 && (
+          <div className="bg-white rounded-xl border border-gray-200 p-4 mb-6">
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-sm font-bold text-gray-700">학교별·과목별 지원 현황</h2>
+            </div>
+            <div className="grid md:grid-cols-3 gap-4">
+              {SCHOOLS.map((school) => {
+                const schoolApps = applicants.filter((a) =>
+                  a.applicant_schools?.some((s) => s.school_id === school.id)
+                );
+                const schoolSubjects = SUBJECTS.filter((sub) =>
+                  (school.subjects as readonly string[]).includes(sub.id)
+                );
+                return (
+                  <div key={school.id} className="bg-gray-50 rounded-lg p-3">
+                    <p className="text-xs font-bold text-gray-900 mb-2 flex justify-between">
+                      <span>{school.shortName}</span>
+                      <span className="text-gray-400 font-normal">{schoolApps.length}명</span>
+                    </p>
+                    <div className="space-y-1">
+                      {schoolSubjects.map((sub) => {
+                        const cnt = schoolApps.filter((a) =>
+                          a.applicant_subjects?.some((s) => s.subject_id === sub.id)
+                        ).length;
+                        return (
+                          <div key={sub.id} className="flex items-center gap-2">
+                            <span className="text-[11px] text-gray-600 w-28 shrink-0 truncate">
+                              {sub.icon} {sub.name}
+                            </span>
+                            <div className="flex-1 bg-gray-200 rounded-full h-2 overflow-hidden">
+                              <div
+                                className={`h-full rounded-full ${cnt > 0 ? "bg-primary" : ""}`}
+                                style={{ width: `${Math.min((cnt / Math.max(school.capacityPerSubject, 1)) * 100, 100)}%`, minWidth: cnt > 0 ? "0.5rem" : "0" }}
+                              />
+                            </div>
+                            <span className="text-[11px] font-bold text-gray-700 w-8 text-right">
+                              {cnt}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         {loading ? (
           <div className="flex justify-center py-20">
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
