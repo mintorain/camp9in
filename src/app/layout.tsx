@@ -13,6 +13,14 @@ export const metadata: Metadata = {
   title: "AI캠프 강사 모집 | 두온교육",
   description:
     "초등학교 AI로 만나는 미래 교육 체험 캠프 강사를 모집합니다. 바이브코딩, AI동화, 로봇, AI이미지 등 8개 분야",
+  metadataBase: new URL("https://camp9in.duonedu.net"),
+  openGraph: {
+    title: "AI캠프 강사 모집 | 두온교육",
+    description: "초등학교 AI 미래 교육 체험 캠프 강사를 모집합니다. 미금초·정림초·청원초 3개교, 8개 체험 분야",
+    siteName: "두온교육 AI캠프",
+    locale: "ko_KR",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
