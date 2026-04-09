@@ -44,6 +44,8 @@ export default function DashboardPage() {
 
   const [showCounts, setShowCounts] = useState(true);
   const [togglingCounts, setTogglingCounts] = useState(false);
+  const [showStatus, setShowStatus] = useState(false);
+  const [togglingStatus, setTogglingStatus] = useState(false);
 
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [newPassword, setNewPassword] = useState("");
@@ -122,6 +124,9 @@ export default function DashboardPage() {
       if (data?.show_counts !== undefined) {
         setShowCounts(data.show_counts !== "false");
       }
+      if (data?.show_status !== undefined) {
+        setShowStatus(data.show_status === "true");
+      }
     } catch {
       /* ignore */
     }
@@ -140,6 +145,22 @@ export default function DashboardPage() {
       /* ignore */
     } finally {
       setTogglingCounts(false);
+    }
+  }
+
+  async function toggleShowStatus() {
+    setTogglingStatus(true);
+    const newValue = !showStatus;
+    try {
+      await adminFetch("/api/settings", {
+        method: "POST",
+        body: JSON.stringify({ key: "show_status", value: String(newValue) }),
+      });
+      setShowStatus(newValue);
+    } catch {
+      /* ignore */
+    } finally {
+      setTogglingStatus(false);
     }
   }
 
@@ -501,6 +522,17 @@ export default function DashboardPage() {
             >
               <Eye className="w-4 h-4" aria-hidden="true" />
               {togglingCounts ? "..." : showCounts ? "인원수 공개중" : "인원수 비공개"}
+            </button>
+            <button
+              onClick={toggleShowStatus}
+              disabled={togglingStatus}
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 ${
+                showStatus
+                  ? "bg-green-600 text-white hover:bg-green-700"
+                  : "bg-gray-200 text-gray-600 hover:bg-gray-300"
+              } ${togglingStatus ? "opacity-50 cursor-not-allowed" : ""}`}
+            >
+              {togglingStatus ? "..." : showStatus ? "합격조회 공개중" : "합격조회 비공개"}
             </button>
           </div>
           <div className="bg-white rounded-xl border border-gray-200 p-6">

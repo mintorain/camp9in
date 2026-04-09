@@ -53,6 +53,16 @@ export default function StatusPage() {
   const [results, setResults] = useState<StatusResult[] | null>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [enabled, setEnabled] = useState<boolean | null>(null);
+
+  useState(() => {
+    fetch("/api/settings")
+      .then((res) => res.json())
+      .then((json) => {
+        setEnabled(json.data?.show_status === "true");
+      })
+      .catch(() => setEnabled(false));
+  });
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -102,6 +112,29 @@ export default function StatusPage() {
       </header>
 
       <main className="max-w-2xl mx-auto px-4 py-12">
+        {enabled === false ? (
+          <div className="text-center py-20">
+            <Clock className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              아직 결과를 조회할 수 없습니다
+            </h2>
+            <p className="text-gray-500 mb-6">
+              지원서 검토가 완료되면 결과 조회가 가능합니다.<br />
+              조금만 기다려주세요.
+            </p>
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 bg-indigo-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-indigo-700 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            >
+              메인으로 돌아가기
+            </Link>
+          </div>
+        ) : enabled === null ? (
+          <div className="flex justify-center py-20">
+            <Loader2 className="w-8 h-8 animate-spin text-indigo-500" />
+          </div>
+        ) : (
+        <>
         <div className="text-center mb-10">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
             합격 여부를 확인하세요
@@ -215,6 +248,8 @@ export default function StatusPage() {
               );
             })}
           </div>
+        )}
+        </>
         )}
       </main>
     </div>

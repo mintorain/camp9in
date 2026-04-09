@@ -14,6 +14,7 @@ import SubjectGrid from "@/components/SubjectGrid";
 import ScrollHero from "@/components/ScrollHero";
 import ParallaxText from "@/components/ParallaxText";
 import SecretAdminLink from "@/components/SecretAdminLink";
+import StatusLink from "@/components/StatusLink";
 
 export default function Home() {
   return (
@@ -47,12 +48,7 @@ export default function Home() {
             </li>
           </ul>
           <div className="flex items-center gap-2">
-            <a
-              href="/status"
-              className="hidden sm:inline-flex px-4 py-2 rounded-full text-sm font-medium text-indigo-600 hover:bg-indigo-50 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
-            >
-              결과 조회
-            </a>
+            <StatusLink />
             <a
               href="/apply"
               className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-5 py-2 rounded-full text-sm font-semibold hover:shadow-lg hover:shadow-indigo-500/30 transition-all duration-300 hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

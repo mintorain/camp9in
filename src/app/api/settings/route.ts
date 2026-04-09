@@ -12,7 +12,7 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   try {
     const rows = await query<SettingRow>(
-      "SELECT `key`, value FROM settings WHERE `key` IN ('show_counts')"
+      "SELECT `key`, value FROM settings WHERE `key` IN ('show_counts', 'show_status')"
     );
     const settings: Record<string, string> = {};
     for (const row of rows) {
@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "key와 value가 필요합니다" }, { status: 400 });
     }
 
-    const allowedKeys = ["show_counts"];
+    const allowedKeys = ["show_counts", "show_status"];
     if (!allowedKeys.includes(key)) {
       return NextResponse.json({ error: "허용되지 않는 설정입니다" }, { status: 400 });
     }
