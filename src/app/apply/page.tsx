@@ -47,11 +47,35 @@ export default function ApplyPage() {
   const [counts, setCounts] = useState<Record<string, number>>({});
   const [dbClosedIds, setDbClosedIds] = useState<string[]>([]);
   const [showCounts, setShowCounts] = useState(true);
+  const [restored, setRestored] = useState(false);
 
+  // localStorage에서 이전 작성 내용 복원
   useEffect(() => {
+    try {
+      const saved = localStorage.getItem("camp9in_draft");
+      if (saved) {
+        const draft = JSON.parse(saved);
+        const fields = ["name", "phone", "email", "birthDate", "address", "education", "major", "experience", "qualifications", "introduction"] as const;
+        fields.forEach((f) => { if (draft[f]) setValue(f, draft[f]); });
+        if (draft.schools?.length) setValue("schools", draft.schools);
+        if (draft.subjects?.length) setValue("subjects", draft.subjects);
+        if (draft.schoolSubjectMap) setSchoolSubjectMap(draft.schoolSubjectMap);
+        if (draft.step) setStep(draft.step);
+        setRestored(true);
+      }
+    } catch { /* ignore */ }
     fetch("/api/applicants/counts").then((r) => r.json()).then((j) => { setCounts(j.data || {}); setDbClosedIds(j.closedIds || []); }).catch(() => {});
     fetch("/api/settings").then((r) => r.json()).then((j) => { if (j.data?.show_counts !== undefined) setShowCounts(j.data.show_counts !== "false"); }).catch(() => {});
   }, []);
+
+  // 폼 데이터 변경 시 localStorage에 자동 저장
+  const allFields = watch();
+  useEffect(() => {
+    if (!allFields.name && !allFields.phone) return;
+    try {
+      localStorage.setItem("camp9in_draft", JSON.stringify({ ...allFields, schoolSubjectMap, step }));
+    } catch { /* ignore */ }
+  }, [allFields, schoolSubjectMap, step]);
 
   function isSubjectClosed(subjectId: string) {
     return dbClosedIds.includes(subjectId);
@@ -103,6 +127,7 @@ export default function ApplyPage() {
     try {
       const res = await fetch("/api/applicants", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
       if (!res.ok) { const err = await res.json(); throw new Error(err.error || "제출에 실패했습니다"); }
+      localStorage.removeItem("camp9in_draft");
       router.push("/apply/complete");
     } catch (e) {
       alert(e instanceof Error ? e.message : "제출에 실패했습니다");
@@ -152,6 +177,22 @@ export default function ApplyPage() {
           ))}
         </div>
       </div>
+
+      {/* 복원 알림 */}
+      {restored && (
+        <div className="max-w-2xl mx-auto px-4 pt-3">
+          <div className="flex items-center justify-between bg-indigo-50 border border-indigo-200 rounded-xl px-4 py-3 text-sm">
+            <p className="text-indigo-700">이전에 작성하던 내용이 복원되었습니다.</p>
+            <button
+              type="button"
+              onClick={() => { localStorage.removeItem("camp9in_draft"); setRestored(false); window.location.reload(); }}
+              className="text-indigo-500 hover:text-indigo-700 text-xs font-medium shrink-0 ml-3"
+            >
+              새로 작성
+            </button>
+          </div>
+        </div>
+      )}
 
       <main className="max-w-2xl mx-auto px-4 py-6">
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
