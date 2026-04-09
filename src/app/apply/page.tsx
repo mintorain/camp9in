@@ -69,6 +69,10 @@ export default function ApplyPage() {
     fetch("/api/settings").then((r) => r.json()).then((j) => { if (j.data?.show_counts !== undefined) setShowCounts(j.data.show_counts !== "false"); }).catch(() => {});
   }, []);
 
+  const selectedSchools = watch("schools") || [];
+  const selectedSubjects = watch("subjects") || [];
+  const [schoolSubjectMap, setSchoolSubjectMap] = useState<Record<string, string>>({});
+
   // 폼 데이터 변경 시 localStorage에 자동 저장
   const allFields = watch();
   useEffect(() => {
@@ -77,10 +81,6 @@ export default function ApplyPage() {
       localStorage.setItem("camp9in_draft", JSON.stringify({ ...allFields, schoolSubjectMap, step }));
     } catch { /* ignore */ }
   }, [allFields, schoolSubjectMap, step]);
-
-  const selectedSchools = watch("schools") || [];
-  const selectedSubjects = watch("subjects") || [];
-  const [schoolSubjectMap, setSchoolSubjectMap] = useState<Record<string, string>>({});
 
   function isSubjectClosed(subjectId: string) {
     return dbClosedIds.includes(subjectId);
