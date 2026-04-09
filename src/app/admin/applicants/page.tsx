@@ -578,6 +578,26 @@ export default function ApplicantsPage() {
                   )}
                 </div>
               </div>
+
+              <hr />
+
+              <div className="flex justify-end">
+                <button
+                  onClick={() => {
+                    if (confirm(`${selectedApplicant.name}님의 지원서를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.`)) {
+                      adminFetch(`/api/applicants/${selectedApplicant.id}`, {
+                        method: "DELETE",
+                      }).then(() => {
+                        setSelectedId(null);
+                        fetchData();
+                      });
+                    }
+                  }}
+                  className="px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-red-500"
+                >
+                  지원서 삭제
+                </button>
+              </div>
             </div>
           </div>
         </div>

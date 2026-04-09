@@ -44,3 +44,25 @@ export async function PATCH(
 
   return NextResponse.json({ message: "수정되었습니다" });
 }
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const isAdmin = await verifyAdmin(request.headers.get("authorization"));
+  if (!isAdmin) {
+    return NextResponse.json({ error: "인증이 필요합니다" }, { status: 401 });
+  }
+
+  const { id } = await params;
+
+  try {
+    await query("DELETE FROM applicants WHERE id = ?", [id]);
+    return NextResponse.json({ message: "삭제되었습니다" });
+  } catch {
+    return NextResponse.json(
+      { error: "삭제에 실패했습니다" },
+      { status: 500 }
+    );
+  }
+}
