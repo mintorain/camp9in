@@ -17,6 +17,7 @@ interface ApplicantRow {
   introduction: string | null;
   privacy_agreed: number;
   status: string;
+  confirmed_subject: string | null;
   created_at: string;
   updated_at: string;
 }

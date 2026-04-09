@@ -13,6 +13,7 @@ interface Applicant {
   phone: string;
   email: string;
   status: string;
+  confirmed_subject: string | null;
   applicant_schools: { school_id: string }[];
   applicant_subjects: { subject_id: string }[];
 }
@@ -118,9 +119,11 @@ export default function AssignedPage() {
                     <tbody>
                       {schoolSubjects.map((subject) => {
                         const assigned = schoolApplicants.filter((a) =>
-                          a.applicant_subjects?.some(
-                            (s) => s.subject_id === subject.id
-                          )
+                          a.confirmed_subject
+                            ? a.confirmed_subject === subject.id
+                            : a.applicant_subjects?.some(
+                                (s) => s.subject_id === subject.id
+                              )
                         );
 
                         return (

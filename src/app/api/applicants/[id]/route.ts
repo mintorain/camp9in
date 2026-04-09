@@ -14,26 +14,32 @@ export async function PATCH(
   const { id } = await params;
   const body = await request.json();
 
-  if (body.status) {
-    const validStatuses = ["pending", "reviewing", "accepted", "rejected"];
-    if (!validStatuses.includes(body.status)) {
-      return NextResponse.json(
-        { error: "올바르지 않은 상태값입니다" },
-        { status: 422 }
-      );
-    }
-
-    try {
+  try {
+    if (body.status) {
+      const validStatuses = ["pending", "reviewing", "accepted", "rejected"];
+      if (!validStatuses.includes(body.status)) {
+        return NextResponse.json(
+          { error: "올바르지 않은 상태값입니다" },
+          { status: 422 }
+        );
+      }
       await query("UPDATE applicants SET status = ? WHERE id = ?", [
         body.status,
         id,
       ]);
-    } catch {
-      return NextResponse.json(
-        { error: "상태 변경에 실패했습니다" },
-        { status: 500 }
+    }
+
+    if (body.confirmed_subject !== undefined) {
+      await query(
+        "UPDATE applicants SET confirmed_subject = ? WHERE id = ?",
+        [body.confirmed_subject || null, id]
       );
     }
+  } catch {
+    return NextResponse.json(
+      { error: "수정에 실패했습니다" },
+      { status: 500 }
+    );
   }
 
   return NextResponse.json({ message: "수정되었습니다" });

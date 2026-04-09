@@ -27,6 +27,7 @@ interface Applicant {
   qualifications: string | null;
   introduction: string | null;
   status: string;
+  confirmed_subject: string | null;
   created_at: string;
   applicant_schools: { school_id: string }[];
   applicant_subjects: { subject_id: string }[];
@@ -73,6 +74,14 @@ export default function ApplicantsPage() {
     await adminFetch(`/api/applicants/${id}`, {
       method: "PATCH",
       body: JSON.stringify({ status }),
+    });
+    fetchData();
+  }
+
+  async function updateConfirmedSubject(id: string, subjectId: string) {
+    await adminFetch(`/api/applicants/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ confirmed_subject: subjectId || null }),
     });
     fetchData();
   }
@@ -343,7 +352,15 @@ export default function ApplicantsPage() {
                           {schools}
                         </td>
                         <td className="px-4 py-3 text-gray-600 hidden md:table-cell">
-                          <span className="line-clamp-1">{subjects}</span>
+                          <span className="line-clamp-1">
+                            {applicant.confirmed_subject ? (
+                              <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700 mr-1">
+                                확정: {SUBJECTS.find((s) => s.id === applicant.confirmed_subject)?.name}
+                              </span>
+                            ) : (
+                              subjects
+                            )}
+                          </span>
                         </td>
                         <td className="px-4 py-3">
                           <span
@@ -501,27 +518,65 @@ export default function ApplicantsPage() {
 
               <hr />
 
-              <div>
-                <label
-                  htmlFor="status-select"
-                  className="text-sm text-gray-500 mb-2 block"
-                >
-                  상태 변경
-                </label>
-                <select
-                  id="status-select"
-                  value={selectedApplicant.status}
-                  onChange={(e) =>
-                    updateStatus(selectedApplicant.id, e.target.value)
-                  }
-                  className="border border-gray-300 rounded-lg px-3 py-2.5 text-sm w-full focus:ring-2 focus:ring-primary"
-                >
-                  {STATUS_OPTIONS.map((s) => (
-                    <option key={s.value} value={s.value}>
-                      {s.label}
-                    </option>
-                  ))}
-                </select>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label
+                    htmlFor="status-select"
+                    className="text-sm text-gray-500 mb-2 block"
+                  >
+                    상태 변경
+                  </label>
+                  <select
+                    id="status-select"
+                    value={selectedApplicant.status}
+                    onChange={(e) =>
+                      updateStatus(selectedApplicant.id, e.target.value)
+                    }
+                    className="border border-gray-300 rounded-lg px-3 py-2.5 text-sm w-full focus:ring-2 focus:ring-primary"
+                  >
+                    {STATUS_OPTIONS.map((s) => (
+                      <option key={s.value} value={s.value}>
+                        {s.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label
+                    htmlFor="confirmed-subject-select"
+                    className="text-sm text-gray-500 mb-2 block"
+                  >
+                    확정 과목
+                  </label>
+                  <select
+                    id="confirmed-subject-select"
+                    value={selectedApplicant.confirmed_subject || ""}
+                    onChange={(e) =>
+                      updateConfirmedSubject(selectedApplicant.id, e.target.value)
+                    }
+                    className={`border rounded-lg px-3 py-2.5 text-sm w-full focus:ring-2 focus:ring-primary ${
+                      selectedApplicant.confirmed_subject
+                        ? "border-green-300 bg-green-50"
+                        : "border-gray-300"
+                    }`}
+                  >
+                    <option value="">미정</option>
+                    {selectedApplicant.applicant_subjects?.map((s) => {
+                      const sub = SUBJECTS.find((sub) => sub.id === s.subject_id);
+                      return (
+                        <option key={s.subject_id} value={s.subject_id}>
+                          {sub ? `${sub.icon} ${sub.name}` : s.subject_id}
+                        </option>
+                      );
+                    })}
+                  </select>
+                  {selectedApplicant.confirmed_subject && (
+                    <p className="text-xs text-green-600 mt-1 font-medium">
+                      {SUBJECTS.find((s) => s.id === selectedApplicant.confirmed_subject)?.icon}{" "}
+                      {SUBJECTS.find((s) => s.id === selectedApplicant.confirmed_subject)?.name} 확정
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           </div>
