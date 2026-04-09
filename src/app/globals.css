@@ -99,3 +99,30 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ── DUON FOOTER ──────────────────────────────── */
+.duon-footer{border-top:1px solid #e2e8f0;padding:20px 20px 16px;background:#f8fafc}
+.duon-footer-inner{max-width:860px;margin:0 auto;text-align:center;display:flex;flex-direction:column;gap:8px}
+.duon-footer-brand{font-size:.82rem;color:#64748b;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+.duon-footer-brand a{color:#1e293b;text-decoration:none;font-weight:600}
+.duon-footer-brand a:hover{color:#6366f1}
+.duon-footer-dev,.duon-footer-sponsor{display:inline-flex;align-items:center;gap:4px}
+.duon-footer-sep{color:#cbd5e1}
+.duon-footer-info{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 14px;font-size:.71rem;color:#94a3b8}
+.duon-footer-info a{color:#94a3b8;text-decoration:none}
+.duon-footer-info a:hover{color:#6366f1}
+.duon-footer-bank{font-size:.72rem;color:#94a3b8}
+.duon-footer-bank strong{color:#64748b}
+.duon-footer-links{display:flex;justify-content:center;align-items:center;gap:8px;font-size:.72rem}
+.duon-footer-links a{color:#64748b;text-decoration:none;font-weight:500}
+.duon-footer-links a:hover{color:#6366f1}
+.duon-footer-social{display:flex;justify-content:center;gap:10px;padding:4px 0}
+.duon-footer-social a{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;color:#94a3b8;font-size:.85rem;transition:all .2s;border:1px solid #e2e8f0}
+.duon-footer-social a:hover{color:#fff;border-color:transparent}
+.duon-footer-social a[title="유튜브"]:hover{background:#ff0000}
+.duon-footer-social a[title="인스타그램"]:hover{background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fd5949 45%,#d6249f 60%,#285aeb 90%)}
+.duon-footer-social a[title="페이스북"]:hover{background:#1877f2}
+.duon-footer-social a[title*="X"]:hover{background:#000}
+.duon-footer-social a[title*="카카오"]:hover{background:#fee500;color:#3c1e1e}
+.duon-footer-social a[title="고객센터"]:hover{background:#6366f1}
+.duon-footer-copy{font-size:.68rem;color:#94a3b8}

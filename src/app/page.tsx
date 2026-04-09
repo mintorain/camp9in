@@ -15,8 +15,8 @@ import GlowButton from "@/components/GlowButton";
 import SubjectGrid from "@/components/SubjectGrid";
 import ScrollHero from "@/components/ScrollHero";
 import ParallaxText from "@/components/ParallaxText";
-import SecretAdminLink from "@/components/SecretAdminLink";
 import StatusLink from "@/components/StatusLink";
+import DuonFooter from "@/components/DuonFooter";
 
 export default function Home() {
   return (
@@ -260,18 +260,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="bg-slate-950 text-slate-500 py-12">
-        <div className="max-w-5xl mx-auto px-4 text-center text-sm">
-          <SecretAdminLink />
-          <div className="flex flex-wrap justify-center gap-x-6 gap-y-1 mb-4">
-            <a href="mailto:duonedu@duonedu.net" className="hover:text-slate-300 transition-colors">duonedu@duonedu.net</a>
-            <a href="tel:010-3343-4000" className="hover:text-slate-300 transition-colors">010-3343-4000</a>
-            <a href="https://vibe.duonedu.net" target="_blank" rel="noopener noreferrer" className="hover:text-slate-300 transition-colors">vibe.duonedu.net</a>
-            <a href="http://pf.kakao.com/_QVXFj/chat" target="_blank" rel="noopener noreferrer" className="hover:text-slate-300 transition-colors">카카오채널</a>
-          </div>
-          <p className="text-slate-600">&copy; 2026 두온교육(주). All rights reserved.</p>
-        </div>
-      </footer>
+      <DuonFooter />
     </>
   );
 }

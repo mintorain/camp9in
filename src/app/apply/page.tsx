@@ -8,6 +8,7 @@ import Link from "next/link";
 import { ArrowLeft, Loader2, CheckCircle, ChevronRight } from "lucide-react";
 import { applicantSchema, type ApplicantFormData } from "@/lib/schema";
 import { SCHOOLS, SUBJECTS, EDUCATION_OPTIONS } from "@/lib/constants";
+import DuonFooter from "@/components/DuonFooter";
 
 function formatPhone(value: string) {
   const digits = value.replace(/\D/g, "").slice(0, 11);
@@ -408,6 +409,7 @@ export default function ApplyPage() {
           )}
         </form>
       </main>
+      <DuonFooter />
     </div>
   );
 }
