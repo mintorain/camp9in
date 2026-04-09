@@ -691,14 +691,21 @@ export default function DashboardPage() {
           </div>
         </section>
 
-        {/* 지원자 목록 바로가기 */}
-        <section>
+        {/* 바로가기 */}
+        <section className="flex flex-wrap gap-3">
           <Link
             href="/admin/applicants"
             className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-xl font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
           >
             <BookOpen className="w-5 h-5" aria-hidden="true" />
-            지원자 목록 보기
+            지원자 목록
+          </Link>
+          <Link
+            href="/admin/assigned"
+            className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+          >
+            <Users className="w-5 h-5" aria-hidden="true" />
+            배정 강사 명단
           </Link>
         </section>
       </main>
