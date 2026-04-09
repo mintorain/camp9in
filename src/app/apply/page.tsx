@@ -78,13 +78,13 @@ export default function ApplyPage() {
     } catch { /* ignore */ }
   }, [allFields, schoolSubjectMap, step]);
 
-  function isSubjectClosed(subjectId: string) {
-    return dbClosedIds.includes(subjectId);
-  }
-
   const selectedSchools = watch("schools") || [];
   const selectedSubjects = watch("subjects") || [];
   const [schoolSubjectMap, setSchoolSubjectMap] = useState<Record<string, string>>({});
+
+  function isSubjectClosed(subjectId: string) {
+    return dbClosedIds.includes(subjectId);
+  }
 
   function handleSchoolToggle(schoolId: string) {
     const current = selectedSchools;
