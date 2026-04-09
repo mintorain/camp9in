@@ -312,7 +312,7 @@ export default function ApplyPage() {
                   <div className="bg-white/80 rounded-lg p-3">
                     <p className="font-semibold text-indigo-700 text-xs mb-2">미금초</p>
                     <p className="text-slate-600">1~4학년: 80분 <strong className="text-indigo-600">80,000원</strong> (1일 2개반)</p>
-                    <p className="text-slate-600 mt-1">5~6학년: 1일 <strong className="text-indigo-600">160,000원</strong></p>
+                    <p className="text-slate-600 mt-1">5~6학년: 1일 <strong className="text-indigo-600">160,000원</strong> (09:00~12:20)</p>
                   </div>
                   <div className="bg-white/80 rounded-lg p-3">
                     <p className="font-semibold text-amber-700 text-xs mb-2">정림초 · 청원초</p>
