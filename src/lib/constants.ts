@@ -84,7 +84,7 @@ export const SUBJECTS = [
   },
   {
     id: "ai-orchestra",
-    name: "구글 AI 오케스트라",
+    name: "구글AI오페라(음악)",
     description: "AI 지휘로 음악 창작 체험",
     skills: "음악교육, AI도구 활용",
     icon: "🎵",
