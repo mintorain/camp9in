@@ -31,6 +31,11 @@ interface Applicant {
   status: string;
   confirmed_subject: string | null;
   confirmed_school: string | null;
+  payment_name: string | null;
+  payment_address: string | null;
+  bank_name: string | null;
+  bank_account: string | null;
+  payment_submitted_at: string | null;
   created_at: string;
   applicant_schools: { school_id: string }[];
   applicant_subjects: { subject_id: string }[];
@@ -649,6 +654,36 @@ export default function ApplicantsPage() {
                   )}
                 </div>
               </div>
+
+              {/* 강사료 지급 정보 (제출된 경우만) */}
+              {selectedApplicant.payment_submitted_at && (
+                <>
+                  <hr />
+                  <div className="text-sm">
+                    <p className="text-gray-500 mb-2 font-medium">강사료 지급 정보</p>
+                    <div className="bg-green-50 border border-green-200 rounded-lg p-3 grid grid-cols-2 gap-2 text-xs">
+                      <div>
+                        <span className="text-gray-500">성함:</span>{" "}
+                        <span className="font-medium">{selectedApplicant.payment_name}</span>
+                      </div>
+                      <div>
+                        <span className="text-gray-500">주소:</span>{" "}
+                        <span className="font-medium">{selectedApplicant.payment_address}</span>
+                      </div>
+                      <div>
+                        <span className="text-gray-500">은행:</span>{" "}
+                        <span className="font-medium">{selectedApplicant.bank_name} {selectedApplicant.bank_account}</span>
+                      </div>
+                      <div>
+                        <span className="text-gray-500">제출일:</span>{" "}
+                        <span className="font-medium">
+                          {new Date(selectedApplicant.payment_submitted_at).toLocaleDateString("ko-KR")}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
 
               <hr />
 

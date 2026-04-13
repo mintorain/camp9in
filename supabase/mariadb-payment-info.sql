@@ -1,0 +1,7 @@
+-- 강사료 지급 정보 컬럼 추가
+ALTER TABLE applicants ADD COLUMN payment_name VARCHAR(50) DEFAULT NULL;
+ALTER TABLE applicants ADD COLUMN resident_id VARCHAR(255) DEFAULT NULL;
+ALTER TABLE applicants ADD COLUMN payment_address VARCHAR(500) DEFAULT NULL;
+ALTER TABLE applicants ADD COLUMN bank_name VARCHAR(50) DEFAULT NULL;
+ALTER TABLE applicants ADD COLUMN bank_account VARCHAR(100) DEFAULT NULL;
+ALTER TABLE applicants ADD COLUMN payment_submitted_at DATETIME DEFAULT NULL;

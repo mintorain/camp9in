@@ -19,6 +19,11 @@ interface ApplicantRow {
   status: string;
   confirmed_subject: string | null;
   confirmed_school: string | null;
+  payment_name: string | null;
+  payment_address: string | null;
+  bank_name: string | null;
+  bank_account: string | null;
+  payment_submitted_at: string | null;
   created_at: string;
   updated_at: string;
 }
