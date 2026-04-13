@@ -39,6 +39,7 @@ interface AssignmentRow {
   applicant_id: number;
   school_id: string;
   subject_id: string;
+  grade: string | null;
 }
 
 export async function POST(request: NextRequest) {
@@ -138,7 +139,7 @@ export async function GET(request: NextRequest) {
       "SELECT applicant_id, subject_id FROM applicant_subjects ORDER BY id ASC"
     );
     const assignmentRows = await query<AssignmentRow>(
-      "SELECT applicant_id, school_id, subject_id FROM applicant_assignments ORDER BY id ASC"
+      "SELECT applicant_id, school_id, subject_id, grade FROM applicant_assignments ORDER BY id ASC"
     );
 
     let result = applicants.map((a) => ({
@@ -151,7 +152,7 @@ export async function GET(request: NextRequest) {
         .map((s) => ({ subject_id: s.subject_id })),
       assignments: assignmentRows
         .filter((s) => s.applicant_id === a.id)
-        .map((s) => ({ school_id: s.school_id, subject_id: s.subject_id })),
+        .map((s) => ({ school_id: s.school_id, subject_id: s.subject_id, grade: s.grade })),
     }));
 
     if (school) {

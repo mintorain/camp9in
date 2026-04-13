@@ -10,11 +10,11 @@ export const SCHOOLS = [
     capacityPerSubject: 8,
     subjects: ["dash-robot", "turtle-bot", "drone", "vibe-coding", "ai-art"],
     gradeSchedule: [
-      { grade: "1학년", period: "4/20(월)~4/21(화)", subjects: ["dash-robot"], type: "교실수업" },
-      { grade: "2학년", period: "4/23(목)~4/24(금)", subjects: ["turtle-bot"], type: "교실수업" },
-      { grade: "3학년", period: "4/20(월)~4/21(화)", subjects: ["drone"], type: "교실수업" },
-      { grade: "4학년", period: "4/22(수)~4/23(목)", subjects: ["dash-robot"], type: "교실수업" },
-      { grade: "5~6학년", period: "4/21(화)", subjects: ["ai-art", "vibe-coding", "turtle-bot"], type: "강당 체험부스" },
+      { grade: "1학년", period: "4/20(월)~4/21(화)", subjects: ["dash-robot"], type: "교실수업", capacity: 1 },
+      { grade: "2학년", period: "4/23(목)~4/24(금)", subjects: ["turtle-bot"], type: "교실수업", capacity: 1 },
+      { grade: "3학년", period: "4/20(월)~4/21(화)", subjects: ["drone"], type: "교실수업", capacity: 1 },
+      { grade: "4학년", period: "4/22(수)~4/23(목)", subjects: ["dash-robot"], type: "교실수업", capacity: 1 },
+      { grade: "5~6학년", period: "4/21(화)", subjects: ["ai-art", "vibe-coding", "turtle-bot"], type: "강당 체험부스", capacity: 2 },
     ],
   },
   {
@@ -29,7 +29,7 @@ export const SCHOOLS = [
     capacityPerSubject: 8,
     subjects: ["vibe-coding", "ai-story", "turtle-bot", "dash-robot", "ai-orchestra", "reactive-robot", "ai-image", "cooking"],
     gradeSchedule: [
-      { grade: "전학년", period: "4/29(수)", subjects: ["vibe-coding", "ai-story", "turtle-bot", "dash-robot", "ai-orchestra", "reactive-robot", "ai-image", "cooking"] },
+      { grade: "전학년", period: "4/29(수)", subjects: ["vibe-coding", "ai-story", "turtle-bot", "dash-robot", "ai-orchestra", "reactive-robot", "ai-image", "cooking"], capacity: 2 },
     ],
   },
   {
@@ -44,7 +44,7 @@ export const SCHOOLS = [
     capacityPerSubject: 8,
     subjects: ["vibe-coding", "ai-story", "turtle-bot", "dash-robot", "ai-orchestra", "reactive-robot", "ai-image", "cooking"],
     gradeSchedule: [
-      { grade: "전학년", period: "6/12(금)", subjects: ["vibe-coding", "ai-story", "turtle-bot", "dash-robot", "ai-orchestra", "reactive-robot", "ai-image", "cooking"] },
+      { grade: "전학년", period: "6/12(금)", subjects: ["vibe-coding", "ai-story", "turtle-bot", "dash-robot", "ai-orchestra", "reactive-robot", "ai-image", "cooking"], capacity: 2 },
     ],
   },
 ] as const;

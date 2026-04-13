@@ -30,7 +30,7 @@ interface ResultData {
   id: number;
   name: string;
   status: string;
-  assignments: { school_id: string; subject_id: string }[];
+  assignments: { school_id: string; subject_id: string; grade: string | null }[];
   paymentSubmitted: boolean;
   paymentName?: string;
   paymentAddress?: string;
@@ -287,12 +287,19 @@ export default function ResultPage() {
                           </p>
                           <p className="text-xs text-gray-600">
                             {subject?.name || a.subject_id}
-                            {school?.dateLabel && (
+                            {a.grade && (
                               <span className="text-gray-400">
-                                {" "}
-                                &middot; {school.dateLabel}
+                                {" "}&middot; {a.grade}
                               </span>
                             )}
+                            {school && (() => {
+                              const gs = school.gradeSchedule.find(
+                                (g) => g.grade === a.grade && (g.subjects as readonly string[]).includes(a.subject_id)
+                              );
+                              return gs ? (
+                                <span className="text-gray-400"> &middot; {gs.period}</span>
+                              ) : null;
+                            })()}
                           </p>
                         </div>
                       </div>

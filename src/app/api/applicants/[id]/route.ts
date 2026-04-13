@@ -37,8 +37,8 @@ export async function PATCH(
       for (const a of body.assignments) {
         if (a.school_id && a.subject_id) {
           await insert(
-            "INSERT INTO applicant_assignments (applicant_id, school_id, subject_id) VALUES (?, ?, ?)",
-            [id, a.school_id, a.subject_id]
+            "INSERT INTO applicant_assignments (applicant_id, school_id, subject_id, grade) VALUES (?, ?, ?, ?)",
+            [id, a.school_id, a.subject_id, a.grade || null]
           );
         }
       }

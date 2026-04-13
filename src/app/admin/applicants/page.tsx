@@ -40,7 +40,7 @@ interface Applicant {
   created_at: string;
   applicant_schools: { school_id: string }[];
   applicant_subjects: { subject_id: string }[];
-  assignments: { school_id: string; subject_id: string }[];
+  assignments: { school_id: string; subject_id: string; grade: string | null }[];
 }
 
 export default function ApplicantsPage() {
@@ -90,7 +90,7 @@ export default function ApplicantsPage() {
 
   async function updateAssignments(
     id: string,
-    assignments: { school_id: string; subject_id: string }[]
+    assignments: { school_id: string; subject_id: string; grade: string | null }[]
   ) {
     await adminFetch(`/api/applicants/${id}`, {
       method: "PATCH",
@@ -369,7 +369,7 @@ export default function ApplicantsPage() {
                             <div className="flex flex-wrap gap-1">
                               {applicant.assignments.map((a, i) => (
                                 <span key={i} className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700">
-                                  {SCHOOLS.find((s) => s.id === a.school_id)?.shortName}/{SUBJECTS.find((s) => s.id === a.subject_id)?.name}
+                                  {SCHOOLS.find((s) => s.id === a.school_id)?.shortName}/{SUBJECTS.find((s) => s.id === a.subject_id)?.name}{a.grade ? `(${a.grade})` : ""}
                                 </span>
                               ))}
                             </div>
@@ -564,9 +564,18 @@ export default function ApplicantsPage() {
                       : []
                     ).map((assignment, idx) => {
                       const school = SCHOOLS.find((sc) => sc.id === assignment.school_id);
-                      const schoolSubjects = school
-                        ? SUBJECTS.filter((sub) =>
-                            (school.subjects as readonly string[]).includes(sub.id)
+                      // 학교의 gradeSchedule에서 과목별 일정 목록 생성
+                      const scheduleSlots = school
+                        ? school.gradeSchedule.flatMap((gs) =>
+                            gs.subjects.map((subId) => {
+                              const sub = SUBJECTS.find((s) => s.id === subId);
+                              return {
+                                key: `${subId}||${gs.grade}`,
+                                subjectId: subId,
+                                grade: gs.grade,
+                                label: `${sub?.icon || ""} ${sub?.name || subId} - ${gs.grade} ${gs.period} (${gs.capacity}명)`,
+                              };
+                            })
                           )
                         : [];
                       return (
@@ -576,12 +585,16 @@ export default function ApplicantsPage() {
                             value={assignment.school_id}
                             onChange={(e) => {
                               const updated = [...(selectedApplicant.assignments || [])];
-                              updated[idx] = { school_id: e.target.value, subject_id: "" };
+                              updated[idx] = { school_id: e.target.value, subject_id: "", grade: null };
                               updateAssignments(selectedApplicant.id, updated);
                             }}
-                            className="border border-green-300 bg-green-50 rounded-lg px-3 py-2 text-sm flex-1 focus:ring-2 focus:ring-primary"
+                            className={`border rounded-lg px-3 py-2 text-sm w-28 shrink-0 focus:ring-2 focus:ring-primary ${
+                              assignment.school_id
+                                ? "border-green-300 bg-green-50"
+                                : "border-gray-300"
+                            }`}
                           >
-                            <option value="">학교 선택</option>
+                            <option value="">학교</option>
                             {selectedApplicant.applicant_schools?.map((s) => {
                               const sc = SCHOOLS.find((sc) => sc.id === s.school_id);
                               return (
@@ -592,11 +605,12 @@ export default function ApplicantsPage() {
                             })}
                           </select>
                           <select
-                            aria-label={`배정 과목 ${idx + 1}`}
-                            value={assignment.subject_id}
+                            aria-label={`배정 일정 ${idx + 1}`}
+                            value={assignment.subject_id && assignment.grade ? `${assignment.subject_id}||${assignment.grade}` : ""}
                             onChange={(e) => {
+                              const [subjectId, grade] = e.target.value.split("||");
                               const updated = [...(selectedApplicant.assignments || [])];
-                              updated[idx] = { ...updated[idx], subject_id: e.target.value };
+                              updated[idx] = { ...updated[idx], subject_id: subjectId || "", grade: grade || null };
                               updateAssignments(selectedApplicant.id, updated);
                             }}
                             disabled={!assignment.school_id}
@@ -606,10 +620,10 @@ export default function ApplicantsPage() {
                                 : "border-gray-300"
                             } ${!assignment.school_id ? "opacity-50 cursor-not-allowed" : ""}`}
                           >
-                            <option value="">과목 선택</option>
-                            {schoolSubjects.map((sub) => (
-                              <option key={sub.id} value={sub.id}>
-                                {sub.icon} {sub.name}
+                            <option value="">과목·일정 선택</option>
+                            {scheduleSlots.map((slot) => (
+                              <option key={slot.key} value={slot.key}>
+                                {slot.label}
                               </option>
                             ))}
                           </select>
@@ -620,7 +634,7 @@ export default function ApplicantsPage() {
                               );
                               updateAssignments(selectedApplicant.id, updated);
                             }}
-                            className="p-1.5 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                            className="p-1.5 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg shrink-0 focus:outline-none focus:ring-2 focus:ring-red-500"
                             aria-label={`배정 ${idx + 1} 삭제`}
                           >
                             <Trash2 className="w-4 h-4" />
@@ -632,14 +646,14 @@ export default function ApplicantsPage() {
                       onClick={() => {
                         const updated = [
                           ...(selectedApplicant.assignments || []),
-                          { school_id: "", subject_id: "" },
+                          { school_id: "", subject_id: "", grade: null },
                         ];
                         updateAssignments(selectedApplicant.id, updated);
                       }}
                       className="flex items-center gap-1.5 px-3 py-2 text-sm text-primary hover:bg-primary/5 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
                     >
                       <Plus className="w-4 h-4" />
-                      학교 배정 추가
+                      배정 추가
                     </button>
                   </div>
                   {selectedApplicant.assignments?.filter((a) => a.school_id && a.subject_id).length > 0 && (
@@ -648,7 +662,7 @@ export default function ApplicantsPage() {
                         .filter((a) => a.school_id && a.subject_id)
                         .map((a, i) => (
                           <span key={i} className="px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-700">
-                            {SCHOOLS.find((s) => s.id === a.school_id)?.shortName} / {SUBJECTS.find((s) => s.id === a.subject_id)?.icon} {SUBJECTS.find((s) => s.id === a.subject_id)?.name}
+                            {SCHOOLS.find((s) => s.id === a.school_id)?.shortName} / {SUBJECTS.find((s) => s.id === a.subject_id)?.icon} {SUBJECTS.find((s) => s.id === a.subject_id)?.name}{a.grade ? ` (${a.grade})` : ""}
                           </span>
                         ))}
                     </div>

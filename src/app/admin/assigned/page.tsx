@@ -15,7 +15,7 @@ interface Applicant {
   status: string;
   applicant_schools: { school_id: string }[];
   applicant_subjects: { subject_id: string }[];
-  assignments: { school_id: string; subject_id: string }[];
+  assignments: { school_id: string; subject_id: string; grade: string | null }[];
 }
 
 export default function AssignedPage() {
@@ -83,10 +83,6 @@ export default function AssignedPage() {
 
             if (schoolApplicants.length === 0) return null;
 
-            const schoolSubjects = SUBJECTS.filter((sub) =>
-              (school.subjects as readonly string[]).includes(sub.id)
-            );
-
             return (
               <section key={school.id}>
                 <div className="flex items-center justify-between mb-4">
@@ -102,8 +98,11 @@ export default function AssignedPage() {
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="bg-gray-50 border-b border-gray-200">
-                        <th scope="col" className="text-left px-4 py-3 font-medium text-gray-600 w-32">
-                          과목
+                        <th scope="col" className="text-left px-4 py-3 font-medium text-gray-600 w-44">
+                          일정 / 과목
+                        </th>
+                        <th scope="col" className="text-left px-4 py-3 font-medium text-gray-600 w-16">
+                          인원
                         </th>
                         <th scope="col" className="text-left px-4 py-3 font-medium text-gray-600">
                           배정 강사
@@ -111,59 +110,67 @@ export default function AssignedPage() {
                         <th scope="col" className="text-left px-4 py-3 font-medium text-gray-600 hidden md:table-cell">
                           연락처
                         </th>
-                        <th scope="col" className="text-left px-4 py-3 font-medium text-gray-600 hidden lg:table-cell">
-                          이메일
-                        </th>
                       </tr>
                     </thead>
                     <tbody>
-                      {schoolSubjects.map((subject) => {
-                        const assigned = schoolApplicants.filter((a) =>
-                          a.assignments?.some(
-                            (asn) =>
-                              asn.school_id === school.id &&
-                              asn.subject_id === subject.id
-                          )
-                        );
+                      {school.gradeSchedule.flatMap((gs) =>
+                        gs.subjects.map((subId) => {
+                          const sub = SUBJECTS.find((s) => s.id === subId);
+                          if (!sub) return null;
+                          const assigned = schoolApplicants.filter((a) =>
+                            a.assignments?.some(
+                              (asn) =>
+                                asn.school_id === school.id &&
+                                asn.subject_id === subId &&
+                                asn.grade === gs.grade
+                            )
+                          );
+                          const isFull = assigned.length >= gs.capacity;
 
-                        return (
-                          <tr
-                            key={subject.id}
-                            className="border-b border-gray-100 last:border-0"
-                          >
-                            <td className="px-4 py-3 font-medium text-gray-900 align-top">
-                              <span className="text-base mr-1">{subject.icon}</span>
-                              {subject.name}
-                            </td>
-                            <td className="px-4 py-3 align-top">
-                              {assigned.length === 0 ? (
-                                <span className="text-gray-300 text-xs">미배정</span>
-                              ) : (
-                                <div className="space-y-1">
-                                  {assigned.map((a) => (
-                                    <span
-                                      key={a.id}
-                                      className="inline-block px-2 py-0.5 rounded bg-green-100 text-green-800 text-xs font-medium mr-1"
-                                    >
-                                      {a.name}
-                                    </span>
-                                  ))}
-                                </div>
-                              )}
-                            </td>
-                            <td className="px-4 py-3 text-gray-500 align-top hidden md:table-cell">
-                              {assigned.map((a) => (
-                                <p key={a.id} className="text-xs">{a.phone}</p>
-                              ))}
-                            </td>
-                            <td className="px-4 py-3 text-gray-500 align-top hidden lg:table-cell">
-                              {assigned.map((a) => (
-                                <p key={a.id} className="text-xs">{a.email}</p>
-                              ))}
-                            </td>
-                          </tr>
-                        );
-                      })}
+                          return (
+                            <tr
+                              key={`${gs.grade}-${subId}`}
+                              className="border-b border-gray-100 last:border-0"
+                            >
+                              <td className="px-4 py-3 align-top">
+                                <p className="font-medium text-gray-900">
+                                  <span className="text-base mr-1">{sub.icon}</span>
+                                  {sub.name}
+                                </p>
+                                <p className="text-[11px] text-gray-400">
+                                  {gs.grade} · {gs.period} · {gs.type}
+                                </p>
+                              </td>
+                              <td className="px-4 py-3 align-top">
+                                <span className={`text-xs font-bold ${isFull ? "text-green-600" : "text-amber-600"}`}>
+                                  {assigned.length}/{gs.capacity}
+                                </span>
+                              </td>
+                              <td className="px-4 py-3 align-top">
+                                {assigned.length === 0 ? (
+                                  <span className="text-gray-300 text-xs">미배정</span>
+                                ) : (
+                                  <div className="space-y-1">
+                                    {assigned.map((a) => (
+                                      <span
+                                        key={a.id}
+                                        className="inline-block px-2 py-0.5 rounded bg-green-100 text-green-800 text-xs font-medium mr-1"
+                                      >
+                                        {a.name}
+                                      </span>
+                                    ))}
+                                  </div>
+                                )}
+                              </td>
+                              <td className="px-4 py-3 text-gray-500 align-top hidden md:table-cell">
+                                {assigned.map((a) => (
+                                  <p key={a.id} className="text-xs">{a.phone}</p>
+                                ))}
+                              </td>
+                            </tr>
+                          );
+                        })
+                      )}
                     </tbody>
                   </table>
                 </div>

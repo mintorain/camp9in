@@ -23,6 +23,7 @@ interface AssignmentRow {
   applicant_id: number;
   school_id: string;
   subject_id: string;
+  grade: string | null;
 }
 
 // 합격 조회
@@ -70,7 +71,7 @@ export async function POST(request: NextRequest) {
 
     // 합격자만 배정 정보 조회
     const assignments = await query<AssignmentRow>(
-      "SELECT school_id, subject_id FROM applicant_assignments WHERE applicant_id = ?",
+      "SELECT school_id, subject_id, grade FROM applicant_assignments WHERE applicant_id = ?",
       [applicant.id]
     );
 
@@ -82,6 +83,7 @@ export async function POST(request: NextRequest) {
         assignments: assignments.map((a) => ({
           school_id: a.school_id,
           subject_id: a.subject_id,
+          grade: a.grade,
         })),
         paymentSubmitted: !!applicant.payment_submitted_at,
         paymentName: applicant.payment_name,
