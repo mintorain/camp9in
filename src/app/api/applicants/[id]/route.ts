@@ -35,6 +35,13 @@ export async function PATCH(
         [body.confirmed_subject || null, id]
       );
     }
+
+    if (body.confirmed_school !== undefined) {
+      await query(
+        "UPDATE applicants SET confirmed_school = ? WHERE id = ?",
+        [body.confirmed_school || null, id]
+      );
+    }
   } catch {
     return NextResponse.json(
       { error: "수정에 실패했습니다" },

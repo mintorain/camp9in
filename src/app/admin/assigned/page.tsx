@@ -14,6 +14,7 @@ interface Applicant {
   email: string;
   status: string;
   confirmed_subject: string | null;
+  confirmed_school: string | null;
   applicant_schools: { school_id: string }[];
   applicant_subjects: { subject_id: string }[];
 }
@@ -78,7 +79,9 @@ export default function AssignedPage() {
         ) : (
           SCHOOLS.map((school) => {
             const schoolApplicants = applicants.filter((a) =>
-              a.applicant_schools?.some((s) => s.school_id === school.id)
+              a.confirmed_school
+                ? a.confirmed_school === school.id
+                : a.applicant_schools?.some((s) => s.school_id === school.id)
             );
 
             if (schoolApplicants.length === 0) return null;
