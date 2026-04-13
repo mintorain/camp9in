@@ -53,6 +53,9 @@ export default function ApplicantsPage() {
   const [filterStatus, setFilterStatus] = useState("");
   const [filterDuplicate, setFilterDuplicate] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [editingAssignments, setEditingAssignments] = useState<
+    { school_id: string; subject_id: string; grade: string | null }[] | null
+  >(null);
 
   const fetchData = useCallback(async () => {
     try {
@@ -88,7 +91,7 @@ export default function ApplicantsPage() {
     fetchData();
   }
 
-  async function updateAssignments(
+  async function saveAssignments(
     id: string,
     assignments: { school_id: string; subject_id: string; grade: string | null }[]
   ) {
@@ -96,6 +99,7 @@ export default function ApplicantsPage() {
       method: "PATCH",
       body: JSON.stringify({ assignments }),
     });
+    setEditingAssignments(null);
     fetchData();
   }
 
@@ -120,6 +124,7 @@ export default function ApplicantsPage() {
     : applicants;
 
   const selectedApplicant = applicants.find((a) => a.id === selectedId);
+  const currentAssignments = editingAssignments ?? selectedApplicant?.assignments ?? [];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -419,7 +424,7 @@ export default function ApplicantsPage() {
         >
           <div
             className="absolute inset-0 bg-black/50"
-            onClick={() => setSelectedId(null)}
+            onClick={() => { setSelectedId(null); setEditingAssignments(null); }}
           />
           <div className="relative bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-xl">
             <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between rounded-t-2xl">
@@ -430,7 +435,7 @@ export default function ApplicantsPage() {
                 {selectedApplicant.name} 지원서
               </h2>
               <button
-                onClick={() => setSelectedId(null)}
+                onClick={() => { setSelectedId(null); setEditingAssignments(null); }}
                 className="p-1 text-gray-400 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-primary rounded-lg"
                 aria-label="닫기"
               >
@@ -559,10 +564,7 @@ export default function ApplicantsPage() {
                 <div className="col-span-2">
                   <p className="text-sm text-gray-500 mb-2">배정 학교 / 과목</p>
                   <div className="space-y-2">
-                    {(selectedApplicant.assignments?.length > 0
-                      ? selectedApplicant.assignments
-                      : []
-                    ).map((assignment, idx) => {
+                    {currentAssignments.map((assignment, idx) => {
                       const school = SCHOOLS.find((sc) => sc.id === assignment.school_id);
                       // 학교의 gradeSchedule에서 과목별 일정 목록 생성
                       const scheduleSlots = school
@@ -584,9 +586,9 @@ export default function ApplicantsPage() {
                             aria-label={`배정 학교 ${idx + 1}`}
                             value={assignment.school_id}
                             onChange={(e) => {
-                              const updated = [...(selectedApplicant.assignments || [])];
+                              const updated = [...currentAssignments];
                               updated[idx] = { school_id: e.target.value, subject_id: "", grade: null };
-                              updateAssignments(selectedApplicant.id, updated);
+                              setEditingAssignments(updated);
                             }}
                             className={`border rounded-lg px-3 py-2 text-sm w-28 shrink-0 focus:ring-2 focus:ring-primary ${
                               assignment.school_id
@@ -609,9 +611,12 @@ export default function ApplicantsPage() {
                             value={assignment.subject_id && assignment.grade ? `${assignment.subject_id}||${assignment.grade}` : ""}
                             onChange={(e) => {
                               const [subjectId, grade] = e.target.value.split("||");
-                              const updated = [...(selectedApplicant.assignments || [])];
+                              const updated = [...currentAssignments];
                               updated[idx] = { ...updated[idx], subject_id: subjectId || "", grade: grade || null };
-                              updateAssignments(selectedApplicant.id, updated);
+                              setEditingAssignments(updated);
+                              // 학교+과목+일정 모두 선택된 행만 저장
+                              const toSave = updated.filter((a) => a.school_id && a.subject_id && a.grade);
+                              saveAssignments(selectedApplicant.id, toSave);
                             }}
                             disabled={!assignment.school_id}
                             className={`border rounded-lg px-3 py-2 text-sm flex-1 focus:ring-2 focus:ring-primary ${
@@ -629,10 +634,12 @@ export default function ApplicantsPage() {
                           </select>
                           <button
                             onClick={() => {
-                              const updated = (selectedApplicant.assignments || []).filter(
+                              const updated = currentAssignments.filter(
                                 (_, i) => i !== idx
                               );
-                              updateAssignments(selectedApplicant.id, updated);
+                              setEditingAssignments(updated);
+                              const toSave = updated.filter((a) => a.school_id && a.subject_id);
+                              saveAssignments(selectedApplicant.id, toSave);
                             }}
                             className="p-1.5 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg shrink-0 focus:outline-none focus:ring-2 focus:ring-red-500"
                             aria-label={`배정 ${idx + 1} 삭제`}
@@ -644,11 +651,10 @@ export default function ApplicantsPage() {
                     })}
                     <button
                       onClick={() => {
-                        const updated = [
-                          ...(selectedApplicant.assignments || []),
+                        setEditingAssignments([
+                          ...currentAssignments,
                           { school_id: "", subject_id: "", grade: null },
-                        ];
-                        updateAssignments(selectedApplicant.id, updated);
+                        ]);
                       }}
                       className="flex items-center gap-1.5 px-3 py-2 text-sm text-primary hover:bg-primary/5 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
                     >
@@ -656,9 +662,9 @@ export default function ApplicantsPage() {
                       배정 추가
                     </button>
                   </div>
-                  {selectedApplicant.assignments?.filter((a) => a.school_id && a.subject_id).length > 0 && (
+                  {currentAssignments.filter((a) => a.school_id && a.subject_id).length > 0 && (
                     <div className="mt-2 flex flex-wrap gap-1">
-                      {selectedApplicant.assignments
+                      {currentAssignments
                         .filter((a) => a.school_id && a.subject_id)
                         .map((a, i) => (
                           <span key={i} className="px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-700">
@@ -713,7 +719,7 @@ export default function ApplicantsPage() {
                       adminFetch(`/api/applicants/${selectedApplicant.id}`, {
                         method: "DELETE",
                       }).then(() => {
-                        setSelectedId(null);
+                        { setSelectedId(null); setEditingAssignments(null); };
                         fetchData();
                       });
                     }
