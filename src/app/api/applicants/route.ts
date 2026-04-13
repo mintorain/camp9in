@@ -29,6 +29,12 @@ interface RelationRow {
   subject_id?: string;
 }
 
+interface AssignmentRow {
+  applicant_id: number;
+  school_id: string;
+  subject_id: string;
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -125,6 +131,9 @@ export async function GET(request: NextRequest) {
     const subjectRows = await query<RelationRow>(
       "SELECT applicant_id, subject_id FROM applicant_subjects ORDER BY id ASC"
     );
+    const assignmentRows = await query<AssignmentRow>(
+      "SELECT applicant_id, school_id, subject_id FROM applicant_assignments ORDER BY id ASC"
+    );
 
     let result = applicants.map((a) => ({
       ...a,
@@ -134,6 +143,9 @@ export async function GET(request: NextRequest) {
       applicant_subjects: subjectRows
         .filter((s) => s.applicant_id === a.id)
         .map((s) => ({ subject_id: s.subject_id })),
+      assignments: assignmentRows
+        .filter((s) => s.applicant_id === a.id)
+        .map((s) => ({ school_id: s.school_id, subject_id: s.subject_id })),
     }));
 
     if (school) {

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { query } from "@/lib/db";
+import { query, insert } from "@/lib/db";
 import { verifyAdmin } from "@/lib/auth-server";
 
 export async function PATCH(
@@ -29,18 +29,19 @@ export async function PATCH(
       ]);
     }
 
-    if (body.confirmed_subject !== undefined) {
+    if (body.assignments !== undefined) {
       await query(
-        "UPDATE applicants SET confirmed_subject = ? WHERE id = ?",
-        [body.confirmed_subject || null, id]
+        "DELETE FROM applicant_assignments WHERE applicant_id = ?",
+        [id]
       );
-    }
-
-    if (body.confirmed_school !== undefined) {
-      await query(
-        "UPDATE applicants SET confirmed_school = ? WHERE id = ?",
-        [body.confirmed_school || null, id]
-      );
+      for (const a of body.assignments) {
+        if (a.school_id && a.subject_id) {
+          await insert(
+            "INSERT INTO applicant_assignments (applicant_id, school_id, subject_id) VALUES (?, ?, ?)",
+            [id, a.school_id, a.subject_id]
+          );
+        }
+      }
     }
   } catch {
     return NextResponse.json(

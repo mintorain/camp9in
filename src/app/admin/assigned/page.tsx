@@ -13,10 +13,9 @@ interface Applicant {
   phone: string;
   email: string;
   status: string;
-  confirmed_subject: string | null;
-  confirmed_school: string | null;
   applicant_schools: { school_id: string }[];
   applicant_subjects: { subject_id: string }[];
+  assignments: { school_id: string; subject_id: string }[];
 }
 
 export default function AssignedPage() {
@@ -79,9 +78,7 @@ export default function AssignedPage() {
         ) : (
           SCHOOLS.map((school) => {
             const schoolApplicants = applicants.filter((a) =>
-              a.confirmed_school
-                ? a.confirmed_school === school.id
-                : a.applicant_schools?.some((s) => s.school_id === school.id)
+              a.assignments?.some((asn) => asn.school_id === school.id)
             );
 
             if (schoolApplicants.length === 0) return null;
@@ -122,11 +119,11 @@ export default function AssignedPage() {
                     <tbody>
                       {schoolSubjects.map((subject) => {
                         const assigned = schoolApplicants.filter((a) =>
-                          a.confirmed_subject
-                            ? a.confirmed_subject === subject.id
-                            : a.applicant_subjects?.some(
-                                (s) => s.subject_id === subject.id
-                              )
+                          a.assignments?.some(
+                            (asn) =>
+                              asn.school_id === school.id &&
+                              asn.subject_id === subject.id
+                          )
                         );
 
                         return (

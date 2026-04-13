@@ -10,6 +10,8 @@ import {
   Loader2,
   ChevronDown,
   X,
+  Plus,
+  Trash2,
 } from "lucide-react";
 import { SCHOOLS, SUBJECTS, STATUS_OPTIONS } from "@/lib/constants";
 import { adminFetch, getAdminToken } from "@/lib/admin";
@@ -32,6 +34,7 @@ interface Applicant {
   created_at: string;
   applicant_schools: { school_id: string }[];
   applicant_subjects: { subject_id: string }[];
+  assignments: { school_id: string; subject_id: string }[];
 }
 
 export default function ApplicantsPage() {
@@ -79,17 +82,13 @@ export default function ApplicantsPage() {
     fetchData();
   }
 
-  async function updateConfirmedAssignment(
+  async function updateAssignments(
     id: string,
-    schoolId: string,
-    subjectId: string
+    assignments: { school_id: string; subject_id: string }[]
   ) {
     await adminFetch(`/api/applicants/${id}`, {
       method: "PATCH",
-      body: JSON.stringify({
-        confirmed_school: schoolId || null,
-        confirmed_subject: subjectId || null,
-      }),
+      body: JSON.stringify({ assignments }),
     });
     fetchData();
   }
@@ -360,15 +359,17 @@ export default function ApplicantsPage() {
                           {schools}
                         </td>
                         <td className="px-4 py-3 text-gray-600 hidden md:table-cell">
-                          <span className="line-clamp-1">
-                            {applicant.confirmed_school && applicant.confirmed_subject ? (
-                              <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700 mr-1">
-                                확정: {SCHOOLS.find((s) => s.id === applicant.confirmed_school)?.shortName} / {SUBJECTS.find((s) => s.id === applicant.confirmed_subject)?.name}
-                              </span>
-                            ) : (
-                              subjects
-                            )}
-                          </span>
+                          {applicant.assignments?.length > 0 ? (
+                            <div className="flex flex-wrap gap-1">
+                              {applicant.assignments.map((a, i) => (
+                                <span key={i} className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-700">
+                                  {SCHOOLS.find((s) => s.id === a.school_id)?.shortName}/{SUBJECTS.find((s) => s.id === a.subject_id)?.name}
+                                </span>
+                              ))}
+                            </div>
+                          ) : (
+                            <span className="line-clamp-1">{subjects}</span>
+                          )}
                         </td>
                         <td className="px-4 py-3">
                           <span
@@ -551,84 +552,100 @@ export default function ApplicantsPage() {
                 </div>
                 <div className="col-span-2">
                   <p className="text-sm text-gray-500 mb-2">배정 학교 / 과목</p>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label htmlFor="confirmed-school-select" className="sr-only">
-                        배정 학교
-                      </label>
-                      <select
-                        id="confirmed-school-select"
-                        value={selectedApplicant.confirmed_school || ""}
-                        onChange={(e) => {
-                          const schoolId = e.target.value;
-                          updateConfirmedAssignment(
-                            selectedApplicant.id,
-                            schoolId,
-                            ""
-                          );
-                        }}
-                        className={`border rounded-lg px-3 py-2.5 text-sm w-full focus:ring-2 focus:ring-primary ${
-                          selectedApplicant.confirmed_school
-                            ? "border-green-300 bg-green-50"
-                            : "border-gray-300"
-                        }`}
-                      >
-                        <option value="">학교 선택</option>
-                        {selectedApplicant.applicant_schools?.map((s) => {
-                          const school = SCHOOLS.find((sc) => sc.id === s.school_id);
-                          return (
-                            <option key={s.school_id} value={s.school_id}>
-                              {school?.shortName || s.school_id}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </div>
-                    <div>
-                      <label htmlFor="confirmed-subject-select" className="sr-only">
-                        배정 과목
-                      </label>
-                      <select
-                        id="confirmed-subject-select"
-                        value={selectedApplicant.confirmed_subject || ""}
-                        onChange={(e) =>
-                          updateConfirmedAssignment(
-                            selectedApplicant.id,
-                            selectedApplicant.confirmed_school || "",
-                            e.target.value
+                  <div className="space-y-2">
+                    {(selectedApplicant.assignments?.length > 0
+                      ? selectedApplicant.assignments
+                      : []
+                    ).map((assignment, idx) => {
+                      const school = SCHOOLS.find((sc) => sc.id === assignment.school_id);
+                      const schoolSubjects = school
+                        ? SUBJECTS.filter((sub) =>
+                            (school.subjects as readonly string[]).includes(sub.id)
                           )
-                        }
-                        disabled={!selectedApplicant.confirmed_school}
-                        className={`border rounded-lg px-3 py-2.5 text-sm w-full focus:ring-2 focus:ring-primary ${
-                          selectedApplicant.confirmed_subject
-                            ? "border-green-300 bg-green-50"
-                            : "border-gray-300"
-                        } ${!selectedApplicant.confirmed_school ? "opacity-50 cursor-not-allowed" : ""}`}
-                      >
-                        <option value="">과목 선택</option>
-                        {selectedApplicant.confirmed_school &&
-                          (() => {
-                            const school = SCHOOLS.find(
-                              (sc) => sc.id === selectedApplicant.confirmed_school
-                            );
-                            if (!school) return null;
-                            return SUBJECTS.filter((sub) =>
-                              (school.subjects as readonly string[]).includes(sub.id)
-                            ).map((sub) => (
+                        : [];
+                      return (
+                        <div key={idx} className="flex items-center gap-2">
+                          <select
+                            aria-label={`배정 학교 ${idx + 1}`}
+                            value={assignment.school_id}
+                            onChange={(e) => {
+                              const updated = [...(selectedApplicant.assignments || [])];
+                              updated[idx] = { school_id: e.target.value, subject_id: "" };
+                              updateAssignments(selectedApplicant.id, updated);
+                            }}
+                            className="border border-green-300 bg-green-50 rounded-lg px-3 py-2 text-sm flex-1 focus:ring-2 focus:ring-primary"
+                          >
+                            <option value="">학교 선택</option>
+                            {selectedApplicant.applicant_schools?.map((s) => {
+                              const sc = SCHOOLS.find((sc) => sc.id === s.school_id);
+                              return (
+                                <option key={s.school_id} value={s.school_id}>
+                                  {sc?.shortName || s.school_id}
+                                </option>
+                              );
+                            })}
+                          </select>
+                          <select
+                            aria-label={`배정 과목 ${idx + 1}`}
+                            value={assignment.subject_id}
+                            onChange={(e) => {
+                              const updated = [...(selectedApplicant.assignments || [])];
+                              updated[idx] = { ...updated[idx], subject_id: e.target.value };
+                              updateAssignments(selectedApplicant.id, updated);
+                            }}
+                            disabled={!assignment.school_id}
+                            className={`border rounded-lg px-3 py-2 text-sm flex-1 focus:ring-2 focus:ring-primary ${
+                              assignment.subject_id
+                                ? "border-green-300 bg-green-50"
+                                : "border-gray-300"
+                            } ${!assignment.school_id ? "opacity-50 cursor-not-allowed" : ""}`}
+                          >
+                            <option value="">과목 선택</option>
+                            {schoolSubjects.map((sub) => (
                               <option key={sub.id} value={sub.id}>
                                 {sub.icon} {sub.name}
                               </option>
-                            ));
-                          })()}
-                      </select>
-                    </div>
+                            ))}
+                          </select>
+                          <button
+                            onClick={() => {
+                              const updated = (selectedApplicant.assignments || []).filter(
+                                (_, i) => i !== idx
+                              );
+                              updateAssignments(selectedApplicant.id, updated);
+                            }}
+                            className="p-1.5 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                            aria-label={`배정 ${idx + 1} 삭제`}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      );
+                    })}
+                    <button
+                      onClick={() => {
+                        const updated = [
+                          ...(selectedApplicant.assignments || []),
+                          { school_id: "", subject_id: "" },
+                        ];
+                        updateAssignments(selectedApplicant.id, updated);
+                      }}
+                      className="flex items-center gap-1.5 px-3 py-2 text-sm text-primary hover:bg-primary/5 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+                    >
+                      <Plus className="w-4 h-4" />
+                      학교 배정 추가
+                    </button>
                   </div>
-                  {selectedApplicant.confirmed_school && selectedApplicant.confirmed_subject && (
-                    <p className="text-xs text-green-600 mt-2 font-medium">
-                      {SCHOOLS.find((s) => s.id === selectedApplicant.confirmed_school)?.shortName}{" "}
-                      / {SUBJECTS.find((s) => s.id === selectedApplicant.confirmed_subject)?.icon}{" "}
-                      {SUBJECTS.find((s) => s.id === selectedApplicant.confirmed_subject)?.name} 배정 확정
-                    </p>
+                  {selectedApplicant.assignments?.filter((a) => a.school_id && a.subject_id).length > 0 && (
+                    <div className="mt-2 flex flex-wrap gap-1">
+                      {selectedApplicant.assignments
+                        .filter((a) => a.school_id && a.subject_id)
+                        .map((a, i) => (
+                          <span key={i} className="px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-700">
+                            {SCHOOLS.find((s) => s.id === a.school_id)?.shortName} / {SUBJECTS.find((s) => s.id === a.subject_id)?.icon} {SUBJECTS.find((s) => s.id === a.subject_id)?.name}
+                          </span>
+                        ))}
+                    </div>
                   )}
                 </div>
               </div>
