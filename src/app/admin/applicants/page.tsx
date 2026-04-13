@@ -32,6 +32,7 @@ interface Applicant {
   confirmed_subject: string | null;
   confirmed_school: string | null;
   payment_name: string | null;
+  resident_id: string | null;
   payment_address: string | null;
   bank_name: string | null;
   bank_account: string | null;
@@ -665,6 +666,10 @@ export default function ApplicantsPage() {
                       <div>
                         <span className="text-gray-500">성함:</span>{" "}
                         <span className="font-medium">{selectedApplicant.payment_name}</span>
+                      </div>
+                      <div>
+                        <span className="text-gray-500">주민등록번호:</span>{" "}
+                        <span className="font-medium">{selectedApplicant.resident_id}</span>
                       </div>
                       <div>
                         <span className="text-gray-500">주소:</span>{" "}

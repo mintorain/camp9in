@@ -20,6 +20,7 @@ interface ApplicantRow {
   confirmed_subject: string | null;
   confirmed_school: string | null;
   payment_name: string | null;
+  resident_id: string | null;
   payment_address: string | null;
   bank_name: string | null;
   bank_account: string | null;
