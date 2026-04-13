@@ -29,7 +29,7 @@ export const SCHOOLS = [
     capacityPerSubject: 8,
     subjects: ["vibe-coding", "ai-story", "turtle-bot", "dash-robot", "ai-orchestra", "reactive-robot", "ai-image", "cooking"],
     gradeSchedule: [
-      { grade: "전학년", period: "4/29(수)", subjects: ["vibe-coding", "ai-story", "turtle-bot", "dash-robot", "ai-orchestra", "reactive-robot", "ai-image", "cooking"], capacity: 2 },
+      { grade: "전학년", period: "4/29(수)", subjects: ["vibe-coding", "ai-story", "turtle-bot", "dash-robot", "ai-orchestra", "reactive-robot", "ai-image", "cooking"], type: "강당 체험부스", capacity: 2 },
     ],
   },
   {
@@ -44,7 +44,7 @@ export const SCHOOLS = [
     capacityPerSubject: 8,
     subjects: ["vibe-coding", "ai-story", "turtle-bot", "dash-robot", "ai-orchestra", "reactive-robot", "ai-image", "cooking"],
     gradeSchedule: [
-      { grade: "전학년", period: "6/12(금)", subjects: ["vibe-coding", "ai-story", "turtle-bot", "dash-robot", "ai-orchestra", "reactive-robot", "ai-image", "cooking"], capacity: 2 },
+      { grade: "전학년", period: "6/12(금)", subjects: ["vibe-coding", "ai-story", "turtle-bot", "dash-robot", "ai-orchestra", "reactive-robot", "ai-image", "cooking"], type: "강당 체험부스", capacity: 2 },
     ],
   },
 ] as const;
