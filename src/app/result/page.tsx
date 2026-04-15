@@ -281,30 +281,36 @@ export default function ResultPage() {
                     return (
                       <div
                         key={i}
-                        className="flex items-center gap-3 bg-green-50 rounded-lg px-4 py-3"
+                        className="bg-green-50 rounded-lg px-4 py-3"
                       >
-                        <span className="text-lg">{subject?.icon}</span>
-                        <div>
-                          <p className="text-sm font-bold text-gray-900">
-                            {school?.name || a.school_id}
-                          </p>
-                          <p className="text-xs text-gray-600">
-                            {subject?.name || a.subject_id}
-                            {a.grade && (
-                              <span className="text-gray-400">
-                                {" "}&middot; {a.grade}
-                              </span>
-                            )}
-                            {school && (() => {
-                              const gs = school.gradeSchedule.find(
-                                (g) => g.grade === a.grade && (g.subjects as readonly string[]).includes(a.subject_id)
-                              );
-                              return gs ? (
-                                <span className="text-gray-400"> &middot; {gs.period}</span>
-                              ) : null;
-                            })()}
-                          </p>
+                        <div className="flex items-center gap-3">
+                          <span className="text-lg">{subject?.icon}</span>
+                          <div>
+                            <p className="text-sm font-bold text-gray-900">
+                              {school?.name || a.school_id}
+                            </p>
+                            <p className="text-xs text-gray-600">
+                              {subject?.name || a.subject_id}
+                              {a.grade && (
+                                <span className="text-gray-400">
+                                  {" "}&middot; {a.grade}
+                                </span>
+                              )}
+                            </p>
+                          </div>
                         </div>
+                        {school && (() => {
+                          const gs = school.gradeSchedule.find(
+                            (g) => g.grade === a.grade && (g.subjects as readonly string[]).includes(a.subject_id)
+                          );
+                          return (
+                            <div className="mt-2 ml-8 text-xs text-gray-500 space-y-0.5">
+                              {gs && <p>📅 강의일: {gs.period}</p>}
+                              <p>🕐 강의시간: {school.time}</p>
+                              <p>📍 장소: {school.location}</p>
+                            </div>
+                          );
+                        })()}
                       </div>
                     );
                   })}
