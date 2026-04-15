@@ -57,6 +57,21 @@ export async function PATCH(
         id,
       ]);
     }
+
+    // 배정별 강사료 저장
+    if (body.assignment_payments && Array.isArray(body.assignment_payments)) {
+      for (const ap of body.assignment_payments) {
+        try {
+          await query(
+            `UPDATE applicant_assignments SET payment_amount = ?
+             WHERE applicant_id = ? AND school_id = ? AND subject_id = ?`,
+            [ap.payment_amount, id, ap.school_id, ap.subject_id]
+          );
+        } catch {
+          // payment_amount 컬럼이 없으면 무시
+        }
+      }
+    }
   } catch {
     return NextResponse.json(
       { error: "수정에 실패했습니다" },

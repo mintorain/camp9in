@@ -31,7 +31,7 @@ interface ResultData {
   id: number;
   name: string;
   status: string;
-  assignments: { school_id: string; subject_id: string; grade: string | null }[];
+  assignments: { school_id: string; subject_id: string; grade: string | null; paymentAmount?: number | null }[];
   paymentSubmitted: boolean;
   paymentName?: string;
   paymentAddress?: string;
@@ -269,7 +269,9 @@ export default function ResultPage() {
             </div>
 
             {/* 배정 정보 (합격자만) */}
-            {result.status === "accepted" && result.assignments.length > 0 && (
+            {result.status === "accepted" && result.assignments.length > 0 && (() => {
+              const assignmentTotal = result.assignments.reduce((sum, a) => sum + (a.paymentAmount || 0), 0);
+              return (
               <div className="bg-white rounded-2xl border border-gray-200 p-6">
                 <h3 className="text-sm font-bold text-gray-700 mb-3">
                   배정 학교 / 과목
@@ -285,7 +287,7 @@ export default function ResultPage() {
                       >
                         <div className="flex items-center gap-3">
                           <span className="text-lg">{subject?.icon}</span>
-                          <div>
+                          <div className="flex-1">
                             <p className="text-sm font-bold text-gray-900">
                               {school?.name || a.school_id}
                             </p>
@@ -298,6 +300,11 @@ export default function ResultPage() {
                               )}
                             </p>
                           </div>
+                          {a.paymentAmount != null && a.paymentAmount > 0 && (
+                            <span className="text-sm font-mono font-semibold text-emerald-700">
+                              {a.paymentAmount.toLocaleString()}원
+                            </span>
+                          )}
                         </div>
                         {school && (() => {
                           const gs = school.gradeSchedule.find(
@@ -315,8 +322,21 @@ export default function ResultPage() {
                     );
                   })}
                 </div>
+
+                {/* 배정별 금액 총액 */}
+                {assignmentTotal > 0 && (
+                  <div className="mt-4 pt-3 border-t border-gray-200">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-semibold text-gray-700">강사료 합계</span>
+                      <span className="text-lg font-mono font-bold text-emerald-700">
+                        {assignmentTotal.toLocaleString()}원
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
+              );
+            })()}
 
             {/* 강사료 지급 정보 입력 (합격자만) */}
             {result.status === "accepted" && (

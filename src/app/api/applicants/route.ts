@@ -42,6 +42,7 @@ interface AssignmentRow {
   school_id: string;
   subject_id: string;
   grade: string | null;
+  payment_amount: number | null;
 }
 
 interface ExistingApplicant {
@@ -227,9 +228,16 @@ export async function GET(request: NextRequest) {
     const subjectRows = await query<RelationRow>(
       "SELECT applicant_id, subject_id FROM applicant_subjects ORDER BY id ASC"
     );
-    const assignmentRows = await query<AssignmentRow>(
-      "SELECT applicant_id, school_id, subject_id, grade FROM applicant_assignments ORDER BY id ASC"
-    );
+    let assignmentRows: AssignmentRow[];
+    try {
+      assignmentRows = await query<AssignmentRow>(
+        "SELECT applicant_id, school_id, subject_id, grade, payment_amount FROM applicant_assignments ORDER BY id ASC"
+      );
+    } catch {
+      assignmentRows = await query<AssignmentRow>(
+        "SELECT applicant_id, school_id, subject_id, grade, NULL as payment_amount FROM applicant_assignments ORDER BY id ASC"
+      );
+    }
 
     let result = applicants.map((a) => ({
       ...a,
@@ -241,7 +249,7 @@ export async function GET(request: NextRequest) {
         .map((s) => ({ subject_id: s.subject_id })),
       assignments: assignmentRows
         .filter((s) => s.applicant_id === a.id)
-        .map((s) => ({ school_id: s.school_id, subject_id: s.subject_id, grade: s.grade })),
+        .map((s) => ({ school_id: s.school_id, subject_id: s.subject_id, grade: s.grade, payment_amount: s.payment_amount })),
     }));
 
     if (school) {

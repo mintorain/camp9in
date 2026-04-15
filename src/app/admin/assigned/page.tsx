@@ -22,7 +22,7 @@ interface Applicant {
   payment_submitted_at: string | null;
   applicant_schools: { school_id: string }[];
   applicant_subjects: { subject_id: string }[];
-  assignments: { school_id: string; subject_id: string; grade: string | null }[];
+  assignments: { school_id: string; subject_id: string; grade: string | null; payment_amount?: number | null }[];
 }
 
 interface SlotTarget {
@@ -42,6 +42,7 @@ export default function AssignedPage() {
   const modalRef = useRef<HTMLDivElement>(null);
   const [paymentTarget, setPaymentTarget] = useState<Applicant | null>(null);
   const [paymentAmount, setPaymentAmount] = useState("");
+  const [paymentAmounts, setPaymentAmounts] = useState<Record<string, string>>({});
   const [paymentDate, setPaymentDate] = useState("");
   const [savingPayment, setSavingPayment] = useState(false);
   const paymentRef = useRef<HTMLDivElement>(null);
@@ -102,8 +103,17 @@ export default function AssignedPage() {
   // 강사료 모달 열기
   function openPaymentModal(applicant: Applicant) {
     setPaymentTarget(applicant);
-    setPaymentAmount(applicant.payment_amount?.toString() || "");
     setPaymentDate(applicant.payment_date || "");
+    // 배정별 금액 초기화
+    const amounts: Record<string, string> = {};
+    applicant.assignments.forEach((a, i) => {
+      const key = `${a.school_id}_${a.subject_id}_${i}`;
+      amounts[key] = a.payment_amount?.toString() || "";
+    });
+    setPaymentAmounts(amounts);
+    // 총액은 배정별 합계로 계산
+    const total = applicant.assignments.reduce((sum, a) => sum + (a.payment_amount || 0), 0);
+    setPaymentAmount(total > 0 ? total.toString() : (applicant.payment_amount?.toString() || ""));
   }
 
   // 강사료/입금일 저장
@@ -111,9 +121,20 @@ export default function AssignedPage() {
     if (!paymentTarget) return;
     setSavingPayment(true);
     try {
+      // 배정별 금액 저장
+      const assignmentPayments = paymentTarget.assignments.map((a, i) => {
+        const key = `${a.school_id}_${a.subject_id}_${i}`;
+        const amt = paymentAmounts[key] ? parseInt(paymentAmounts[key], 10) : null;
+        return { school_id: a.school_id, subject_id: a.subject_id, grade: a.grade, payment_amount: amt };
+      });
+
+      // 총액 계산
+      const total = assignmentPayments.reduce((sum, a) => sum + (a.payment_amount || 0), 0);
+
       const body: Record<string, unknown> = {};
-      body.payment_amount = paymentAmount ? parseInt(paymentAmount, 10) : null;
+      body.payment_amount = total > 0 ? total : null;
       body.payment_date = paymentDate || null;
+      body.assignment_payments = assignmentPayments;
 
       const res = await adminFetch(`/api/applicants/${paymentTarget.id}`, {
         method: "PATCH",
@@ -649,33 +670,56 @@ export default function AssignedPage() {
                 )}
               </div>
 
-              {/* 강사료 입력 */}
+              {/* 배정별 강사료 입력 */}
               <div>
-                <label htmlFor="pay-amount" className="block text-sm font-medium text-gray-700 mb-1">
-                  강사료 (원)
-                </label>
-                <input
-                  id="pay-amount"
-                  type="number"
-                  value={paymentAmount}
-                  onChange={(e) => setPaymentAmount(e.target.value)}
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                  placeholder="예: 160000"
-                />
+                <p className="text-sm font-medium text-gray-700 mb-2">배정별 강사료 (원)</p>
+                <div className="space-y-2">
+                  {paymentTarget.assignments.map((a, i) => {
+                    const school = SCHOOLS.find((s) => s.id === a.school_id);
+                    const subject = SUBJECTS.find((s) => s.id === a.subject_id);
+                    const key = `${a.school_id}_${a.subject_id}_${i}`;
+                    return (
+                      <div key={key} className="flex items-center gap-2">
+                        <div className="flex-1 text-xs text-gray-700">
+                          <span className="font-semibold">{school?.shortName || a.school_id}</span>
+                          <span className="text-gray-400"> · </span>
+                          <span>{subject?.name || a.subject_id}</span>
+                        </div>
+                        <input
+                          type="number"
+                          value={paymentAmounts[key] || ""}
+                          onChange={(e) => {
+                            const newAmounts = { ...paymentAmounts, [key]: e.target.value };
+                            setPaymentAmounts(newAmounts);
+                            const total = Object.values(newAmounts).reduce(
+                              (sum, v) => sum + (v ? parseInt(v, 10) || 0 : 0), 0
+                            );
+                            setPaymentAmount(total > 0 ? total.toString() : "");
+                          }}
+                          className="w-28 border border-gray-200 rounded-lg px-3 py-2 text-sm text-right font-mono focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                          placeholder="금액"
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
 
-              {/* 세금 자동 계산 미리보기 */}
-              {paymentAmount && parseInt(paymentAmount, 10) > 0 && (() => {
-                const amt = parseInt(paymentAmount, 10);
-                const incomeTax = Math.floor(amt * 0.03);
-                const localTax = Math.floor(amt * 0.003);
+              {/* 총액 + 세금 계산 */}
+              {(() => {
+                const total = Object.values(paymentAmounts).reduce(
+                  (sum, v) => sum + (v ? parseInt(v, 10) || 0 : 0), 0
+                );
+                if (total <= 0) return null;
+                const incomeTax = Math.floor(total * 0.03);
+                const localTax = Math.floor(total * 0.003);
                 const totalTax = incomeTax + localTax;
-                const net = amt - totalTax;
+                const net = total - totalTax;
                 return (
                   <div className="bg-emerald-50 rounded-xl p-3 text-xs space-y-1">
                     <div className="flex justify-between">
-                      <span className="text-gray-600">강사료 (총액)</span>
-                      <span className="font-mono font-semibold text-gray-900">{amt.toLocaleString()}원</span>
+                      <span className="font-semibold text-gray-800">강사료 합계</span>
+                      <span className="font-mono font-bold text-gray-900">{total.toLocaleString()}원</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-600">사업소득세 (3%)</span>

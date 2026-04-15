@@ -26,6 +26,7 @@ interface AssignmentRow {
   school_id: string;
   subject_id: string;
   grade: string | null;
+  payment_amount: number | null;
 }
 
 // 합격 조회
@@ -84,11 +85,23 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // 합격자만 배정 정보 조회
-    const assignments = await query<AssignmentRow>(
-      "SELECT school_id, subject_id, grade FROM applicant_assignments WHERE applicant_id = ?",
-      [applicant.id]
-    );
+    // 합격자만 배정 정보 조회 (배정별 금액 포함)
+    let assignments: AssignmentRow[];
+    try {
+      assignments = await query<AssignmentRow>(
+        "SELECT school_id, subject_id, grade, payment_amount FROM applicant_assignments WHERE applicant_id = ?",
+        [applicant.id]
+      );
+    } catch {
+      assignments = await query<AssignmentRow>(
+        "SELECT school_id, subject_id, grade, NULL as payment_amount FROM applicant_assignments WHERE applicant_id = ?",
+        [applicant.id]
+      );
+    }
+
+    // 배정별 금액 합계 또는 applicants 테이블의 금액
+    const assignmentTotal = assignments.reduce((sum, a) => sum + (a.payment_amount || 0), 0);
+    const totalAmount = assignmentTotal > 0 ? assignmentTotal : applicant.payment_amount;
 
     return NextResponse.json({
       data: {
@@ -99,13 +112,14 @@ export async function POST(request: NextRequest) {
           school_id: a.school_id,
           subject_id: a.subject_id,
           grade: a.grade,
+          paymentAmount: a.payment_amount,
         })),
         paymentSubmitted: !!applicant.payment_submitted_at,
         paymentName: applicant.payment_name,
         paymentAddress: applicant.payment_address,
         bankName: applicant.bank_name,
         bankAccount: applicant.bank_account,
-        paymentAmount: applicant.payment_amount,
+        paymentAmount: totalAmount,
         paymentDate: applicant.payment_date,
       },
     });
