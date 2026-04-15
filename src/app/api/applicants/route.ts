@@ -25,6 +25,8 @@ interface ApplicantRow {
   bank_name: string | null;
   bank_account: string | null;
   payment_submitted_at: string | null;
+  payment_amount: number | null;
+  payment_date: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -42,6 +44,15 @@ interface AssignmentRow {
   grade: string | null;
 }
 
+interface ExistingApplicant {
+  id: number;
+}
+
+interface ConfirmedAssignment {
+  school_id: string;
+  subject_id: string;
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -56,6 +67,84 @@ export async function POST(request: NextRequest) {
 
     const data = parsed.data;
 
+    // 기존 지원자 확인 (이름 + 연락처 동일)
+    const existing = await query<ExistingApplicant>(
+      "SELECT id FROM applicants WHERE name = ? AND phone = ? ORDER BY created_at DESC LIMIT 1",
+      [data.name, data.phone]
+    );
+
+    if (existing.length > 0) {
+      // 수정 모드: 기존 지원서 업데이트
+      const applicantId = existing[0].id;
+
+      // 관리자가 확정한 과목 조회
+      const confirmedAssignments = await query<ConfirmedAssignment>(
+        "SELECT school_id, subject_id FROM applicant_assignments WHERE applicant_id = ?",
+        [applicantId]
+      );
+
+      // 확정된 과목이 제출 데이터에서 빠져있으면 차단
+      for (const confirmed of confirmedAssignments) {
+        if (!data.subjects.includes(confirmed.subject_id)) {
+          return NextResponse.json(
+            {
+              error: `확정된 과목은 삭제할 수 없습니다.`,
+            },
+            { status: 422 }
+          );
+        }
+      }
+
+      // 기본 정보 업데이트
+      await query(
+        `UPDATE applicants SET email = ?, address = ?, birth_date = ?, education = ?,
+         major = ?, experience = ?, qualifications = ?, introduction = ?,
+         privacy_agreed = ?, updated_at = NOW() WHERE id = ?`,
+        [
+          data.email,
+          data.address,
+          data.birthDate,
+          data.education,
+          data.major || null,
+          data.experience,
+          data.qualifications || null,
+          data.introduction || null,
+          data.privacyAgreed ? 1 : 0,
+          applicantId,
+        ]
+      );
+
+      // 학교 관계 재설정
+      await query(
+        "DELETE FROM applicant_schools WHERE applicant_id = ?",
+        [applicantId]
+      );
+      for (const schoolId of data.schools) {
+        await insert(
+          "INSERT INTO applicant_schools (applicant_id, school_id) VALUES (?, ?)",
+          [applicantId, schoolId]
+        );
+      }
+
+      // 과목 관계 재설정 (확정된 과목 포함하여 전체 재설정)
+      await query(
+        "DELETE FROM applicant_subjects WHERE applicant_id = ?",
+        [applicantId]
+      );
+      for (const subjectId of data.subjects) {
+        await insert(
+          "INSERT INTO applicant_subjects (applicant_id, subject_id) VALUES (?, ?)",
+          [applicantId, subjectId]
+        );
+      }
+
+      return NextResponse.json(
+        { data: { id: applicantId }, message: "지원서가 수정되었습니다" },
+        { status: 200 }
+      );
+    }
+
+    // 신규 지원자
     const result = await insert(
       `INSERT INTO applicants (name, phone, email, address, birth_date, education, major, experience, qualifications, introduction, privacy_agreed, status)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')`,

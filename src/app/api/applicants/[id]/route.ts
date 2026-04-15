@@ -43,6 +43,20 @@ export async function PATCH(
         }
       }
     }
+
+    if (body.payment_amount !== undefined) {
+      await query("UPDATE applicants SET payment_amount = ? WHERE id = ?", [
+        body.payment_amount,
+        id,
+      ]);
+    }
+
+    if (body.payment_date !== undefined) {
+      await query("UPDATE applicants SET payment_date = ? WHERE id = ?", [
+        body.payment_date || null,
+        id,
+      ]);
+    }
   } catch {
     return NextResponse.json(
       { error: "수정에 실패했습니다" },

@@ -41,7 +41,9 @@ export default function DashboardPage() {
   const [applicants, setApplicants] = useState<Applicant[]>([]);
   const [loading, setLoading] = useState(true);
   const [closedIds, setClosedIds] = useState<string[]>([]);
+  const [closedSchoolIds, setClosedSchoolIds] = useState<string[]>([]);
   const [togglingSubject, setTogglingSubject] = useState<string | null>(null);
+  const [togglingSchool, setTogglingSchool] = useState<string | null>(null);
   const [analytics, setAnalytics] = useState<{
     realtime: number;
     today: { visitors: number; views: number };
@@ -97,6 +99,7 @@ export default function DashboardPage() {
     }
     fetchData();
     fetchClosedSubjects();
+    fetchClosedSchools();
     fetchAnalytics();
     fetchSettings();
     const interval = setInterval(fetchAnalytics, 30000);
@@ -165,6 +168,23 @@ export default function DashboardPage() {
       await adminFetch("/api/subjects/close", { method: "POST", body: JSON.stringify({ subjectId, closed: !isClosed }) });
       await fetchClosedSubjects();
     } catch { /* ignore */ } finally { setTogglingSubject(null); }
+  }
+
+  async function fetchClosedSchools() {
+    try {
+      const res = await fetch("/api/schools/close");
+      const { data } = await res.json();
+      setClosedSchoolIds(data || []);
+    } catch { /* ignore */ }
+  }
+
+  async function toggleSchoolClose(schoolId: string) {
+    setTogglingSchool(schoolId);
+    const isClosed = closedSchoolIds.includes(schoolId);
+    try {
+      await adminFetch("/api/schools/close", { method: "POST", body: JSON.stringify({ schoolId, closed: !isClosed }) });
+      await fetchClosedSchools();
+    } catch { /* ignore */ } finally { setTogglingSchool(null); }
   }
 
   async function handleExport() {
@@ -320,13 +340,23 @@ export default function DashboardPage() {
               <p className="text-2xl font-bold">{applicants.length}</p>
               <p className="text-xs text-indigo-200">전체 지원자</p>
             </div>
-            {SCHOOLS.map((school) => (
-              <div key={school.id} className="bg-white rounded-xl border border-slate-200/80 p-4 shadow-sm">
-                <School className="w-4 h-4 text-indigo-400 mb-2" />
-                <p className="text-2xl font-bold text-slate-900">{countBySchool(school.id)}</p>
-                <p className="text-xs text-slate-400">{school.shortName}</p>
-              </div>
-            ))}
+            {SCHOOLS.map((school) => {
+              const isClosed = closedSchoolIds.includes(school.id);
+              const isToggling = togglingSchool === school.id;
+              return (
+                <div key={school.id} className={`bg-white rounded-xl border p-4 shadow-sm ${isClosed ? "border-red-200" : "border-slate-200/80"}`}>
+                  <div className="flex items-center justify-between mb-2">
+                    <School className={`w-4 h-4 ${isClosed ? "text-red-400" : "text-indigo-400"}`} />
+                    <button onClick={() => toggleSchoolClose(school.id)} disabled={isToggling}
+                      className={`text-[10px] px-2 py-0.5 rounded-full font-semibold transition-all ${isClosed ? "bg-red-100 text-red-600 hover:bg-red-200" : "bg-slate-100 text-slate-500 hover:bg-slate-200"} ${isToggling ? "opacity-40" : ""}`}>
+                      {isToggling ? "..." : isClosed ? "마감" : "모집중"}
+                    </button>
+                  </div>
+                  <p className="text-2xl font-bold text-slate-900">{countBySchool(school.id)}</p>
+                  <p className="text-xs text-slate-400">{school.shortName}</p>
+                </div>
+              );
+            })}
             <div className="bg-white rounded-xl border border-slate-200/80 p-4 shadow-sm">
               <BarChart3 className="w-4 h-4 text-emerald-400 mb-2" />
               <p className="text-2xl font-bold text-slate-900">{countByStatus("accepted")}</p>

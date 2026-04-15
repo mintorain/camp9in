@@ -9,6 +9,7 @@ import {
   XCircle,
   Clock,
   Search,
+  Banknote,
 } from "lucide-react";
 import { SCHOOLS, SUBJECTS } from "@/lib/constants";
 import DuonFooter from "@/components/DuonFooter";
@@ -36,6 +37,8 @@ interface ResultData {
   paymentAddress?: string;
   bankName?: string;
   bankAccount?: string;
+  paymentAmount?: number | null;
+  paymentDate?: string | null;
 }
 
 const STATUS_MAP: Record<
@@ -467,6 +470,66 @@ export default function ResultPage() {
                     </button>
                   </form>
                 )}
+              </div>
+            )}
+
+            {/* 강사료 지급 현황 (합격자 + 금액 설정됨) */}
+            {result.status === "accepted" && result.paymentAmount && result.paymentAmount > 0 && (
+              <div className="bg-white rounded-2xl border border-gray-200 p-6">
+                <h3 className="text-sm font-bold text-gray-700 mb-3 flex items-center gap-2">
+                  <Banknote className="w-4 h-4 text-emerald-600" />
+                  강사료 지급 현황
+                </h3>
+                {(() => {
+                  const amt = result.paymentAmount!;
+                  const incomeTax = Math.floor(amt * 0.03);
+                  const localTax = Math.floor(amt * 0.003);
+                  const totalTax = incomeTax + localTax;
+                  const net = amt - totalTax;
+                  return (
+                    <div className="space-y-3">
+                      <div className="bg-gray-50 rounded-xl p-4 text-sm space-y-2">
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">강사료 (총액)</span>
+                          <span className="font-mono font-semibold text-gray-900">{amt.toLocaleString()}원</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">사업소득세 (3%)</span>
+                          <span className="font-mono text-red-500">-{incomeTax.toLocaleString()}원</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-600">지방소득세 (0.3%)</span>
+                          <span className="font-mono text-red-500">-{localTax.toLocaleString()}원</span>
+                        </div>
+                        <div className="border-t border-gray-200 pt-2 flex justify-between">
+                          <span className="font-semibold text-gray-800">실수령액</span>
+                          <span className="font-mono font-bold text-emerald-700">{net.toLocaleString()}원</span>
+                        </div>
+                      </div>
+
+                      {result.paymentDate ? (
+                        <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-center">
+                          <CheckCircle className="w-8 h-8 text-emerald-500 mx-auto mb-2" />
+                          <p className="text-sm font-bold text-emerald-700">입금 완료</p>
+                          <p className="text-xs text-emerald-600 mt-1">
+                            입금일: {result.paymentDate}
+                          </p>
+                          <p className="text-lg font-bold font-mono text-emerald-800 mt-1">
+                            {net.toLocaleString()}원
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-center">
+                          <Clock className="w-8 h-8 text-amber-500 mx-auto mb-2" />
+                          <p className="text-sm font-bold text-amber-700">입금 대기중</p>
+                          <p className="text-xs text-amber-600 mt-1">
+                            강사료 지급 절차가 진행 중입니다
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
               </div>
             )}
 

@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Loader2, CheckCircle, ChevronRight } from "lucide-react";
+import { ArrowLeft, Loader2, CheckCircle, ChevronRight, Pencil } from "lucide-react";
 import { applicantSchema, type ApplicantFormData } from "@/lib/schema";
 import { SCHOOLS, SUBJECTS, EDUCATION_OPTIONS } from "@/lib/constants";
 import DuonFooter from "@/components/DuonFooter";
@@ -24,10 +24,19 @@ const STEPS = [
   { id: 4, label: "확인·제출" },
 ];
 
+interface ExistingData {
+  id: number;
+  status: string;
+  assignments: { school_id: string; subject_id: string; grade: string | null }[];
+}
+
 export default function ApplyPage() {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
   const [step, setStep] = useState(1);
+  const [editMode, setEditMode] = useState(false);
+  const [existingData, setExistingData] = useState<ExistingData | null>(null);
+  const [checking, setChecking] = useState(false);
 
   const {
     register,
@@ -47,6 +56,7 @@ export default function ApplyPage() {
 
   const [counts, setCounts] = useState<Record<string, number>>({});
   const [dbClosedIds, setDbClosedIds] = useState<string[]>([]);
+  const [dbClosedSchoolIds, setDbClosedSchoolIds] = useState<string[]>([]);
   const [showCounts, setShowCounts] = useState(true);
   const [restored, setRestored] = useState(false);
 
@@ -65,7 +75,7 @@ export default function ApplyPage() {
         setRestored(true);
       }
     } catch { /* ignore */ }
-    fetch("/api/applicants/counts").then((r) => r.json()).then((j) => { setCounts(j.data || {}); setDbClosedIds(j.closedIds || []); }).catch(() => {});
+    fetch("/api/applicants/counts").then((r) => r.json()).then((j) => { setCounts(j.data || {}); setDbClosedIds(j.closedIds || []); setDbClosedSchoolIds(j.closedSchoolIds || []); }).catch(() => {});
     fetch("/api/settings").then((r) => r.json()).then((j) => { if (j.data?.show_counts !== undefined) setShowCounts(j.data.show_counts !== "false"); }).catch(() => {});
   }, []);
 
@@ -84,6 +94,10 @@ export default function ApplyPage() {
 
   function isSubjectClosed(subjectId: string) {
     return dbClosedIds.includes(subjectId);
+  }
+
+  function isSchoolClosed(schoolId: string) {
+    return dbClosedSchoolIds.includes(schoolId);
   }
 
   function handleSchoolToggle(schoolId: string) {
@@ -115,9 +129,80 @@ export default function ApplyPage() {
     setValue("subjects", uniqueSubjects as ApplicantFormData["subjects"], { shouldValidate: true });
   }
 
+  // 기존 지원자 확인 (이름 + 연락처로 조회)
+  async function checkExistingApplicant() {
+    const name = watch("name");
+    const phone = watch("phone");
+    if (!name || !phone) return;
+
+    setChecking(true);
+    try {
+      const res = await fetch("/api/applicants/check", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, phone }),
+      });
+      if (!res.ok) return;
+      const json = await res.json();
+      if (json.data) {
+        const d = json.data;
+        setEditMode(true);
+        setExistingData({
+          id: d.id,
+          status: d.status,
+          assignments: d.assignments || [],
+        });
+        // 기존 데이터로 폼 채우기
+        setValue("email", d.email || "");
+        setValue("address", d.address || "");
+        setValue("birthDate", d.birthDate || "");
+        setValue("education", d.education || "");
+        if (d.major) setValue("major", d.major);
+        if (d.experience) setValue("experience", d.experience);
+        if (d.qualifications) setValue("qualifications", d.qualifications);
+        if (d.introduction) setValue("introduction", d.introduction);
+        if (d.schools?.length) setValue("schools", d.schools);
+        if (d.subjects?.length) setValue("subjects", d.subjects);
+        // schoolSubjectMap 복원: assignments 기반 + 기존 school-subject 매핑
+        const newMap: Record<string, string> = {};
+        // assignments에서 school→subject 매핑 (확정된 것 우선)
+        for (const a of d.assignments || []) {
+          newMap[a.school_id] = a.subject_id;
+        }
+        // 나머지 학교는 subjects 배열에서 추정 (1:1 매핑 시도)
+        const usedSubjects = new Set(Object.values(newMap));
+        for (const schoolId of d.schools || []) {
+          if (!newMap[schoolId]) {
+            const remaining = (d.subjects || []).find((s: string) => !usedSubjects.has(s));
+            if (remaining) {
+              newMap[schoolId] = remaining;
+              usedSubjects.add(remaining);
+            }
+          }
+        }
+        setSchoolSubjectMap(newMap);
+      }
+    } catch {
+      // 조회 실패 시 신규 지원 모드 유지
+    } finally {
+      setChecking(false);
+    }
+  }
+
+  // 확정된 학교-과목 조합인지 확인
+  function isConfirmedSchoolSubject(schoolId: string): boolean {
+    if (!existingData) return false;
+    return existingData.assignments.some((a) => a.school_id === schoolId);
+  }
+
   async function nextStep() {
     let valid = true;
-    if (step === 1) valid = await trigger(["name", "phone", "email", "birthDate", "address"]);
+    if (step === 1) {
+      valid = await trigger(["name", "phone", "email", "birthDate", "address"]);
+      if (valid && !editMode) {
+        await checkExistingApplicant();
+      }
+    }
     if (step === 2) valid = await trigger(["schools", "subjects"]);
     if (step === 3) valid = await trigger(["education", "experience"]);
     if (valid) setStep((s) => Math.min(s + 1, 4));
@@ -129,7 +214,7 @@ export default function ApplyPage() {
       const res = await fetch("/api/applicants", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
       if (!res.ok) { const err = await res.json(); throw new Error(err.error || "제출에 실패했습니다"); }
       localStorage.removeItem("camp9in_draft");
-      router.push("/apply/complete");
+      router.push(editMode ? "/apply/complete?mode=edit" : "/apply/complete");
     } catch (e) {
       alert(e instanceof Error ? e.message : "제출에 실패했습니다");
     } finally {
@@ -148,7 +233,10 @@ export default function ApplyPage() {
           <Link href="/" className="text-slate-400 hover:text-slate-700 p-1 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" aria-label="메인으로">
             <ArrowLeft className="w-5 h-5" />
           </Link>
-          <h1 className="text-base font-bold text-slate-900">강사 지원서</h1>
+          <h1 className="text-base font-bold text-slate-900 flex items-center gap-2">
+            {editMode && <Pencil className="w-4 h-4 text-amber-600" />}
+            {editMode ? "지원서 수정" : "강사 지원서"}
+          </h1>
         </nav>
       </header>
 
@@ -179,8 +267,34 @@ export default function ApplyPage() {
         </div>
       </div>
 
+      {/* 수정 모드 알림 */}
+      {editMode && existingData && (
+        <div className="max-w-2xl mx-auto px-4 pt-3">
+          <div className="flex items-center justify-between bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-sm">
+            <div>
+              <p className="text-amber-800 font-semibold">기존 지원서 수정 모드</p>
+              <p className="text-amber-600 text-xs mt-0.5">
+                동일한 이름·연락처의 지원서가 있어 수정 모드로 전환되었습니다.
+                {existingData.assignments.length > 0 && (
+                  <span className="block mt-0.5 text-red-600 font-medium">
+                    관리자가 확정한 과목은 변경할 수 없습니다.
+                  </span>
+                )}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => { setEditMode(false); setExistingData(null); }}
+              className="text-amber-600 hover:text-amber-800 text-xs font-medium shrink-0 ml-3"
+            >
+              새로 작성
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* 복원 알림 */}
-      {restored && (
+      {restored && !editMode && (
         <div className="max-w-2xl mx-auto px-4 pt-3">
           <div className="flex items-center justify-between bg-indigo-50 border border-indigo-200 rounded-xl px-4 py-3 text-sm">
             <p className="text-indigo-700">이전에 작성하던 내용이 복원되었습니다.</p>
@@ -248,16 +362,31 @@ export default function ApplyPage() {
                 <div className="grid grid-cols-1 gap-3">
                   {SCHOOLS.map((school) => {
                     const selected = selectedSchools.includes(school.id);
+                    const confirmed = isConfirmedSchoolSubject(school.id);
+                    const schoolClosed = isSchoolClosed(school.id);
+                    const isDisabled = confirmed || schoolClosed;
                     return (
-                      <button key={school.id} type="button" onClick={() => handleSchoolToggle(school.id)}
+                      <button key={school.id} type="button"
+                        onClick={() => { if (!isDisabled) handleSchoolToggle(school.id); }}
+                        disabled={isDisabled}
                         className={`flex items-center gap-4 p-4 rounded-xl border-2 text-left transition-all ${
+                          schoolClosed ? "border-red-200 bg-red-50/50 cursor-not-allowed opacity-60" :
+                          confirmed ? "border-amber-400 bg-amber-50/50 cursor-not-allowed opacity-80" :
                           selected ? "border-indigo-500 bg-indigo-50/50 shadow-sm shadow-indigo-100" : "border-slate-200 bg-white hover:border-slate-300"
                         }`} aria-pressed={selected}>
-                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${selected ? "border-indigo-500 bg-indigo-500" : "border-slate-300"}`}>
-                          {selected && <CheckCircle className="w-3.5 h-3.5 text-white" />}
+                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                          schoolClosed ? "border-red-400 bg-red-400" :
+                          confirmed ? "border-amber-500 bg-amber-500" :
+                          selected ? "border-indigo-500 bg-indigo-500" : "border-slate-300"
+                        }`}>
+                          {(selected || confirmed) && !schoolClosed && <CheckCircle className="w-3.5 h-3.5 text-white" />}
                         </div>
-                        <div>
-                          <p className={`text-sm font-bold ${selected ? "text-indigo-700" : "text-slate-700"}`}>{school.name}</p>
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2">
+                            <p className={`text-sm font-bold ${schoolClosed ? "text-red-400" : confirmed ? "text-amber-700" : selected ? "text-indigo-700" : "text-slate-700"}`}>{school.name}</p>
+                            {schoolClosed && <span className="text-[10px] bg-red-100 text-red-600 px-1.5 py-0.5 rounded-full font-bold">마감</span>}
+                            {confirmed && !schoolClosed && <span className="text-[10px] bg-amber-200 text-amber-800 px-1.5 py-0.5 rounded-full font-bold">확정</span>}
+                          </div>
                           <p className="text-xs text-slate-400 mt-0.5">{school.dateLabel} | {school.time}</p>
                         </div>
                       </button>
@@ -278,15 +407,19 @@ export default function ApplyPage() {
                       const subjectList = SUBJECTS.filter((sub) => (school.subjects as readonly string[]).includes(sub.id)).filter((sub) => !isSubjectClosed(sub.id));
                       const selectedSub = schoolSubjectMap[schoolId];
                       const subInfo = selectedSub ? SUBJECTS.find((s) => s.id === selectedSub) : null;
+                      const confirmed = isConfirmedSchoolSubject(schoolId);
                       return (
-                        <div key={schoolId} className="bg-white rounded-xl border border-slate-200 p-4">
+                        <div key={schoolId} className={`rounded-xl border p-4 ${confirmed ? "bg-amber-50/50 border-amber-200" : "bg-white border-slate-200"}`}>
                           <div className="flex items-center gap-3 mb-3">
-                            <span className="text-sm font-bold text-indigo-600">{school.shortName}</span>
-                            {subInfo && <span className="text-xs text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full font-medium">{subInfo.icon} {subInfo.name}</span>}
+                            <span className={`text-sm font-bold ${confirmed ? "text-amber-700" : "text-indigo-600"}`}>{school.shortName}</span>
+                            {subInfo && <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${confirmed ? "text-amber-700 bg-amber-100" : "text-emerald-600 bg-emerald-50"}`}>{subInfo.icon} {subInfo.name}</span>}
+                            {confirmed && <span className="text-[10px] bg-amber-200 text-amber-800 px-1.5 py-0.5 rounded-full font-bold">확정 - 변경 불가</span>}
                           </div>
                           <label htmlFor={`subject-${schoolId}`} className="sr-only">{school.shortName} 과목</label>
-                          <select id={`subject-${schoolId}`} value={schoolSubjectMap[schoolId] || ""} onChange={(e) => handleSchoolSubjectChange(schoolId, e.target.value)}
-                            className={inputClass}>
+                          <select id={`subject-${schoolId}`} value={schoolSubjectMap[schoolId] || ""}
+                            onChange={(e) => { if (!confirmed) handleSchoolSubjectChange(schoolId, e.target.value); }}
+                            disabled={confirmed}
+                            className={`${inputClass} ${confirmed ? "bg-amber-50 text-amber-700 cursor-not-allowed" : ""}`}>
                             <option value="">과목을 선택해주세요</option>
                             {subjectList.map((subject) => (
                               <option key={subject.id} value={subject.id}>{subject.icon} {subject.name} — {subject.description}</option>
@@ -344,7 +477,7 @@ export default function ApplyPage() {
           {step === 4 && (
             <div className="space-y-6">
               <div className="mb-6">
-                <h2 className="text-xl font-bold text-slate-900">지원 내용을 확인하고 제출하세요</h2>
+                <h2 className="text-xl font-bold text-slate-900">{editMode ? "수정 내용을 확인하고 제출하세요" : "지원 내용을 확인하고 제출하세요"}</h2>
               </div>
 
               {/* 강사료 */}
@@ -386,8 +519,8 @@ export default function ApplyPage() {
               <button type="submit" disabled={submitting}
                 className="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white py-4 rounded-xl font-bold text-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-indigo-200 hover:shadow-xl hover:shadow-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                 {submitting ? (
-                  <span className="inline-flex items-center gap-2"><Loader2 className="w-5 h-5 animate-spin" /> 제출 중...</span>
-                ) : "지원서 제출"}
+                  <span className="inline-flex items-center gap-2"><Loader2 className="w-5 h-5 animate-spin" /> {editMode ? "수정 중..." : "제출 중..."}</span>
+                ) : editMode ? "지원서 수정 제출" : "지원서 제출"}
               </button>
             </div>
           )}
@@ -401,9 +534,13 @@ export default function ApplyPage() {
                   이전
                 </button>
               )}
-              <button type="button" onClick={nextStep}
-                className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl font-bold text-base transition-colors flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                다음 <ChevronRight className="w-4 h-4" />
+              <button type="button" onClick={nextStep} disabled={checking}
+                className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl font-bold text-base transition-colors flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50">
+                {checking ? (
+                  <span className="inline-flex items-center gap-2"><Loader2 className="w-4 h-4 animate-spin" /> 확인 중...</span>
+                ) : (
+                  <>다음 <ChevronRight className="w-4 h-4" /></>
+                )}
               </button>
             </div>
           )}

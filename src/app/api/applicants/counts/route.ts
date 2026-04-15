@@ -12,6 +12,10 @@ interface ClosedRow {
   subject_id: string;
 }
 
+interface ClosedSchoolRow {
+  school_id: string;
+}
+
 export async function GET() {
   try {
     const countRows = await query<CountRow>(
@@ -22,6 +26,16 @@ export async function GET() {
       "SELECT subject_id FROM closed_subjects"
     );
 
+    let closedSchoolIds: string[] = [];
+    try {
+      const closedSchoolRows = await query<ClosedSchoolRow>(
+        "SELECT school_id FROM closed_schools"
+      );
+      closedSchoolIds = closedSchoolRows.map((r) => r.school_id);
+    } catch {
+      // 테이블 미존재 시 무시
+    }
+
     const counts: Record<string, number> = {};
     for (const row of countRows) {
       counts[row.subject_id] = row.cnt;
@@ -29,8 +43,8 @@ export async function GET() {
 
     const closedIds = closedRows.map((r) => r.subject_id);
 
-    return NextResponse.json({ data: counts, closedIds });
+    return NextResponse.json({ data: counts, closedIds, closedSchoolIds });
   } catch {
-    return NextResponse.json({ data: {}, closedIds: [] });
+    return NextResponse.json({ data: {}, closedIds: [], closedSchoolIds: [] });
   }
 }

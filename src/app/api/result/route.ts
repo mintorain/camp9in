@@ -11,6 +11,8 @@ interface ApplicantResult {
   bank_name: string | null;
   bank_account: string | null;
   payment_submitted_at: string | null;
+  payment_amount: number | null;
+  payment_date: string | null;
 }
 
 interface RelationRow {
@@ -42,7 +44,8 @@ export async function POST(request: NextRequest) {
     const normalizedPhone = phone.replace(/-/g, "");
 
     const rows = await query<ApplicantResult>(
-      `SELECT id, name, phone, status, payment_name, payment_address, bank_name, bank_account, payment_submitted_at
+      `SELECT id, name, phone, status, payment_name, payment_address, bank_name, bank_account,
+              payment_submitted_at, payment_amount, DATE_FORMAT(payment_date, '%Y-%m-%d') as payment_date
        FROM applicants
        WHERE name = ? AND REPLACE(phone, '-', '') = ?`,
       [name.trim(), normalizedPhone]
@@ -90,6 +93,8 @@ export async function POST(request: NextRequest) {
         paymentAddress: applicant.payment_address,
         bankName: applicant.bank_name,
         bankAccount: applicant.bank_account,
+        paymentAmount: applicant.payment_amount,
+        paymentDate: applicant.payment_date,
       },
     });
   } catch (err) {

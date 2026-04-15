@@ -1,0 +1,7 @@
+-- 학교 마감 관리 테이블
+CREATE TABLE IF NOT EXISTS closed_schools (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  school_id VARCHAR(50) NOT NULL UNIQUE,
+  closed_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  closed_by VARCHAR(50) DEFAULT 'admin'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
