@@ -43,13 +43,25 @@ export async function POST(request: NextRequest) {
 
     const normalizedPhone = phone.replace(/-/g, "");
 
-    const rows = await query<ApplicantResult>(
-      `SELECT id, name, phone, status, payment_name, payment_address, bank_name, bank_account,
-              payment_submitted_at, payment_amount, DATE_FORMAT(payment_date, '%Y-%m-%d') as payment_date
-       FROM applicants
-       WHERE name = ? AND REPLACE(phone, '-', '') = ?`,
-      [name.trim(), normalizedPhone]
-    );
+    let rows: ApplicantResult[];
+    try {
+      rows = await query<ApplicantResult>(
+        `SELECT id, name, phone, status, payment_name, payment_address, bank_name, bank_account,
+                payment_submitted_at, payment_amount, DATE_FORMAT(payment_date, '%Y-%m-%d') as payment_date
+         FROM applicants
+         WHERE name = ? AND REPLACE(phone, '-', '') = ?`,
+        [name.trim(), normalizedPhone]
+      );
+    } catch {
+      // payment_amount/payment_date 컬럼이 없는 경우 fallback
+      rows = await query<ApplicantResult>(
+        `SELECT id, name, phone, status, payment_name, payment_address, bank_name, bank_account,
+                payment_submitted_at, NULL as payment_amount, NULL as payment_date
+         FROM applicants
+         WHERE name = ? AND REPLACE(phone, '-', '') = ?`,
+        [name.trim(), normalizedPhone]
+      );
+    }
 
     if (rows.length === 0) {
       return NextResponse.json(
