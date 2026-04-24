@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { query } from "@/lib/db";
-import { SCHOOLS, SUBJECTS } from "@/lib/constants";
+import { getSchools, getSubjects } from "@/lib/data";
 import { verifyAdmin } from "@/lib/auth-server";
 
 interface ApplicantRow {
@@ -34,21 +34,24 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const applicants = await query<ApplicantRow>(
-      `SELECT id, name, phone, email, address,
-              DATE_FORMAT(birth_date, '%Y-%m-%d') as birth_date,
-              payment_name, resident_id, payment_address,
-              bank_name, bank_account, payment_amount,
-              DATE_FORMAT(payment_date, '%Y-%m-%d') as payment_date,
-              payment_submitted_at
-       FROM applicants
-       WHERE status = 'accepted'
-       ORDER BY name ASC`
-    );
-
-    const assignmentRows = await query<AssignmentRow>(
-      "SELECT applicant_id, school_id, subject_id, grade FROM applicant_assignments ORDER BY id ASC"
-    );
+    const [applicants, assignmentRows, SCHOOLS, SUBJECTS] = await Promise.all([
+      query<ApplicantRow>(
+        `SELECT id, name, phone, email, address,
+                DATE_FORMAT(birth_date, '%Y-%m-%d') as birth_date,
+                payment_name, resident_id, payment_address,
+                bank_name, bank_account, payment_amount,
+                DATE_FORMAT(payment_date, '%Y-%m-%d') as payment_date,
+                payment_submitted_at
+         FROM applicants
+         WHERE status = 'accepted'
+         ORDER BY name ASC`
+      ),
+      query<AssignmentRow>(
+        "SELECT applicant_id, school_id, subject_id, grade FROM applicant_assignments ORDER BY id ASC"
+      ),
+      getSchools(),
+      getSubjects(),
+    ]);
 
     const BOM = "\uFEFF";
     const headers = [

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { query } from "@/lib/db";
-import { SCHOOLS, SUBJECTS, STATUS_OPTIONS } from "@/lib/constants";
+import { STATUS_OPTIONS } from "@/lib/constants";
+import { getSchools, getSubjects } from "@/lib/data";
 import { verifyAdmin } from "@/lib/auth-server";
 
 interface ApplicantRow {
@@ -31,15 +32,15 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const applicants = await query<ApplicantRow>(
-      "SELECT *, DATE_FORMAT(birth_date, '%Y-%m-%d') as birth_date, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at FROM applicants ORDER BY created_at DESC"
-    );
-    const schoolRows = await query<RelationRow>(
-      "SELECT applicant_id, school_id FROM applicant_schools"
-    );
-    const subjectRows = await query<RelationRow>(
-      "SELECT applicant_id, subject_id FROM applicant_subjects"
-    );
+    const [applicants, schoolRows, subjectRows, SCHOOLS, SUBJECTS] = await Promise.all([
+      query<ApplicantRow>(
+        "SELECT *, DATE_FORMAT(birth_date, '%Y-%m-%d') as birth_date, DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') as created_at FROM applicants ORDER BY created_at DESC"
+      ),
+      query<RelationRow>("SELECT applicant_id, school_id FROM applicant_schools"),
+      query<RelationRow>("SELECT applicant_id, subject_id FROM applicant_subjects"),
+      getSchools(),
+      getSubjects(),
+    ]);
 
     const BOM = "\uFEFF";
     const headers = [

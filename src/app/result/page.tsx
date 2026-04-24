@@ -10,8 +10,9 @@ import {
   Clock,
   Search,
   Banknote,
+  Info,
 } from "lucide-react";
-import { SCHOOLS, SUBJECTS } from "@/lib/constants";
+import { useCampData } from "@/lib/useCampData";
 import DuonFooter from "@/components/DuonFooter";
 
 function formatPhone(value: string) {
@@ -31,7 +32,13 @@ interface ResultData {
   id: number;
   name: string;
   status: string;
-  assignments: { school_id: string; subject_id: string; grade: string | null; paymentAmount?: number | null }[];
+  assignments: {
+    school_id: string;
+    subject_id: string;
+    grade: string | null;
+    paymentAmount?: number | null;
+    paymentDate?: string | null;
+  }[];
   paymentSubmitted: boolean;
   paymentName?: string;
   paymentAddress?: string;
@@ -68,6 +75,7 @@ const STATUS_MAP: Record<
 };
 
 export default function ResultPage() {
+  const { schools: SCHOOLS, subjects: SUBJECTS } = useCampData();
   const [lookupName, setLookupName] = useState("");
   const [lookupPhone, setLookupPhone] = useState("");
   const [loading, setLoading] = useState(false);
@@ -82,6 +90,7 @@ export default function ResultPage() {
   const [bankAccount, setBankAccount] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [justSaved, setJustSaved] = useState(false);
 
   async function handleLookup(e: React.FormEvent) {
     e.preventDefault();
@@ -161,6 +170,8 @@ export default function ResultPage() {
       }
 
       setSubmitted(true);
+      setJustSaved(true);
+      setTimeout(() => setJustSaved(false), 3000);
     } catch {
       setError("서버 오류가 발생했습니다");
     } finally {
@@ -188,6 +199,18 @@ export default function ResultPage() {
       <main className="flex-1 max-w-2xl mx-auto w-full px-4 py-8">
         {/* 조회 폼 */}
         {!result && (
+          <>
+          <div className="mb-6 rounded-2xl border border-amber-200 bg-amber-50 p-4 flex gap-3" role="note">
+            <Info className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" aria-hidden="true" />
+            <div className="text-sm leading-relaxed text-amber-900">
+              <p className="font-semibold mb-1">합격자 안내</p>
+              <p>
+                합격하신 분께는 <strong>강사료 지급을 위한 개인정보</strong>(예금주·은행·계좌번호,
+                주민등록번호 등)를 추가로 요청드립니다. 입력하신 정보는 강사료 지급 및 원천징수 신고
+                목적으로만 사용되며, 관계 법령에 따라 안전하게 관리됩니다.
+              </p>
+            </div>
+          </div>
           <div className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
             <div className="text-center mb-6">
               <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-3">
@@ -252,6 +275,7 @@ export default function ResultPage() {
               </button>
             </form>
           </div>
+          </>
         )}
 
         {/* 결과 표시 */}
@@ -338,36 +362,100 @@ export default function ResultPage() {
               );
             })()}
 
-            {/* 강사료 지급 정보 입력 (합격자만) */}
+            {/* 학교별 강사료 지급 상태 (합격자 + 지급 금액 설정된 배정) */}
+            {result.status === "accepted" && result.assignments.some((a) => (a.paymentAmount ?? 0) > 0) && (
+              <div className="bg-white rounded-2xl border border-gray-200 p-6">
+                <h3 className="text-sm font-bold text-gray-700 mb-3 flex items-center gap-2">
+                  <Banknote className="w-4 h-4 text-emerald-600" />
+                  학교별 강사료 지급 상태
+                </h3>
+                <div className="space-y-2">
+                  {result.assignments
+                    .filter((a) => (a.paymentAmount ?? 0) > 0)
+                    .map((a, i) => {
+                      const school = SCHOOLS.find((s) => s.id === a.school_id);
+                      const schoolName = school?.name || a.school_id;
+                      const amt = a.paymentAmount || 0;
+                      const incomeTax = Math.floor(amt * 0.03);
+                      const localTax = Math.floor(amt * 0.003);
+                      const net = amt - (incomeTax + localTax);
+                      const paid = !!a.paymentDate;
+                      const dateStr = a.paymentDate
+                        ? (() => {
+                            const d = new Date(a.paymentDate);
+                            return `${d.getMonth() + 1}월 ${d.getDate()}일`;
+                          })()
+                        : null;
+                      return (
+                        <div
+                          key={`${a.school_id}_${a.subject_id}_${i}`}
+                          className={`rounded-xl p-4 border ${paid ? "bg-emerald-50 border-emerald-200" : "bg-amber-50 border-amber-200"}`}
+                        >
+                          <div className="flex items-start gap-3">
+                            {paid ? (
+                              <CheckCircle className="w-6 h-6 text-emerald-500 shrink-0 mt-0.5" />
+                            ) : (
+                              <Clock className="w-6 h-6 text-amber-500 shrink-0 mt-0.5" />
+                            )}
+                            <div className="flex-1">
+                              {paid ? (
+                                <p className="text-sm font-bold text-emerald-800 leading-relaxed">
+                                  {schoolName}는 <span className="underline">{dateStr}</span> 강사료 입금이 완료되었습니다.
+                                </p>
+                              ) : (
+                                <p className="text-sm font-bold text-amber-800">
+                                  {schoolName} 강사료 입금 대기중
+                                </p>
+                              )}
+                              <div className="mt-2 text-xs grid grid-cols-3 gap-1 font-mono">
+                                <div>
+                                  <span className="text-gray-500">강사료 </span>
+                                  <span className="text-gray-800">{amt.toLocaleString()}원</span>
+                                </div>
+                                <div>
+                                  <span className="text-gray-500">원천징수 </span>
+                                  <span className="text-red-500">-{(incomeTax + localTax).toLocaleString()}</span>
+                                </div>
+                                <div>
+                                  <span className="text-gray-500">실수령 </span>
+                                  <span className={paid ? "text-emerald-700 font-bold" : "text-gray-800"}>{net.toLocaleString()}원</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                </div>
+              </div>
+            )}
+
+            {/* 강사료 지급 정보 입력 (합격자만) — 언제든 수정 가능 */}
             {result.status === "accepted" && (
               <div className="bg-white rounded-2xl border border-gray-200 p-6">
-                <h3 className="text-sm font-bold text-gray-700 mb-1">
-                  사업소득 강사료 지급 정보
-                </h3>
+                <div className="flex items-start justify-between mb-1 gap-3">
+                  <h3 className="text-sm font-bold text-gray-700">
+                    사업소득 강사료 지급 정보
+                  </h3>
+                  {submitted && (
+                    <span className="text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium shrink-0">
+                      제출완료
+                    </span>
+                  )}
+                </div>
                 <p className="text-xs text-gray-400 mb-4">
-                  강사료 지급을 위해 아래 정보를 입력해주세요. 입력된 정보는 강사료 지급 목적으로만 사용됩니다.
+                  {submitted
+                    ? "이미 제출하신 정보입니다. 필요하면 아래에서 언제든 수정할 수 있습니다."
+                    : "강사료 지급을 위해 아래 정보를 입력해주세요. 입력된 정보는 강사료 지급 목적으로만 사용됩니다."}
                 </p>
-
-                {submitted ? (
-                  <div className="bg-green-50 border border-green-200 rounded-xl p-4 text-center">
-                    <CheckCircle className="w-8 h-8 text-green-500 mx-auto mb-2" />
-                    <p className="text-sm font-bold text-green-700">
-                      강사료 지급 정보가 제출되었습니다
-                    </p>
-                    <div className="mt-3 text-xs text-green-600 space-y-1">
-                      <p>성함: {paymentName}</p>
-                      <p>주소: {paymentAddress}</p>
-                      <p>은행: {bankName} {bankAccount}</p>
-                    </div>
-                    <button
-                      onClick={() => setSubmitted(false)}
-                      className="mt-3 text-xs text-green-600 underline hover:text-green-800 focus:outline-none"
-                    >
-                      수정하기
-                    </button>
+                {justSaved && (
+                  <div className="mb-4 rounded-lg bg-emerald-50 border border-emerald-200 px-3 py-2 text-sm text-emerald-800 flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 shrink-0" />
+                    저장되었습니다
                   </div>
-                ) : (
-                  <form onSubmit={handlePaymentSubmit} className="space-y-4">
+                )}
+
+                <form onSubmit={handlePaymentSubmit} className="space-y-4">
                     <div>
                       <label
                         htmlFor="payment-name"
@@ -490,72 +578,13 @@ export default function ResultPage() {
                     >
                       {submitting ? (
                         <Loader2 className="w-5 h-5 animate-spin mx-auto" />
+                      ) : submitted ? (
+                        "계좌 정보 수정 저장"
                       ) : (
                         "제출하기"
                       )}
                     </button>
                   </form>
-                )}
-              </div>
-            )}
-
-            {/* 강사료 지급 현황 (합격자 + 금액 설정됨) */}
-            {result.status === "accepted" && result.paymentAmount && result.paymentAmount > 0 && (
-              <div className="bg-white rounded-2xl border border-gray-200 p-6">
-                <h3 className="text-sm font-bold text-gray-700 mb-3 flex items-center gap-2">
-                  <Banknote className="w-4 h-4 text-emerald-600" />
-                  강사료 지급 현황
-                </h3>
-                {(() => {
-                  const amt = result.paymentAmount!;
-                  const incomeTax = Math.floor(amt * 0.03);
-                  const localTax = Math.floor(amt * 0.003);
-                  const totalTax = incomeTax + localTax;
-                  const net = amt - totalTax;
-                  return (
-                    <div className="space-y-3">
-                      <div className="bg-gray-50 rounded-xl p-4 text-sm space-y-2">
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">강사료 (총액)</span>
-                          <span className="font-mono font-semibold text-gray-900">{amt.toLocaleString()}원</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">사업소득세 (3%)</span>
-                          <span className="font-mono text-red-500">-{incomeTax.toLocaleString()}원</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-gray-600">지방소득세 (0.3%)</span>
-                          <span className="font-mono text-red-500">-{localTax.toLocaleString()}원</span>
-                        </div>
-                        <div className="border-t border-gray-200 pt-2 flex justify-between">
-                          <span className="font-semibold text-gray-800">실수령액</span>
-                          <span className="font-mono font-bold text-emerald-700">{net.toLocaleString()}원</span>
-                        </div>
-                      </div>
-
-                      {result.paymentDate ? (
-                        <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-center">
-                          <CheckCircle className="w-8 h-8 text-emerald-500 mx-auto mb-2" />
-                          <p className="text-sm font-bold text-emerald-700">입금 완료</p>
-                          <p className="text-xs text-emerald-600 mt-1">
-                            입금일: {result.paymentDate}
-                          </p>
-                          <p className="text-lg font-bold font-mono text-emerald-800 mt-1">
-                            {net.toLocaleString()}원
-                          </p>
-                        </div>
-                      ) : (
-                        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-center">
-                          <Clock className="w-8 h-8 text-amber-500 mx-auto mb-2" />
-                          <p className="text-sm font-bold text-amber-700">입금 대기중</p>
-                          <p className="text-xs text-amber-600 mt-1">
-                            강사료 지급 절차가 진행 중입니다
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })()}
               </div>
             )}
 

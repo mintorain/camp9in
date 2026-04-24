@@ -7,7 +7,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Loader2, CheckCircle, ChevronRight, Pencil } from "lucide-react";
 import { applicantSchema, type ApplicantFormData } from "@/lib/schema";
-import { SCHOOLS, SUBJECTS, EDUCATION_OPTIONS } from "@/lib/constants";
+import { EDUCATION_OPTIONS } from "@/lib/constants";
+import { useCampData } from "@/lib/useCampData";
 import DuonFooter from "@/components/DuonFooter";
 
 function formatPhone(value: string) {
@@ -32,6 +33,7 @@ interface ExistingData {
 
 export default function ApplyPage() {
   const router = useRouter();
+  const { schools: SCHOOLS, subjects: SUBJECTS, loading: campDataLoading } = useCampData();
   const [submitting, setSubmitting] = useState(false);
   const [step, setStep] = useState(1);
   const [editMode, setEditMode] = useState(false);
@@ -91,6 +93,24 @@ export default function ApplyPage() {
       localStorage.setItem("camp9in_draft", JSON.stringify({ ...allFields, schoolSubjectMap, step }));
     } catch { /* ignore */ }
   }, [allFields, schoolSubjectMap, step]);
+
+  // 마감된 학교가 draft에 남아있으면 정리
+  useEffect(() => {
+    if (dbClosedSchoolIds.length === 0) return;
+    const current = selectedSchools;
+    const filtered = current.filter((id) => !dbClosedSchoolIds.includes(id));
+    if (filtered.length !== current.length) {
+      setValue("schools", filtered as ApplicantFormData["schools"], { shouldValidate: false });
+      setSchoolSubjectMap((prev) => {
+        const next = { ...prev };
+        dbClosedSchoolIds.forEach((id) => delete next[id]);
+        const uniqueSubjects = [...new Set(Object.values(next).filter(Boolean))];
+        setValue("subjects", uniqueSubjects as ApplicantFormData["subjects"], { shouldValidate: false });
+        return next;
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dbClosedSchoolIds]);
 
   function isSubjectClosed(subjectId: string) {
     return dbClosedIds.includes(subjectId);
@@ -235,7 +255,7 @@ export default function ApplyPage() {
           </Link>
           <h1 className="text-base font-bold text-slate-900 flex items-center gap-2">
             {editMode && <Pencil className="w-4 h-4 text-amber-600" />}
-            {editMode ? "지원서 수정" : "강사 지원서"}
+            {editMode ? "지원서 관리" : "강사 지원서"}
           </h1>
         </nav>
       </header>
@@ -267,17 +287,20 @@ export default function ApplyPage() {
         </div>
       </div>
 
-      {/* 수정 모드 알림 */}
+      {/* 지원서 관리 모드 알림 (기존 지원 이력 있음) */}
       {editMode && existingData && (
         <div className="max-w-2xl mx-auto px-4 pt-3">
-          <div className="flex items-center justify-between bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-sm">
-            <div>
-              <p className="text-amber-800 font-semibold">기존 지원서 수정 모드</p>
-              <p className="text-amber-600 text-xs mt-0.5">
-                동일한 이름·연락처의 지원서가 있어 수정 모드로 전환되었습니다.
+          <div className="flex items-start justify-between bg-indigo-50 border border-indigo-200 rounded-xl px-4 py-3 text-sm gap-3">
+            <div className="flex-1">
+              <p className="text-indigo-800 font-semibold">
+                이전에 지원하신 이력이 확인됐어요
+              </p>
+              <p className="text-indigo-700 text-xs mt-1 leading-relaxed">
+                기존 정보는 그대로 불러와졌고, <strong>새로운 학교·과목을 추가로 지원</strong>하거나
+                기존 내용을 수정할 수 있습니다.
                 {existingData.assignments.length > 0 && (
-                  <span className="block mt-0.5 text-red-600 font-medium">
-                    관리자가 확정한 과목은 변경할 수 없습니다.
+                  <span className="block mt-1 text-amber-700 font-medium">
+                    · 합격 확정된 학교·과목은 유지됩니다 (해제 불가).
                   </span>
                 )}
               </p>
@@ -285,7 +308,8 @@ export default function ApplyPage() {
             <button
               type="button"
               onClick={() => { setEditMode(false); setExistingData(null); }}
-              className="text-amber-600 hover:text-amber-800 text-xs font-medium shrink-0 ml-3"
+              className="text-indigo-500 hover:text-indigo-800 text-xs font-medium shrink-0 underline"
+              title="기존 이력과 무관하게 새로 작성합니다"
             >
               새로 작성
             </button>
@@ -360,51 +384,58 @@ export default function ApplyPage() {
               <div>
                 <p className={labelClass}>지원 학교 <span className="text-red-400">*</span></p>
                 <div className="grid grid-cols-1 gap-3">
-                  {SCHOOLS.map((school) => {
+                  {SCHOOLS.filter((school) => !isSchoolClosed(school.id)).map((school) => {
                     const selected = selectedSchools.includes(school.id);
                     const confirmed = isConfirmedSchoolSubject(school.id);
-                    const schoolClosed = isSchoolClosed(school.id);
-                    const isDisabled = confirmed || schoolClosed;
+                    const isDisabled = confirmed;
                     return (
                       <button key={school.id} type="button"
                         onClick={() => { if (!isDisabled) handleSchoolToggle(school.id); }}
                         disabled={isDisabled}
                         className={`flex items-center gap-4 p-4 rounded-xl border-2 text-left transition-all ${
-                          schoolClosed ? "border-red-200 bg-red-50/50 cursor-not-allowed opacity-60" :
                           confirmed ? "border-amber-400 bg-amber-50/50 cursor-not-allowed opacity-80" :
                           selected ? "border-indigo-500 bg-indigo-50/50 shadow-sm shadow-indigo-100" : "border-slate-200 bg-white hover:border-slate-300"
                         }`} aria-pressed={selected}>
                         <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
-                          schoolClosed ? "border-red-400 bg-red-400" :
                           confirmed ? "border-amber-500 bg-amber-500" :
                           selected ? "border-indigo-500 bg-indigo-500" : "border-slate-300"
                         }`}>
-                          {(selected || confirmed) && !schoolClosed && <CheckCircle className="w-3.5 h-3.5 text-white" />}
+                          {(selected || confirmed) && <CheckCircle className="w-3.5 h-3.5 text-white" />}
                         </div>
                         <div className="flex-1">
                           <div className="flex items-center gap-2">
-                            <p className={`text-sm font-bold ${schoolClosed ? "text-red-400" : confirmed ? "text-amber-700" : selected ? "text-indigo-700" : "text-slate-700"}`}>{school.name}</p>
-                            {schoolClosed && <span className="text-[10px] bg-red-100 text-red-600 px-1.5 py-0.5 rounded-full font-bold">마감</span>}
-                            {confirmed && !schoolClosed && <span className="text-[10px] bg-amber-200 text-amber-800 px-1.5 py-0.5 rounded-full font-bold">확정</span>}
+                            <p className={`text-sm font-bold ${confirmed ? "text-amber-700" : selected ? "text-indigo-700" : "text-slate-700"}`}>{school.name}</p>
+                            {confirmed && <span className="text-[10px] bg-amber-200 text-amber-800 px-1.5 py-0.5 rounded-full font-bold">확정</span>}
                           </div>
                           <p className="text-xs text-slate-400 mt-0.5">{school.dateLabel} | {school.time}</p>
                         </div>
                       </button>
                     );
                   })}
+                  {campDataLoading && SCHOOLS.length === 0 && (
+                    <div className="rounded-xl border-2 border-dashed border-slate-200 bg-slate-50 p-6 text-center text-sm text-slate-400">
+                      <Loader2 className="w-5 h-5 animate-spin inline-block mr-2" />
+                      학교 정보 불러오는 중...
+                    </div>
+                  )}
+                  {!campDataLoading && SCHOOLS.length > 0 && SCHOOLS.every((s) => isSchoolClosed(s.id)) && (
+                    <div className="rounded-xl border-2 border-dashed border-slate-200 bg-slate-50 p-6 text-center text-sm text-slate-500">
+                      현재 지원 가능한 학교가 없습니다.
+                    </div>
+                  )}
                 </div>
                 {errors.schools && <p className={errorClass} role="alert">{errors.schools.message}</p>}
               </div>
 
-              {selectedSchools.length > 0 && (
+              {selectedSchools.filter((id) => !isSchoolClosed(id)).length > 0 && (
                 <div>
                   <p className={labelClass}>학교별 지원 과목 <span className="text-red-400">*</span></p>
                   <p className="text-xs text-slate-400 mb-3">동시 운영이므로 학교별 1개 과목만 선택 가능합니다.</p>
                   <div className="space-y-3">
-                    {selectedSchools.map((schoolId) => {
+                    {selectedSchools.filter((id) => !isSchoolClosed(id)).map((schoolId) => {
                       const school = SCHOOLS.find((s) => s.id === schoolId);
                       if (!school) return null;
-                      const subjectList = SUBJECTS.filter((sub) => (school.subjects as readonly string[]).includes(sub.id)).filter((sub) => !isSubjectClosed(sub.id));
+                      const subjectList = SUBJECTS.filter((sub) => school.subjects.includes(sub.id)).filter((sub) => !isSubjectClosed(sub.id));
                       const selectedSub = schoolSubjectMap[schoolId];
                       const subInfo = selectedSub ? SUBJECTS.find((s) => s.id === selectedSub) : null;
                       const confirmed = isConfirmedSchoolSubject(schoolId);
@@ -477,25 +508,40 @@ export default function ApplyPage() {
           {step === 4 && (
             <div className="space-y-6">
               <div className="mb-6">
-                <h2 className="text-xl font-bold text-slate-900">{editMode ? "수정 내용을 확인하고 제출하세요" : "지원 내용을 확인하고 제출하세요"}</h2>
+                <h2 className="text-xl font-bold text-slate-900">{editMode ? "최종 지원 내용을 확인하고 제출하세요" : "지원 내용을 확인하고 제출하세요"}</h2>
               </div>
 
-              {/* 강사료 */}
-              <div className="bg-gradient-to-br from-indigo-50 to-violet-50 rounded-xl border border-indigo-100 p-5">
-                <h3 className="text-sm font-bold text-slate-800 mb-3">강사료 지급 규정</h3>
-                <div className="grid md:grid-cols-2 gap-3 text-sm">
-                  <div className="bg-white/80 rounded-lg p-3">
-                    <p className="font-semibold text-indigo-700 text-xs mb-2">미금초</p>
-                    <p className="text-slate-600">1~4학년: 80분 <strong className="text-indigo-600">80,000원</strong> (1일 2개반)</p>
-                    <p className="text-slate-600 mt-1">5~6학년: 1일 <strong className="text-indigo-600">160,000원</strong> (09:00~12:20)</p>
+              {/* 강사료 — 모집중인 학교만 표시 (마감 학교 숨김) */}
+              {(() => {
+                const migeumOpen = !isSchoolClosed("migeum");
+                const jeonglimOpen = !isSchoolClosed("jeonglim");
+                const cheongwonOpen = !isSchoolClosed("cheongwon");
+                const anyOpen = migeumOpen || jeonglimOpen || cheongwonOpen;
+                if (!anyOpen) return null;
+                return (
+                <div className="bg-gradient-to-br from-indigo-50 to-violet-50 rounded-xl border border-indigo-100 p-5">
+                  <h3 className="text-sm font-bold text-slate-800 mb-3">강사료 지급 규정 <span className="text-[10px] font-normal text-slate-400">(모집중인 학교)</span></h3>
+                  <div className="grid md:grid-cols-2 gap-3 text-sm">
+                    {migeumOpen && (
+                      <div className="bg-white/80 rounded-lg p-3">
+                        <p className="font-semibold text-indigo-700 text-xs mb-2">미금초</p>
+                        <p className="text-slate-600">1~4학년: 80분 <strong className="text-indigo-600">80,000원</strong> (1일 2개반)</p>
+                        <p className="text-slate-600 mt-1">5~6학년: 1일 <strong className="text-indigo-600">160,000원</strong> (09:00~12:20)</p>
+                      </div>
+                    )}
+                    {(jeonglimOpen || cheongwonOpen) && (
+                      <div className="bg-white/80 rounded-lg p-3">
+                        <p className="font-semibold text-amber-700 text-xs mb-2">
+                          {[jeonglimOpen && "정림초", cheongwonOpen && "청원초"].filter(Boolean).join(" · ")}
+                        </p>
+                        <p className="text-slate-600">09:00~12:00 <strong className="text-amber-600">150,000원</strong></p>
+                      </div>
+                    )}
                   </div>
-                  <div className="bg-white/80 rounded-lg p-3">
-                    <p className="font-semibold text-amber-700 text-xs mb-2">정림초 · 청원초</p>
-                    <p className="text-slate-600">09:00~12:00 <strong className="text-amber-600">150,000원</strong></p>
-                  </div>
+                  <p className="text-[11px] text-slate-400 mt-2">* 원천징수 후 지급</p>
                 </div>
-                <p className="text-[11px] text-slate-400 mt-2">* 원천징수 후 지급</p>
-              </div>
+                );
+              })()}
 
               {/* 개인정보 */}
               <div className="bg-white rounded-xl border border-slate-200 p-5">
@@ -519,8 +565,8 @@ export default function ApplyPage() {
               <button type="submit" disabled={submitting}
                 className="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white py-4 rounded-xl font-bold text-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-indigo-200 hover:shadow-xl hover:shadow-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                 {submitting ? (
-                  <span className="inline-flex items-center gap-2"><Loader2 className="w-5 h-5 animate-spin" /> {editMode ? "수정 중..." : "제출 중..."}</span>
-                ) : editMode ? "지원서 수정 제출" : "지원서 제출"}
+                  <span className="inline-flex items-center gap-2"><Loader2 className="w-5 h-5 animate-spin" /> {editMode ? "저장 중..." : "제출 중..."}</span>
+                ) : editMode ? "지원서 저장 · 추가 지원 제출" : "지원서 제출"}
               </button>
             </div>
           )}

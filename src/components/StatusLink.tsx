@@ -18,8 +18,8 @@ export default function StatusLink() {
 
   return (
     <a
-      href="/status"
-      className="hidden sm:inline-flex px-4 py-2 rounded-full text-sm font-medium text-indigo-600 hover:bg-indigo-50 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      href="/result"
+      className="inline-flex items-center px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium text-indigo-600 hover:bg-indigo-50 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 whitespace-nowrap"
     >
       결과 조회
     </a>

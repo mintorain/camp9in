@@ -24,7 +24,8 @@ import {
   X,
   ChevronRight,
 } from "lucide-react";
-import { SCHOOLS, SUBJECTS, STATUS_OPTIONS, SUBJECT_CLOSE_THRESHOLD } from "@/lib/constants";
+import { STATUS_OPTIONS, SUBJECT_CLOSE_THRESHOLD } from "@/lib/constants";
+import { useCampData } from "@/lib/useCampData";
 import { adminFetch, getAdminToken } from "@/lib/admin";
 
 interface Applicant {
@@ -38,12 +39,15 @@ interface Applicant {
 
 export default function DashboardPage() {
   const router = useRouter();
+  const { schools: SCHOOLS, subjects: SUBJECTS } = useCampData();
   const [applicants, setApplicants] = useState<Applicant[]>([]);
   const [loading, setLoading] = useState(true);
   const [closedIds, setClosedIds] = useState<string[]>([]);
   const [closedSchoolIds, setClosedSchoolIds] = useState<string[]>([]);
   const [togglingSubject, setTogglingSubject] = useState<string | null>(null);
   const [togglingSchool, setTogglingSchool] = useState<string | null>(null);
+  const [schoolDeadlines, setSchoolDeadlines] = useState<Record<string, string>>({});
+  const [savingDeadline, setSavingDeadline] = useState<string | null>(null);
   const [analytics, setAnalytics] = useState<{
     realtime: number;
     today: { visitors: number; views: number };
@@ -100,6 +104,7 @@ export default function DashboardPage() {
     fetchData();
     fetchClosedSubjects();
     fetchClosedSchools();
+    fetchSchoolDeadlines();
     fetchAnalytics();
     fetchSettings();
     const interval = setInterval(fetchAnalytics, 30000);
@@ -185,6 +190,34 @@ export default function DashboardPage() {
       await adminFetch("/api/schools/close", { method: "POST", body: JSON.stringify({ schoolId, closed: !isClosed }) });
       await fetchClosedSchools();
     } catch { /* ignore */ } finally { setTogglingSchool(null); }
+  }
+
+  async function fetchSchoolDeadlines() {
+    try {
+      const res = await fetch("/api/schools");
+      const json = await res.json();
+      const map: Record<string, string> = {};
+      for (const s of json.data || []) {
+        if (s.recruitDeadline) map[s.id] = s.recruitDeadline;
+      }
+      setSchoolDeadlines(map);
+    } catch { /* ignore */ }
+  }
+
+  async function saveSchoolDeadline(schoolId: string, deadline: string) {
+    setSavingDeadline(schoolId);
+    try {
+      await adminFetch(`/api/schools/${schoolId}`, {
+        method: "PATCH",
+        body: JSON.stringify({ recruitDeadline: deadline || null }),
+      });
+      setSchoolDeadlines((prev) => {
+        const next = { ...prev };
+        if (deadline) next[schoolId] = deadline;
+        else delete next[schoolId];
+        return next;
+      });
+    } catch { /* ignore */ } finally { setSavingDeadline(null); }
   }
 
   async function handleExport() {
@@ -343,6 +376,8 @@ export default function DashboardPage() {
             {SCHOOLS.map((school) => {
               const isClosed = closedSchoolIds.includes(school.id);
               const isToggling = togglingSchool === school.id;
+              const deadline = schoolDeadlines[school.id] || "";
+              const isDeadlineSaving = savingDeadline === school.id;
               return (
                 <div key={school.id} className={`bg-white rounded-xl border p-4 shadow-sm ${isClosed ? "border-red-200" : "border-slate-200/80"}`}>
                   <div className="flex items-center justify-between mb-2">
@@ -353,7 +388,26 @@ export default function DashboardPage() {
                     </button>
                   </div>
                   <p className="text-2xl font-bold text-slate-900">{countBySchool(school.id)}</p>
-                  <p className="text-xs text-slate-400">{school.shortName}</p>
+                  <p className="text-xs text-slate-400 mb-2">{school.shortName}</p>
+                  <div>
+                    <label
+                      htmlFor={`deadline-${school.id}`}
+                      className="block text-[10px] font-medium text-slate-500 mb-0.5"
+                    >
+                      지원 마감일
+                    </label>
+                    <input
+                      id={`deadline-${school.id}`}
+                      type="date"
+                      value={deadline}
+                      disabled={isDeadlineSaving}
+                      onChange={(e) => saveSchoolDeadline(school.id, e.target.value)}
+                      className="w-full text-[11px] border border-slate-200 rounded px-1.5 py-1 focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 disabled:opacity-40"
+                    />
+                    {isDeadlineSaving && (
+                      <p className="text-[10px] text-slate-400 mt-0.5">저장중...</p>
+                    )}
+                  </div>
                 </div>
               );
             })}
@@ -436,7 +490,7 @@ export default function DashboardPage() {
             <div className="grid md:grid-cols-3 gap-4">
               {SCHOOLS.map((school) => {
                 const schoolApplicants = applicants.filter((a) => a.applicant_schools?.some((s) => s.school_id === school.id));
-                const schoolSubjects = SUBJECTS.filter((sub) => (school.subjects as readonly string[]).includes(sub.id));
+                const schoolSubjects = SUBJECTS.filter((sub) => school.subjects.includes(sub.id));
                 const hasGradeSchedule = "gradeSchedule" in school;
                 const gradeSchedule = hasGradeSchedule
                   ? (school as typeof school & { gradeSchedule: { grade: string; period: string; subjects: string[] }[] }).gradeSchedule
@@ -451,7 +505,7 @@ export default function DashboardPage() {
                     {gradeSchedule ? (
                       <div className="space-y-3">
                         {gradeSchedule.map((gs) => {
-                          const gradeSubjects = SUBJECTS.filter((sub) => (gs.subjects as readonly string[]).includes(sub.id));
+                          const gradeSubjects = SUBJECTS.filter((sub) => gs.subjects.includes(sub.id));
                           return (
                             <div key={gs.grade}>
                               <p className="text-[11px] font-semibold text-slate-500 mb-1">{gs.grade} <span className="font-normal text-slate-400">({gs.period})</span></p>

@@ -7,7 +7,7 @@ import {
   Sparkles,
   ArrowRight,
 } from "lucide-react";
-import { SCHOOLS, SUBJECTS } from "@/lib/constants";
+import { getSchools, getSubjects } from "@/lib/data";
 import TiltCard from "@/components/TiltCard";
 import ScrollReveal from "@/components/ScrollReveal";
 import AnimatedCounter from "@/components/AnimatedCounter";
@@ -18,7 +18,30 @@ import ParallaxText from "@/components/ParallaxText";
 import StatusLink from "@/components/StatusLink";
 import DuonFooter from "@/components/DuonFooter";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const [schools, subjects] = await Promise.all([getSchools(), getSubjects()]);
+
+  // 일정 카드는 hideScheduleCard 적용한 학교만
+  const visibleScheduleSchools = schools.filter((s) => !s.hideScheduleCard);
+
+  // 마감일 표기 헬퍼 (KST 기준)
+  const todayKST = new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Seoul" });
+  function deadlineLabel(deadline: string | null): { text: string; tone: "open" | "soon" | "closed" } | null {
+    if (!deadline) return null;
+    const [y, m, d] = deadline.split("-").map(Number);
+    const [ty, tm, td] = todayKST.split("-").map(Number);
+    const deadlineDate = Date.UTC(y, m - 1, d);
+    const todayDate = Date.UTC(ty, tm - 1, td);
+    const diffDays = Math.floor((deadlineDate - todayDate) / (24 * 60 * 60 * 1000));
+    const mmdd = `${m}월 ${d}일`;
+    if (diffDays < 0) return { text: `접수 마감 · ${mmdd}`, tone: "closed" };
+    if (diffDays === 0) return { text: `오늘 마감 · ${mmdd}`, tone: "soon" };
+    if (diffDays <= 3) return { text: `마감 D-${diffDays} · ${mmdd}`, tone: "soon" };
+    return { text: `접수 마감 ${mmdd} (D-${diffDays})`, tone: "open" };
+  }
+
   return (
     <>
       {/* 헤더 */}
@@ -28,7 +51,7 @@ export default function Home() {
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-600 to-violet-600 flex items-center justify-center">
               <Sparkles className="w-4 h-4 text-white" />
             </div>
-            <span className="text-base font-bold text-slate-900">두온교육 <span className="text-indigo-600">AI캠프</span></span>
+            <span className="text-sm sm:text-base font-bold text-slate-900 whitespace-nowrap">두온교육 <span className="text-indigo-600">강사지원 관리시스템</span></span>
           </a>
           <ul className="hidden md:flex items-center gap-0.5 text-[13px]" role="list">
             {[
@@ -44,10 +67,10 @@ export default function Home() {
               </li>
             ))}
           </ul>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
             <StatusLink />
             <a href="/apply"
-              className="bg-slate-900 hover:bg-slate-800 text-white px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-slate-900 focus:ring-offset-2">
+              className="bg-slate-900 hover:bg-slate-800 text-white px-3 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap transition-all duration-200 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-slate-900 focus:ring-offset-2">
               강사 지원하기
             </a>
           </div>
@@ -61,11 +84,13 @@ export default function Home() {
         <section className="py-20 bg-white">
           <div className="max-w-5xl mx-auto px-4">
             <div className="grid md:grid-cols-3 gap-5">
-              {SCHOOLS.map((school, i) => (
+              {schools.map((school, i) => {
+                const dl = deadlineLabel(school.recruitDeadline);
+                return (
                 <ScrollReveal key={school.id} delay={i * 120} direction="up">
                   <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 p-6 text-white">
                     <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/20 rounded-full -translate-y-1/2 translate-x-1/2" aria-hidden="true" />
-                    <p className="text-lg font-bold mb-4">{school.shortName}</p>
+                    <p className="text-lg font-bold mb-4">{school.hideName ? "정보 비공개" : school.shortName}</p>
                     <div className="flex gap-6">
                       <div>
                         <p className="text-3xl font-extrabold text-indigo-400">
@@ -80,10 +105,25 @@ export default function Home() {
                         <p className="text-slate-400 text-xs mt-0.5">분야별 모집</p>
                       </div>
                     </div>
-                    <p className="text-xs text-slate-500 mt-4 pt-3 border-t border-white/10">{school.dateLabel}</p>
+                    <div className="mt-4 pt-3 border-t border-white/10 space-y-1.5">
+                      <p className="text-xs text-slate-500">{school.hideName ? "일정 비공개" : school.dateLabel}</p>
+                      {dl && !school.hideName && (
+                        <p
+                          className={`text-xs font-semibold ${
+                            dl.tone === "closed"
+                              ? "text-red-400"
+                              : dl.tone === "soon"
+                              ? "text-amber-300"
+                              : "text-emerald-300"
+                          }`}
+                        >
+                          {dl.text}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </ScrollReveal>
-              ))}
+              );})}
             </div>
           </div>
         </section>
@@ -131,20 +171,38 @@ export default function Home() {
               <p className="text-slate-400 text-center mb-14 text-sm">카드 위에 마우스를 올려보세요</p>
             </ParallaxText>
 
+            {visibleScheduleSchools.length === 0 ? (
+              <p className="text-center text-sm text-slate-400">진행 중인 캠프 일정이 없습니다.</p>
+            ) : (
             <div className="grid md:grid-cols-3 gap-5">
-              {SCHOOLS.map((school, i) => (
+              {visibleScheduleSchools.map((school, i) => {
+                const dl = deadlineLabel(school.recruitDeadline);
+                return (
                 <ScrollReveal key={school.id} delay={i * 150} direction="up">
                   <TiltCard className="rounded-2xl h-full">
                     <article className="relative bg-gradient-to-br from-indigo-600 via-indigo-700 to-violet-800 rounded-2xl p-7 text-white overflow-hidden h-full">
                       <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" aria-hidden="true" />
 
-                      <h3 className="text-xl font-bold mb-5 relative z-10">{school.name}</h3>
+                      {dl && !school.hideName && (
+                        <div
+                          className={`absolute top-4 right-4 z-20 px-2.5 py-1 rounded-full text-[10px] font-bold shadow-md ${
+                            dl.tone === "closed"
+                              ? "bg-red-500/90 text-white"
+                              : dl.tone === "soon"
+                              ? "bg-amber-400 text-amber-900"
+                              : "bg-emerald-400/90 text-emerald-950"
+                          }`}
+                        >
+                          {dl.text}
+                        </div>
+                      )}
+                      <h3 className="text-xl font-bold mb-5 relative z-10">{school.hideName ? "정보 비공개" : school.name}</h3>
                       <ul className="space-y-3 relative z-10 text-sm">
                         {[
-                          { icon: <Calendar className="w-4 h-4" />, text: school.dateLabel },
+                          { icon: <Calendar className="w-4 h-4" />, text: school.hideName ? "일정 비공개" : school.dateLabel },
                           { icon: <Clock className="w-4 h-4" />, text: school.time },
-                          { icon: <MapPin className="w-4 h-4" />, text: school.location },
-                          { icon: <Users className="w-4 h-4" />, text: <>{"target" in school && <span className="text-amber-300 font-semibold">{(school as typeof school & { target: string }).target} · </span>}각 분야별 <strong className="text-amber-300">{school.capacityPerSubject}명</strong> 모집</> },
+                          { icon: <MapPin className="w-4 h-4" />, text: school.hideName ? "장소 비공개" : school.location },
+                          { icon: <Users className="w-4 h-4" />, text: <>{school.target && <span className="text-amber-300 font-semibold">{school.target} · </span>}각 분야별 <strong className="text-amber-300">{school.capacityPerSubject}명</strong> 모집</> },
                         ].map((item, idx) => (
                           <li key={idx} className="flex items-center gap-3">
                             <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center shrink-0">{item.icon}</div>
@@ -153,12 +211,16 @@ export default function Home() {
                         ))}
                       </ul>
 
-                      {"gradeSchedule" in school && (
+                      {school.gradeSchedule.length > 0 && (
                         <div className="mt-5 pt-5 border-t border-white/10 relative z-10">
                           <p className="text-[11px] text-white/40 font-semibold uppercase tracking-wider mb-2">학년별 체험 과목</p>
                           <div className="space-y-1.5">
-                            {(school as typeof school & { gradeSchedule: { grade: string; period: string; subjects: string[]; type?: string }[] }).gradeSchedule.map((gs) => {
-                              const subjectNames = gs.subjects.map((sid: string) => SUBJECTS.find((s) => s.id === sid)).filter(Boolean).map((s) => `${s!.icon} ${s!.name}`).join(", ");
+                            {school.gradeSchedule.map((gs) => {
+                              const subjectNames = gs.subjects
+                                .map((sid) => subjects.find((s) => s.id === sid))
+                                .filter(Boolean)
+                                .map((s) => `${s!.icon} ${s!.name}`)
+                                .join(", ");
                               const isMulti = gs.subjects.length > 1;
                               return (
                                 <div key={gs.grade} className="bg-white/8 rounded-lg px-3 py-2">
@@ -181,8 +243,9 @@ export default function Home() {
                     </article>
                   </TiltCard>
                 </ScrollReveal>
-              ))}
+              );})}
             </div>
+            )}
             <p className="text-center text-xs text-slate-400 mt-8">* 학교 사정에 의해 일정은 변경될 수 있습니다.</p>
           </div>
         </section>
@@ -195,7 +258,7 @@ export default function Home() {
               <h2 id="subjects-heading" className="text-3xl md:text-5xl font-extrabold text-slate-900 text-center mb-4">모집 분야</h2>
               <p className="text-slate-400 text-center mb-14 text-sm">체험 부스별 전문 강사를 모집합니다</p>
             </ParallaxText>
-            <SubjectGrid />
+            <SubjectGrid subjects={subjects} schools={schools} />
           </div>
         </section>
 

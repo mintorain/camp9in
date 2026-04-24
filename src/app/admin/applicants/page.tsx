@@ -13,7 +13,8 @@ import {
   Plus,
   Trash2,
 } from "lucide-react";
-import { SCHOOLS, SUBJECTS, STATUS_OPTIONS } from "@/lib/constants";
+import { STATUS_OPTIONS } from "@/lib/constants";
+import { useCampData } from "@/lib/useCampData";
 import { adminFetch, getAdminToken } from "@/lib/admin";
 
 interface Applicant {
@@ -29,6 +30,7 @@ interface Applicant {
   qualifications: string | null;
   introduction: string | null;
   status: string;
+  review_note: string | null;
   confirmed_subject: string | null;
   confirmed_school: string | null;
   payment_name: string | null;
@@ -45,6 +47,7 @@ interface Applicant {
 
 export default function ApplicantsPage() {
   const router = useRouter();
+  const { schools: SCHOOLS, subjects: SUBJECTS } = useCampData();
   const [applicants, setApplicants] = useState<Applicant[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -87,6 +90,14 @@ export default function ApplicantsPage() {
     await adminFetch(`/api/applicants/${id}`, {
       method: "PATCH",
       body: JSON.stringify({ status }),
+    });
+    fetchData();
+  }
+
+  async function updateReviewNote(id: string, reviewNote: string) {
+    await adminFetch(`/api/applicants/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ reviewNote }),
     });
     fetchData();
   }
@@ -240,7 +251,7 @@ export default function ApplicantsPage() {
                   a.applicant_schools?.some((s) => s.school_id === school.id)
                 );
                 const schoolSubjects = SUBJECTS.filter((sub) =>
-                  (school.subjects as readonly string[]).includes(sub.id)
+                  school.subjects.includes(sub.id)
                 );
                 return (
                   <div key={school.id} className="bg-gray-50 rounded-lg p-3">
@@ -388,6 +399,14 @@ export default function ApplicantsPage() {
                           >
                             {statusOption?.label || applicant.status}
                           </span>
+                          {applicant.review_note && (
+                            <p
+                              className="text-[11px] text-gray-400 mt-1 line-clamp-1 max-w-[200px]"
+                              title={applicant.review_note}
+                            >
+                              📝 {applicant.review_note}
+                            </p>
+                          )}
                         </td>
                         <td className="px-4 py-3 text-gray-500 hidden lg:table-cell text-xs">
                           {new Date(applicant.created_at).toLocaleDateString("ko-KR")}
@@ -560,6 +579,31 @@ export default function ApplicantsPage() {
                       </option>
                     ))}
                   </select>
+                </div>
+                <div>
+                  <label
+                    htmlFor="review-note"
+                    className="text-sm text-gray-500 mb-2 block"
+                  >
+                    비고 (검토 사유 · 합격/불합격 사유)
+                  </label>
+                  <textarea
+                    id="review-note"
+                    key={`review-note-${selectedApplicant.id}`}
+                    defaultValue={selectedApplicant.review_note || ""}
+                    onBlur={(e) => {
+                      const next = e.target.value.trim();
+                      const current = (selectedApplicant.review_note || "").trim();
+                      if (next !== current) {
+                        updateReviewNote(selectedApplicant.id, next);
+                      }
+                    }}
+                    placeholder="예: 강의 경력 5년 이상 확인 · 서류 미비로 보류 등"
+                    rows={3}
+                    maxLength={500}
+                    className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full focus:ring-2 focus:ring-primary resize-none"
+                  />
+                  <p className="text-[11px] text-gray-400 mt-1">최대 500자 · 포커스 해제 시 자동 저장</p>
                 </div>
                 <div className="col-span-2">
                   <p className="text-sm text-gray-500 mb-2">배정 학교 / 과목</p>

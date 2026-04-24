@@ -1,5 +1,8 @@
 import { z } from "zod";
-import { EDUCATION_OPTIONS, SCHOOLS, SUBJECTS } from "./constants";
+import { EDUCATION_OPTIONS } from "./constants";
+
+// 학교/과목 enum은 DB 기반으로 바뀌어 zod 정적 enum 사용 불가.
+// UI가 유효한 목록만 보여주므로 string으로 완화 (필요 시 서버에서 DB FK 검증 가능).
 
 export const applicantSchema = z.object({
   name: z
@@ -17,10 +20,10 @@ export const applicantSchema = z.object({
     .max(100, "주소는 100자 이내로 입력해주세요"),
   birthDate: z.string().min(1, "생년월일을 선택해주세요"),
   schools: z
-    .array(z.enum(SCHOOLS.map((s) => s.id) as [string, ...string[]]))
+    .array(z.string().min(1))
     .min(1, "지원할 학교를 1개 이상 선택해주세요"),
   subjects: z
-    .array(z.enum(SUBJECTS.map((s) => s.id) as [string, ...string[]]))
+    .array(z.string().min(1))
     .min(1, "학교별 지원 과목을 선택해주세요"),
   education: z.enum(EDUCATION_OPTIONS),
   major: z.string().optional(),

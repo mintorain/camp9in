@@ -1,1 +1,2776 @@
-/usr/bin/bash: line 1: bashnsudo: command not found
+nohup: ignoring input
+▲ Next.js 16.2.2
+- Local:         http://localhost:3900
+- Network:       http://0.0.0.0:3900
+✓ Ready in 0ms
+2026-04-10T18:14:06: ▲ Next.js 16.2.2
+2026-04-10T18:14:06: - Local:         http://localhost:3900
+2026-04-10T18:14:06: - Network:       http://0.0.0.0:3900
+2026-04-10T18:14:06: ✓ Ready in 0ms
+2026-04-10T18:15:14: ▲ Next.js 16.2.2
+2026-04-10T18:15:14: - Local:         http://localhost:3900
+2026-04-10T18:15:14: - Network:       http://0.0.0.0:3900
+2026-04-10T18:15:14: ✓ Ready in 0ms
+2026-04-10T18:16:19: ▲ Next.js 16.2.2
+2026-04-10T18:16:19: - Local:         http://localhost:3900
+2026-04-10T18:16:19: - Network:       http://0.0.0.0:3900
+2026-04-10T18:16:19: ✓ Ready in 0ms
+2026-04-10T18:35:08: Fetch applicants error: Error: connect ECONNREFUSED 127.0.0.1:3306
+2026-04-10T18:35:08:     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3306)
+2026-04-10T18:35:08:     at n.execute (.next/server/chunks/[root-of-the-server]__0rba~_i._.js:5:258488)
+2026-04-10T18:35:08:     at R (.next/server/chunks/[root-of-the-server]__0rba~_i._.js:5:268014) {
+2026-04-10T18:35:08:   code: 'ECONNREFUSED',
+2026-04-10T18:35:08:   errno: -111,
+2026-04-10T18:35:08:   sql: undefined,
+2026-04-10T18:35:08:   sqlState: undefined,
+2026-04-10T18:35:08:   sqlMessage: undefined
+2026-04-10T18:35:08: }
+2026-04-10T18:35:08: Analytics error: Error: connect ECONNREFUSED 127.0.0.1:3306
+2026-04-10T18:35:08:     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3306)
+2026-04-10T18:35:08:     at n.execute (.next/server/chunks/[root-of-the-server]__0rba~_i._.js:5:258488)
+2026-04-10T18:35:08:     at R (.next/server/chunks/[root-of-the-server]__0rba~_i._.js:5:268014)
+2026-04-10T18:35:08:     at f (.next/server/chunks/[root-of-the-server]__0l7p~yy._.js:1:2434)
+2026-04-10T18:35:08:     at async l (.next/server/chunks/[root-of-the-server]__0l7p~yy._.js:13:3574)
+2026-04-10T18:35:08:     at async o (.next/server/chunks/[root-of-the-server]__0l7p~yy._.js:13:4615)
+2026-04-10T18:35:08:     at async Module.O [as handler] (.next/server/chunks/[root-of-the-server]__0l7p~yy._.js:13:5722) {
+2026-04-10T18:35:08:   code: 'ECONNREFUSED',
+2026-04-10T18:35:08:   errno: -111,
+2026-04-10T18:35:08:   sql: undefined,
+2026-04-10T18:35:08:   sqlState: undefined,
+2026-04-10T18:35:08:   sqlMessage: undefined
+2026-04-10T18:35:08: }
+2026-04-10T18:35:10: Fetch applicants error: Error: connect ECONNREFUSED 127.0.0.1:3306
+2026-04-10T18:35:10:     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3306)
+2026-04-10T18:35:10:     at n.execute (.next/server/chunks/[root-of-the-server]__0rba~_i._.js:5:258488)
+2026-04-10T18:35:10:     at R (.next/server/chunks/[root-of-the-server]__0rba~_i._.js:5:268014) {
+2026-04-10T18:35:10:   code: 'ECONNREFUSED',
+2026-04-10T18:35:10:   errno: -111,
+2026-04-10T18:35:10:   sql: undefined,
+2026-04-10T18:35:10:   sqlState: undefined,
+2026-04-10T18:35:10:   sqlMessage: undefined
+2026-04-10T18:35:10: }
+2026-04-10T18:35:10: Analytics error: Error: connect ECONNREFUSED 127.0.0.1:3306
+2026-04-10T18:35:10:     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3306)
+2026-04-10T18:35:10:     at n.execute (.next/server/chunks/[root-of-the-server]__0rba~_i._.js:5:258488)
+2026-04-10T18:35:10:     at R (.next/server/chunks/[root-of-the-server]__0rba~_i._.js:5:268014)
+2026-04-10T18:35:10:     at f (.next/server/chunks/[root-of-the-server]__0l7p~yy._.js:1:2434)
+2026-04-10T18:35:10:     at async l (.next/server/chunks/[root-of-the-server]__0l7p~yy._.js:13:3574)
+2026-04-10T18:35:10:     at async o (.next/server/chunks/[root-of-the-server]__0l7p~yy._.js:13:4615)
+2026-04-10T18:35:10:     at async Module.O [as handler] (.next/server/chunks/[root-of-the-server]__0l7p~yy._.js:13:5722) {
+2026-04-10T18:35:10:   code: 'ECONNREFUSED',
+2026-04-10T18:35:10:   errno: -111,
+2026-04-10T18:35:10:   sql: undefined,
+2026-04-10T18:35:10:   sqlState: undefined,
+2026-04-10T18:35:10:   sqlMessage: undefined
+2026-04-10T18:35:10: }
+2026-04-10T18:35:11: Fetch applicants error: Error: connect ECONNREFUSED 127.0.0.1:3306
+2026-04-10T18:35:11:     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3306)
+2026-04-10T18:35:11:     at n.execute (.next/server/chunks/[root-of-the-server]__0rba~_i._.js:5:258488)
+2026-04-10T18:35:11:     at R (.next/server/chunks/[root-of-the-server]__0rba~_i._.js:5:268014) {
+2026-04-10T18:35:11:   code: 'ECONNREFUSED',
+2026-04-10T18:35:11:   errno: -111,
+2026-04-10T18:35:11:   sql: undefined,
+2026-04-10T18:35:11:   sqlState: undefined,
+2026-04-10T18:35:11:   sqlMessage: undefined
+2026-04-10T18:35:11: }
+2026-04-10T18:35:11: Analytics error: Error: connect ECONNREFUSED 127.0.0.1:3306
+2026-04-10T18:35:11:     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3306)
+2026-04-10T18:35:11:     at n.execute (.next/server/chunks/[root-of-the-server]__0rba~_i._.js:5:258488)
+2026-04-10T18:35:11:     at R (.next/server/chunks/[root-of-the-server]__0rba~_i._.js:5:268014)
+2026-04-10T18:35:11:     at f (.next/server/chunks/[root-of-the-server]__0l7p~yy._.js:1:2434)
+2026-04-10T18:35:11:     at async l (.next/server/chunks/[root-of-the-server]__0l7p~yy._.js:13:3574)
+2026-04-10T18:35:11:     at async o (.next/server/chunks/[root-of-the-server]__0l7p~yy._.js:13:4615)
+2026-04-10T18:35:11:     at async Module.O [as handler] (.next/server/chunks/[root-of-the-server]__0l7p~yy._.js:13:5722) {
+2026-04-10T18:35:11:   code: 'ECONNREFUSED',
+2026-04-10T18:35:11:   errno: -111,
+2026-04-10T18:35:11:   sql: undefined,
+2026-04-10T18:35:11:   sqlState: undefined,
+2026-04-10T18:35:11:   sqlMessage: undefined
+2026-04-10T18:35:11: }
+2026-04-10T18:41:33: Fetch applicants error: Error: connect ECONNREFUSED 127.0.0.1:3306
+2026-04-10T18:41:33:     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3306)
+2026-04-10T18:41:33:     at n.execute (.next/server/chunks/[root-of-the-server]__0rba~_i._.js:5:258488)
+2026-04-10T18:41:33:     at R (.next/server/chunks/[root-of-the-server]__0rba~_i._.js:5:268014) {
+2026-04-10T18:41:33:   code: 'ECONNREFUSED',
+2026-04-10T18:41:33:   errno: -111,
+2026-04-10T18:41:33:   sql: undefined,
+2026-04-10T18:41:33:   sqlState: undefined,
+2026-04-10T18:41:33:   sqlMessage: undefined
+2026-04-10T18:41:33: }
+2026-04-10T18:41:33: Analytics error: Error: connect ECONNREFUSED 127.0.0.1:3306
+2026-04-10T18:41:33:     at <unknown> (Error: connect ECONNREFUSED 127.0.0.1:3306)
+2026-04-10T18:41:33:     at n.execute (.next/server/chunks/[root-of-the-server]__0rba~_i._.js:5:258488)
+2026-04-10T18:41:33:     at R (.next/server/chunks/[root-of-the-server]__0rba~_i._.js:5:268014)
+2026-04-10T18:41:33:     at f (.next/server/chunks/[root-of-the-server]__0l7p~yy._.js:1:2434)
+2026-04-10T18:41:33:     at async l (.next/server/chunks/[root-of-the-server]__0l7p~yy._.js:13:3574)
+2026-04-10T18:41:33:     at async o (.next/server/chunks/[root-of-the-server]__0l7p~yy._.js:13:4615)
+2026-04-10T18:41:33:     at async Module.O [as handler] (.next/server/chunks/[root-of-the-server]__0l7p~yy._.js:13:5722) {
+2026-04-10T18:41:33:   code: 'ECONNREFUSED',
+2026-04-10T18:41:33:   errno: -111,
+2026-04-10T18:41:33:   sql: undefined,
+2026-04-10T18:41:33:   sqlState: undefined,
+2026-04-10T18:41:33:   sqlMessage: undefined
+2026-04-10T18:41:33: }
+2026-04-10T18:47:06: ▲ Next.js 16.2.2
+2026-04-10T18:47:06: - Local:         http://localhost:3900
+2026-04-10T18:47:06: - Network:       http://0.0.0.0:3900
+2026-04-10T18:47:06: ✓ Ready in 0ms
+2026-04-10T18:53:52: ▲ Next.js 16.2.2
+2026-04-10T18:53:52: - Local:         http://localhost:3900
+2026-04-10T18:53:52: - Network:       http://0.0.0.0:3900
+2026-04-10T18:53:52: ✓ Ready in 0ms
+2026-04-10T18:56:50: ▲ Next.js 16.2.2
+2026-04-10T18:56:50: - Local:         http://localhost:3900
+2026-04-10T18:56:50: - Network:       http://0.0.0.0:3900
+2026-04-10T18:56:50: ✓ Ready in 0ms
+2026-04-10T19:04:36: ▲ Next.js 16.2.2
+2026-04-10T19:04:36: - Local:         http://localhost:3900
+2026-04-10T19:04:36: - Network:       http://0.0.0.0:3900
+2026-04-10T19:04:36: ✓ Ready in 0ms
+2026-04-10T19:07:19: ▲ Next.js 16.2.2
+2026-04-10T19:07:19: - Local:         http://localhost:3900
+2026-04-10T19:07:19: - Network:       http://0.0.0.0:3900
+2026-04-10T19:07:19: ✓ Ready in 0ms
+2026-04-10T19:08:39: ▲ Next.js 16.2.2
+2026-04-10T19:08:39: - Local:         http://localhost:3900
+2026-04-10T19:08:39: - Network:       http://0.0.0.0:3900
+2026-04-10T19:08:39: ✓ Ready in 0ms
+2026-04-10T19:10:16: ▲ Next.js 16.2.2
+2026-04-10T19:10:16: - Local:         http://localhost:3900
+2026-04-10T19:10:16: - Network:       http://0.0.0.0:3900
+2026-04-10T19:10:16: ✓ Ready in 0ms
+2026-04-10T19:14:57: ▲ Next.js 16.2.2
+2026-04-10T19:14:57: - Local:         http://localhost:3900
+2026-04-10T19:14:57: - Network:       http://0.0.0.0:3900
+2026-04-10T19:14:57: ✓ Ready in 0ms
+2026-04-10T19:17:08: ▲ Next.js 16.2.2
+2026-04-10T19:17:08: - Local:         http://localhost:3900
+2026-04-10T19:17:08: - Network:       http://0.0.0.0:3900
+2026-04-10T19:17:08: ✓ Ready in 0ms
+2026-04-10T19:23:29: ▲ Next.js 16.2.2
+2026-04-10T19:23:29: - Local:         http://localhost:3900
+2026-04-10T19:23:29: - Network:       http://0.0.0.0:3900
+2026-04-10T19:23:29: ✓ Ready in 0ms
+2026-04-10T19:26:03: ▲ Next.js 16.2.2
+2026-04-10T19:26:03: - Local:         http://localhost:3900
+2026-04-10T19:26:03: - Network:       http://0.0.0.0:3900
+2026-04-10T19:26:03: ✓ Ready in 0ms
+2026-04-10T19:28:58: ▲ Next.js 16.2.2
+2026-04-10T19:28:58: - Local:         http://localhost:3900
+2026-04-10T19:28:58: - Network:       http://0.0.0.0:3900
+2026-04-10T19:28:58: ✓ Ready in 0ms
+2026-04-10T19:37:32: ▲ Next.js 16.2.2
+2026-04-10T19:37:32: - Local:         http://localhost:3900
+2026-04-10T19:37:32: - Network:       http://0.0.0.0:3900
+2026-04-10T19:37:32: ✓ Ready in 0ms
+2026-04-12T05:20:25: ▲ Next.js 16.2.2
+2026-04-12T05:20:25: - Local:         http://localhost:3900
+2026-04-12T05:20:25: - Network:       http://0.0.0.0:3900
+2026-04-12T05:20:25: ✓ Ready in 0ms
+2026-04-12T05:36:39: ▲ Next.js 16.2.2
+2026-04-12T05:36:39: - Local:         http://localhost:3900
+2026-04-12T05:36:39: - Network:       http://0.0.0.0:3900
+2026-04-12T05:36:39: ✓ Ready in 0ms
+2026-04-12T05:38:02: ▲ Next.js 16.2.2
+2026-04-12T05:38:02: - Local:         http://localhost:3900
+2026-04-12T05:38:02: - Network:       http://0.0.0.0:3900
+2026-04-12T05:38:02: ✓ Ready in 0ms
+2026-04-12T05:57:17: ▲ Next.js 16.2.2
+2026-04-12T05:57:17: - Local:         http://localhost:3900
+2026-04-12T05:57:17: - Network:       http://0.0.0.0:3900
+2026-04-12T05:57:17: ✓ Ready in 0ms
+2026-04-12T05:58:58: ▲ Next.js 16.2.2
+2026-04-12T05:58:58: - Local:         http://localhost:3900
+2026-04-12T05:58:58: - Network:       http://0.0.0.0:3900
+2026-04-12T05:58:58: ✓ Ready in 0ms
+2026-04-12T06:05:21: ▲ Next.js 16.2.2
+2026-04-12T06:05:21: - Local:         http://localhost:3900
+2026-04-12T06:05:21: - Network:       http://0.0.0.0:3900
+2026-04-12T06:05:21: ✓ Ready in 0ms
+2026-04-12T06:06:31: ▲ Next.js 16.2.2
+2026-04-12T06:06:31: - Local:         http://localhost:3900
+2026-04-12T06:06:31: - Network:       http://0.0.0.0:3900
+2026-04-12T06:06:31: ✓ Ready in 0ms
+2026-04-12T06:08:08: ▲ Next.js 16.2.2
+2026-04-12T06:08:08: - Local:         http://localhost:3900
+2026-04-12T06:08:08: - Network:       http://0.0.0.0:3900
+2026-04-12T06:08:08: ✓ Ready in 0ms
+2026-04-12T06:09:27: ▲ Next.js 16.2.2
+2026-04-12T06:09:27: - Local:         http://localhost:3900
+2026-04-12T06:09:27: - Network:       http://0.0.0.0:3900
+2026-04-12T06:09:27: ✓ Ready in 0ms
+2026-04-12T06:31:19: ▲ Next.js 16.2.2
+2026-04-12T06:31:19: - Local:         http://localhost:3900
+2026-04-12T06:31:19: - Network:       http://0.0.0.0:3900
+2026-04-12T06:31:19: ✓ Ready in 0ms
+2026-04-12T06:57:33: ▲ Next.js 16.2.2
+2026-04-12T06:57:33: - Local:         http://localhost:3900
+2026-04-12T06:57:33: - Network:       http://0.0.0.0:3900
+2026-04-12T06:57:33: ✓ Ready in 0ms
+2026-04-12T07:21:29: ▲ Next.js 16.2.2
+2026-04-12T07:21:29: - Local:         http://localhost:3900
+2026-04-12T07:21:29: - Network:       http://0.0.0.0:3900
+2026-04-12T07:21:29: ✓ Ready in 0ms
+2026-04-12T07:53:06: ▲ Next.js 16.2.2
+2026-04-12T07:53:06: - Local:         http://localhost:3900
+2026-04-12T07:53:06: - Network:       http://0.0.0.0:3900
+2026-04-12T07:53:06: ✓ Ready in 0ms
+2026-04-12T07:56:05: ▲ Next.js 16.2.2
+2026-04-12T07:56:05: - Local:         http://localhost:3900
+2026-04-12T07:56:05: - Network:       http://0.0.0.0:3900
+2026-04-12T07:56:05: ✓ Ready in 0ms
+2026-04-12T08:24:36: ▲ Next.js 16.2.2
+2026-04-12T08:24:36: - Local:         http://localhost:3900
+2026-04-12T08:24:36: - Network:       http://0.0.0.0:3900
+2026-04-12T08:24:36: ✓ Ready in 0ms
+2026-04-12T08:35:50: ▲ Next.js 16.2.2
+2026-04-12T08:35:50: - Local:         http://localhost:3900
+2026-04-12T08:35:50: - Network:       http://0.0.0.0:3900
+2026-04-12T08:35:50: ✓ Ready in 0ms
+2026-04-12T08:37:18: ▲ Next.js 16.2.2
+2026-04-12T08:37:18: - Local:         http://localhost:3900
+2026-04-12T08:37:18: - Network:       http://0.0.0.0:3900
+2026-04-12T08:37:18: ✓ Ready in 0ms
+2026-04-12T08:38:37: ▲ Next.js 16.2.2
+2026-04-12T08:38:37: - Local:         http://localhost:3900
+2026-04-12T08:38:37: - Network:       http://0.0.0.0:3900
+2026-04-12T08:38:37: ✓ Ready in 0ms
+2026-04-12T09:06:48: ▲ Next.js 16.2.2
+2026-04-12T09:06:48: - Local:         http://localhost:3900
+2026-04-12T09:06:48: - Network:       http://0.0.0.0:3900
+2026-04-12T09:06:48: ✓ Ready in 0ms
+2026-04-12T09:07:55: ▲ Next.js 16.2.2
+2026-04-12T09:07:55: - Local:         http://localhost:3900
+2026-04-12T09:07:55: - Network:       http://0.0.0.0:3900
+2026-04-12T09:07:55: ✓ Ready in 0ms
+2026-04-12T09:10:19: ▲ Next.js 16.2.2
+2026-04-12T09:10:19: - Local:         http://localhost:3900
+2026-04-12T09:10:19: - Network:       http://0.0.0.0:3900
+2026-04-12T09:10:19: ✓ Ready in 0ms
+2026-04-12T09:13:10: ▲ Next.js 16.2.2
+2026-04-12T09:13:10: - Local:         http://localhost:3900
+2026-04-12T09:13:10: - Network:       http://0.0.0.0:3900
+2026-04-12T09:13:10: ✓ Ready in 0ms
+2026-04-12T09:15:10: ▲ Next.js 16.2.2
+2026-04-12T09:15:10: - Local:         http://localhost:3900
+2026-04-12T09:15:10: - Network:       http://0.0.0.0:3900
+2026-04-12T09:15:10: ✓ Ready in 0ms
+2026-04-12T10:17:49: ▲ Next.js 16.2.2
+2026-04-12T10:17:49: - Local:         http://localhost:3900
+2026-04-12T10:17:49: - Network:       http://0.0.0.0:3900
+2026-04-12T10:17:49: ✓ Ready in 0ms
+2026-04-12T13:51:31: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-04-12T13:51:31: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-04-12T13:51:31:     at ignore-listed frames
+2026-04-12T13:51:31: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-04-12T13:51:31: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-04-12T13:51:31:     at ignore-listed frames
+2026-04-12T13:51:31: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-04-12T13:51:31: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-04-12T13:51:31:     at ignore-listed frames
+2026-04-13T10:54:01: ▲ Next.js 16.2.2
+2026-04-13T10:54:01: - Local:         http://localhost:3900
+2026-04-13T10:54:01: - Network:       http://0.0.0.0:3900
+2026-04-13T10:54:01: ✓ Ready in 0ms
+2026-04-13T11:16:16: ▲ Next.js 16.2.2
+2026-04-13T11:16:16: - Local:         http://localhost:3900
+2026-04-13T11:16:16: - Network:       http://0.0.0.0:3900
+2026-04-13T11:16:16: ✓ Ready in 0ms
+2026-04-13T12:30:55: ▲ Next.js 16.2.2
+2026-04-13T12:30:55: - Local:         http://localhost:3900
+2026-04-13T12:30:55: - Network:       http://0.0.0.0:3900
+2026-04-13T12:30:55: ✓ Ready in 0ms
+2026-04-13T13:46:42: ▲ Next.js 16.2.2
+2026-04-13T13:46:42: - Local:         http://localhost:3900
+2026-04-13T13:46:42: - Network:       http://0.0.0.0:3900
+2026-04-13T13:46:42: ✓ Ready in 0ms
+2026-04-13T13:51:18: ▲ Next.js 16.2.2
+2026-04-13T13:51:18: - Local:         http://localhost:3900
+2026-04-13T13:51:18: - Network:       http://0.0.0.0:3900
+2026-04-13T13:51:18: ✓ Ready in 0ms
+2026-04-13T17:47:14: Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-04-13T17:47:14:     at ignore-listed frames
+2026-04-13T17:47:14: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-04-13T17:47:14:     at ignore-listed frames
+2026-04-13T17:47:14: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-04-13T17:47:14:     at ignore-listed frames
+2026-04-13T17:58:44: Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-04-13T17:58:44:     at ignore-listed frames
+2026-04-13T17:58:44: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-04-13T17:58:44:     at ignore-listed frames
+2026-04-13T17:58:44: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/_not-found" does not exist. This is a bug in Next.js.
+2026-04-13T17:58:44:     at ignore-listed frames
+2026-04-13T18:02:45: ▲ Next.js 16.2.2
+2026-04-13T18:02:45: - Local:         http://localhost:3900
+2026-04-13T18:02:45: - Network:       http://0.0.0.0:3900
+2026-04-13T18:02:45: ✓ Ready in 0ms
+2026-04-13T19:09:37: ▲ Next.js 16.2.2
+2026-04-13T19:09:37: - Local:         http://localhost:3900
+2026-04-13T19:09:37: - Network:       http://0.0.0.0:3900
+2026-04-13T19:09:37: ✓ Ready in 0ms
+2026-04-13T19:28:43: ▲ Next.js 16.2.2
+2026-04-13T19:28:43: - Local:         http://localhost:3900
+2026-04-13T19:28:43: - Network:       http://0.0.0.0:3900
+2026-04-13T19:28:43: ✓ Ready in 0ms
+2026-04-13T19:36:04: ▲ Next.js 16.2.2
+2026-04-13T19:36:04: - Local:         http://localhost:3900
+2026-04-13T19:36:04: - Network:       http://0.0.0.0:3900
+2026-04-13T19:36:04: ✓ Ready in 0ms
+2026-04-13T19:42:55: ▲ Next.js 16.2.2
+2026-04-13T19:42:55: - Local:         http://localhost:3900
+2026-04-13T19:42:55: - Network:       http://0.0.0.0:3900
+2026-04-13T19:42:55: ✓ Ready in 0ms
+2026-04-13T19:45:48: ▲ Next.js 16.2.2
+2026-04-13T19:45:48: - Local:         http://localhost:3900
+2026-04-13T19:45:48: - Network:       http://0.0.0.0:3900
+2026-04-13T19:45:48: ✓ Ready in 0ms
+2026-04-13T20:08:41: ▲ Next.js 16.2.2
+2026-04-13T20:08:41: - Local:         http://localhost:3900
+2026-04-13T20:08:41: - Network:       http://0.0.0.0:3900
+2026-04-13T20:08:41: ✓ Ready in 0ms
+2026-04-13T21:31:13: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-04-13T21:31:13: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-04-13T21:31:13:     at ignore-listed frames
+2026-04-13T21:31:13: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-04-13T21:31:13: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-04-13T21:31:13:     at ignore-listed frames
+2026-04-13T21:31:13: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-04-13T21:31:13: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-04-13T21:31:13:     at ignore-listed frames
+2026-04-13T21:45:56: ▲ Next.js 16.2.2
+2026-04-13T21:45:56: - Local:         http://localhost:3900
+2026-04-13T21:45:56: - Network:       http://0.0.0.0:3900
+2026-04-13T21:45:56: ✓ Ready in 0ms
+2026-04-13T22:52:41: ▲ Next.js 16.2.2
+2026-04-13T22:52:41: - Local:         http://localhost:3900
+2026-04-13T22:52:41: - Network:       http://0.0.0.0:3900
+2026-04-13T22:52:41: ✓ Ready in 0ms
+2026-04-14T01:23:58: ▲ Next.js 16.2.2
+2026-04-14T01:23:58: - Local:         http://localhost:3900
+2026-04-14T01:23:58: - Network:       http://0.0.0.0:3900
+2026-04-14T01:23:58: ✓ Ready in 0ms
+2026-04-14T01:49:23: ▲ Next.js 16.2.2
+2026-04-14T01:49:23: - Local:         http://localhost:3900
+2026-04-14T01:49:23: - Network:       http://0.0.0.0:3900
+2026-04-14T01:49:23: ✓ Ready in 0ms
+2026-04-14T03:04:21: ▲ Next.js 16.2.2
+2026-04-14T03:04:21: - Local:         http://localhost:3900
+2026-04-14T03:04:21: - Network:       http://0.0.0.0:3900
+2026-04-14T03:04:21: ✓ Ready in 0ms
+2026-04-14T03:05:28: ▲ Next.js 16.2.2
+2026-04-14T03:05:28: - Local:         http://localhost:3900
+2026-04-14T03:05:28: - Network:       http://0.0.0.0:3900
+2026-04-14T03:05:28: ✓ Ready in 0ms
+2026-04-14T18:40:11: ▲ Next.js 16.2.2
+2026-04-14T18:40:11: - Local:         http://localhost:3900
+2026-04-14T18:40:11: - Network:       http://0.0.0.0:3900
+2026-04-14T18:40:11: ✓ Ready in 0ms
+2026-04-14T21:45:58: ▲ Next.js 16.2.2
+2026-04-14T21:45:58: - Local:         http://localhost:3900
+2026-04-14T21:45:58: - Network:       http://0.0.0.0:3900
+2026-04-14T21:45:58: ✓ Ready in 0ms
+2026-04-14T22:38:46: ▲ Next.js 16.2.2
+2026-04-14T22:38:46: - Local:         http://localhost:3900
+2026-04-14T22:38:46: - Network:       http://0.0.0.0:3900
+2026-04-14T22:38:46: ✓ Ready in 0ms
+2026-04-15T02:07:50: ▲ Next.js 16.2.2
+2026-04-15T02:07:50: - Local:         http://localhost:3900
+2026-04-15T02:07:50: - Network:       http://0.0.0.0:3900
+2026-04-15T02:07:50: ✓ Ready in 0ms
+2026-04-15T02:31:35: ▲ Next.js 16.2.2
+2026-04-15T02:31:35: - Local:         http://localhost:3900
+2026-04-15T02:31:35: - Network:       http://0.0.0.0:3900
+2026-04-15T02:31:35: ✓ Ready in 0ms
+2026-04-15T02:57:57: Error [InvariantError]: Invariant: The client reference manifest for route "/" does not exist. This is a bug in Next.js.
+2026-04-15T02:57:57:     at Object.get (.next/server/chunks/[root-of-the-server]__0j8-xkl._.js:1:72863)
+2026-04-15T02:57:57: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/" does not exist. This is a bug in Next.js.
+2026-04-15T02:57:57:     at Object.get (.next/server/chunks/[root-of-the-server]__0j8-xkl._.js:1:72863)
+2026-04-15T02:57:57: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/" does not exist. This is a bug in Next.js.
+2026-04-15T02:57:57:     at Object.get (.next/server/chunks/[root-of-the-server]__0j8-xkl._.js:1:72863)
+2026-04-15T02:57:57: ⨯ Error: Failed to load static file for page: /500 ENOENT: no such file or directory, open '/volume3/web/camp9in/.next/standalone/.next/server/pages/500.html'
+2026-04-15T02:57:57:     at ignore-listed frames
+2026-04-15T02:57:58: Error [InvariantError]: Invariant: The client reference manifest for route "/" does not exist. This is a bug in Next.js.
+2026-04-15T02:57:58:     at Object.get (.next/server/chunks/[root-of-the-server]__0j8-xkl._.js:1:72863)
+2026-04-15T02:57:58: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/" does not exist. This is a bug in Next.js.
+2026-04-15T02:57:58:     at Object.get (.next/server/chunks/[root-of-the-server]__0j8-xkl._.js:1:72863)
+2026-04-15T02:57:58: ⨯ Error [InvariantError]: Invariant: The client reference manifest for route "/" does not exist. This is a bug in Next.js.
+2026-04-15T02:57:58:     at Object.get (.next/server/chunks/[root-of-the-server]__0j8-xkl._.js:1:72863)
+2026-04-15T02:57:58: ⨯ Error: Failed to load static file for page: /500 ENOENT: no such file or directory, open '/volume3/web/camp9in/.next/standalone/.next/server/pages/500.html'
+2026-04-15T02:57:58:     at ignore-listed frames
+2026-04-15T02:58:48: ▲ Next.js 16.2.2
+2026-04-15T02:58:48: - Local:         http://localhost:3900
+2026-04-15T02:58:48: - Network:       http://0.0.0.0:3900
+2026-04-15T02:58:48: ✓ Ready in 0ms
+2026-04-15T13:13:13: ▲ Next.js 16.2.2
+2026-04-15T13:13:13: - Local:         http://localhost:3900
+2026-04-15T13:13:13: - Network:       http://0.0.0.0:3900
+2026-04-15T13:13:13: ✓ Ready in 0ms
+2026-04-15T13:22:27: ▲ Next.js 16.2.2
+2026-04-15T13:22:27: - Local:         http://localhost:3900
+2026-04-15T13:22:27: - Network:       http://0.0.0.0:3900
+2026-04-15T13:22:27: ✓ Ready in 0ms
+2026-04-15T13:33:40: ▲ Next.js 16.2.2
+2026-04-15T13:33:40: - Local:         http://localhost:3900
+2026-04-15T13:33:40: - Network:       http://0.0.0.0:3900
+2026-04-15T13:33:40: ✓ Ready in 0ms
+2026-04-15T13:36:53: ▲ Next.js 16.2.2
+2026-04-15T13:36:53: - Local:         http://localhost:3900
+2026-04-15T13:36:53: - Network:       http://0.0.0.0:3900
+2026-04-15T13:36:53: ✓ Ready in 0ms
+2026-04-15T13:40:39: ▲ Next.js 16.2.2
+2026-04-15T13:40:39: - Local:         http://localhost:3900
+2026-04-15T13:40:39: - Network:       http://0.0.0.0:3900
+2026-04-15T13:40:39: ✓ Ready in 0ms
+2026-04-15T15:44:58: ▲ Next.js 16.2.2
+2026-04-15T15:44:58: - Local:         http://localhost:3900
+2026-04-15T15:44:58: - Network:       http://0.0.0.0:3900
+2026-04-15T15:44:58: ✓ Ready in 0ms
+2026-04-15T15:59:34: ▲ Next.js 16.2.2
+2026-04-15T15:59:34: - Local:         http://localhost:3900
+2026-04-15T15:59:34: - Network:       http://0.0.0.0:3900
+2026-04-15T15:59:34: ✓ Ready in 0ms
+2026-04-15T17:15:34: ▲ Next.js 16.2.2
+2026-04-15T17:15:34: - Local:         http://localhost:3900
+2026-04-15T17:15:34: - Network:       http://0.0.0.0:3900
+2026-04-15T17:15:34: ✓ Ready in 0ms
+2026-04-15T19:23:11: ▲ Next.js 16.2.2
+2026-04-15T19:23:11: - Local:         http://localhost:3900
+2026-04-15T19:23:11: - Network:       http://0.0.0.0:3900
+2026-04-15T19:23:11: ✓ Ready in 0ms
+2026-04-15T19:24:13: ▲ Next.js 16.2.2
+2026-04-15T19:24:13: - Local:         http://localhost:3900
+2026-04-15T19:24:13: - Network:       http://0.0.0.0:3900
+2026-04-15T19:24:13: ✓ Ready in 0ms
+2026-04-15T19:25:19: ▲ Next.js 16.2.2
+2026-04-15T19:25:19: - Local:         http://localhost:3900
+2026-04-15T19:25:19: - Network:       http://0.0.0.0:3900
+2026-04-15T19:25:19: ✓ Ready in 0ms
+2026-04-15T19:26:23: ▲ Next.js 16.2.2
+2026-04-15T19:26:23: - Local:         http://localhost:3900
+2026-04-15T19:26:23: - Network:       http://0.0.0.0:3900
+2026-04-15T19:26:23: ✓ Ready in 0ms
+2026-04-15T19:27:28: ▲ Next.js 16.2.2
+2026-04-15T19:27:28: - Local:         http://localhost:3900
+2026-04-15T19:27:28: - Network:       http://0.0.0.0:3900
+2026-04-15T19:27:28: ✓ Ready in 0ms
+2026-04-15T19:28:30: ▲ Next.js 16.2.2
+2026-04-15T19:28:30: - Local:         http://localhost:3900
+2026-04-15T19:28:30: - Network:       http://0.0.0.0:3900
+2026-04-15T19:28:30: ✓ Ready in 0ms
+2026-04-15T19:29:33: ▲ Next.js 16.2.2
+2026-04-15T19:29:33: - Local:         http://localhost:3900
+2026-04-15T19:29:33: - Network:       http://0.0.0.0:3900
+2026-04-15T19:29:33: ✓ Ready in 0ms
+2026-04-15T19:30:42: ▲ Next.js 16.2.2
+2026-04-15T19:30:42: - Local:         http://localhost:3900
+2026-04-15T19:30:42: - Network:       http://0.0.0.0:3900
+2026-04-15T19:30:42: ✓ Ready in 0ms
+2026-04-15T19:31:46: ▲ Next.js 16.2.2
+2026-04-15T19:31:46: - Local:         http://localhost:3900
+2026-04-15T19:31:46: - Network:       http://0.0.0.0:3900
+2026-04-15T19:31:46: ✓ Ready in 0ms
+2026-04-15T19:32:50: ▲ Next.js 16.2.2
+2026-04-15T19:32:50: - Local:         http://localhost:3900
+2026-04-15T19:32:50: - Network:       http://0.0.0.0:3900
+2026-04-15T19:32:50: ✓ Ready in 0ms
+2026-04-15T19:33:54: ▲ Next.js 16.2.2
+2026-04-15T19:33:54: - Local:         http://localhost:3900
+2026-04-15T19:33:54: - Network:       http://0.0.0.0:3900
+2026-04-15T19:33:54: ✓ Ready in 0ms
+2026-04-15T19:34:58: ▲ Next.js 16.2.2
+2026-04-15T19:34:58: - Local:         http://localhost:3900
+2026-04-15T19:34:58: - Network:       http://0.0.0.0:3900
+2026-04-15T19:34:58: ✓ Ready in 0ms
+2026-04-15T19:36:03: ▲ Next.js 16.2.2
+2026-04-15T19:36:03: - Local:         http://localhost:3900
+2026-04-15T19:36:03: - Network:       http://0.0.0.0:3900
+2026-04-15T19:36:03: ✓ Ready in 0ms
+2026-04-15T19:37:10: ▲ Next.js 16.2.2
+2026-04-15T19:37:10: - Local:         http://localhost:3900
+2026-04-15T19:37:10: - Network:       http://0.0.0.0:3900
+2026-04-15T19:37:10: ✓ Ready in 0ms
+2026-04-15T19:38:20: ▲ Next.js 16.2.2
+2026-04-15T19:38:20: - Local:         http://localhost:3900
+2026-04-15T19:38:20: - Network:       http://0.0.0.0:3900
+2026-04-15T19:38:20: ✓ Ready in 0ms
+2026-04-15T19:39:23: ▲ Next.js 16.2.2
+2026-04-15T19:39:23: - Local:         http://localhost:3900
+2026-04-15T19:39:23: - Network:       http://0.0.0.0:3900
+2026-04-15T19:39:23: ✓ Ready in 0ms
+2026-04-15T19:40:26: ▲ Next.js 16.2.2
+2026-04-15T19:40:26: - Local:         http://localhost:3900
+2026-04-15T19:40:26: - Network:       http://0.0.0.0:3900
+2026-04-15T19:40:26: ✓ Ready in 0ms
+2026-04-15T19:41:30: ▲ Next.js 16.2.2
+2026-04-15T19:41:30: - Local:         http://localhost:3900
+2026-04-15T19:41:30: - Network:       http://0.0.0.0:3900
+2026-04-15T19:41:30: ✓ Ready in 0ms
+2026-04-15T19:42:37: ▲ Next.js 16.2.2
+2026-04-15T19:42:37: - Local:         http://localhost:3900
+2026-04-15T19:42:37: - Network:       http://0.0.0.0:3900
+2026-04-15T19:42:37: ✓ Ready in 0ms
+2026-04-15T19:43:47: ▲ Next.js 16.2.2
+2026-04-15T19:43:47: - Local:         http://localhost:3900
+2026-04-15T19:43:47: - Network:       http://0.0.0.0:3900
+2026-04-15T19:43:47: ✓ Ready in 0ms
+2026-04-15T19:44:51: ▲ Next.js 16.2.2
+2026-04-15T19:44:51: - Local:         http://localhost:3900
+2026-04-15T19:44:51: - Network:       http://0.0.0.0:3900
+2026-04-15T19:44:51: ✓ Ready in 0ms
+2026-04-15T19:45:57: ▲ Next.js 16.2.2
+2026-04-15T19:45:57: - Local:         http://localhost:3900
+2026-04-15T19:45:57: - Network:       http://0.0.0.0:3900
+2026-04-15T19:45:57: ✓ Ready in 0ms
+2026-04-15T19:47:00: ▲ Next.js 16.2.2
+2026-04-15T19:47:00: - Local:         http://localhost:3900
+2026-04-15T19:47:00: - Network:       http://0.0.0.0:3900
+2026-04-15T19:47:00: ✓ Ready in 0ms
+2026-04-15T19:48:03: ▲ Next.js 16.2.2
+2026-04-15T19:48:03: - Local:         http://localhost:3900
+2026-04-15T19:48:03: - Network:       http://0.0.0.0:3900
+2026-04-15T19:48:03: ✓ Ready in 0ms
+2026-04-15T19:49:06: ▲ Next.js 16.2.2
+2026-04-15T19:49:06: - Local:         http://localhost:3900
+2026-04-15T19:49:06: - Network:       http://0.0.0.0:3900
+2026-04-15T19:49:06: ✓ Ready in 0ms
+2026-04-15T19:50:13: ▲ Next.js 16.2.2
+2026-04-15T19:50:13: - Local:         http://localhost:3900
+2026-04-15T19:50:13: - Network:       http://0.0.0.0:3900
+2026-04-15T19:50:13: ✓ Ready in 0ms
+2026-04-15T19:51:20: ▲ Next.js 16.2.2
+2026-04-15T19:51:20: - Local:         http://localhost:3900
+2026-04-15T19:51:20: - Network:       http://0.0.0.0:3900
+2026-04-15T19:51:20: ✓ Ready in 0ms
+2026-04-15T19:52:25: ▲ Next.js 16.2.2
+2026-04-15T19:52:25: - Local:         http://localhost:3900
+2026-04-15T19:52:25: - Network:       http://0.0.0.0:3900
+2026-04-15T19:52:25: ✓ Ready in 0ms
+2026-04-15T19:53:32: ▲ Next.js 16.2.2
+2026-04-15T19:53:32: - Local:         http://localhost:3900
+2026-04-15T19:53:32: - Network:       http://0.0.0.0:3900
+2026-04-15T19:53:32: ✓ Ready in 0ms
+2026-04-15T19:54:42: ▲ Next.js 16.2.2
+2026-04-15T19:54:42: - Local:         http://localhost:3900
+2026-04-15T19:54:42: - Network:       http://0.0.0.0:3900
+2026-04-15T19:54:42: ✓ Ready in 0ms
+2026-04-15T19:55:59: ▲ Next.js 16.2.2
+2026-04-15T19:55:59: - Local:         http://localhost:3900
+2026-04-15T19:55:59: - Network:       http://0.0.0.0:3900
+2026-04-15T19:55:59: ✓ Ready in 0ms
+2026-04-15T19:57:03: ▲ Next.js 16.2.2
+2026-04-15T19:57:03: - Local:         http://localhost:3900
+2026-04-15T19:57:03: - Network:       http://0.0.0.0:3900
+2026-04-15T19:57:03: ✓ Ready in 0ms
+2026-04-15T19:58:08: ▲ Next.js 16.2.2
+2026-04-15T19:58:08: - Local:         http://localhost:3900
+2026-04-15T19:58:08: - Network:       http://0.0.0.0:3900
+2026-04-15T19:58:08: ✓ Ready in 0ms
+2026-04-15T19:59:12: ▲ Next.js 16.2.2
+2026-04-15T19:59:12: - Local:         http://localhost:3900
+2026-04-15T19:59:12: - Network:       http://0.0.0.0:3900
+2026-04-15T19:59:12: ✓ Ready in 0ms
+2026-04-15T20:00:18: ▲ Next.js 16.2.2
+2026-04-15T20:00:18: - Local:         http://localhost:3900
+2026-04-15T20:00:18: - Network:       http://0.0.0.0:3900
+2026-04-15T20:00:18: ✓ Ready in 0ms
+2026-04-15T20:01:23: ▲ Next.js 16.2.2
+2026-04-15T20:01:23: - Local:         http://localhost:3900
+2026-04-15T20:01:23: - Network:       http://0.0.0.0:3900
+2026-04-15T20:01:23: ✓ Ready in 0ms
+2026-04-15T20:02:27: ▲ Next.js 16.2.2
+2026-04-15T20:02:27: - Local:         http://localhost:3900
+2026-04-15T20:02:27: - Network:       http://0.0.0.0:3900
+2026-04-15T20:02:27: ✓ Ready in 0ms
+2026-04-15T20:03:30: ▲ Next.js 16.2.2
+2026-04-15T20:03:30: - Local:         http://localhost:3900
+2026-04-15T20:03:30: - Network:       http://0.0.0.0:3900
+2026-04-15T20:03:30: ✓ Ready in 0ms
+2026-04-15T20:04:39: ▲ Next.js 16.2.2
+2026-04-15T20:04:39: - Local:         http://localhost:3900
+2026-04-15T20:04:39: - Network:       http://0.0.0.0:3900
+2026-04-15T20:04:39: ✓ Ready in 0ms
+2026-04-15T20:05:46: ▲ Next.js 16.2.2
+2026-04-15T20:05:46: - Local:         http://localhost:3900
+2026-04-15T20:05:46: - Network:       http://0.0.0.0:3900
+2026-04-15T20:05:46: ✓ Ready in 0ms
+2026-04-15T20:06:54: ▲ Next.js 16.2.2
+2026-04-15T20:06:54: - Local:         http://localhost:3900
+2026-04-15T20:06:54: - Network:       http://0.0.0.0:3900
+2026-04-15T20:06:54: ✓ Ready in 0ms
+2026-04-15T20:07:58: ▲ Next.js 16.2.2
+2026-04-15T20:07:58: - Local:         http://localhost:3900
+2026-04-15T20:07:58: - Network:       http://0.0.0.0:3900
+2026-04-15T20:07:58: ✓ Ready in 0ms
+2026-04-15T20:09:04: ▲ Next.js 16.2.2
+2026-04-15T20:09:04: - Local:         http://localhost:3900
+2026-04-15T20:09:04: - Network:       http://0.0.0.0:3900
+2026-04-15T20:09:04: ✓ Ready in 0ms
+2026-04-15T20:10:14: ▲ Next.js 16.2.2
+2026-04-15T20:10:14: - Local:         http://localhost:3900
+2026-04-15T20:10:14: - Network:       http://0.0.0.0:3900
+2026-04-15T20:10:14: ✓ Ready in 0ms
+2026-04-15T20:11:22: ▲ Next.js 16.2.2
+2026-04-15T20:11:22: - Local:         http://localhost:3900
+2026-04-15T20:11:22: - Network:       http://0.0.0.0:3900
+2026-04-15T20:11:22: ✓ Ready in 0ms
+2026-04-15T20:12:27: ▲ Next.js 16.2.2
+2026-04-15T20:12:27: - Local:         http://localhost:3900
+2026-04-15T20:12:27: - Network:       http://0.0.0.0:3900
+2026-04-15T20:12:27: ✓ Ready in 0ms
+2026-04-15T20:13:29: ▲ Next.js 16.2.2
+2026-04-15T20:13:29: - Local:         http://localhost:3900
+2026-04-15T20:13:29: - Network:       http://0.0.0.0:3900
+2026-04-15T20:13:29: ✓ Ready in 0ms
+2026-04-15T20:14:41: ▲ Next.js 16.2.2
+2026-04-15T20:14:41: - Local:         http://localhost:3900
+2026-04-15T20:14:41: - Network:       http://0.0.0.0:3900
+2026-04-15T20:14:41: ✓ Ready in 0ms
+2026-04-15T20:15:44: ▲ Next.js 16.2.2
+2026-04-15T20:15:44: - Local:         http://localhost:3900
+2026-04-15T20:15:44: - Network:       http://0.0.0.0:3900
+2026-04-15T20:15:44: ✓ Ready in 0ms
+2026-04-15T20:16:48: ▲ Next.js 16.2.2
+2026-04-15T20:16:48: - Local:         http://localhost:3900
+2026-04-15T20:16:48: - Network:       http://0.0.0.0:3900
+2026-04-15T20:16:48: ✓ Ready in 0ms
+2026-04-15T20:17:53: ▲ Next.js 16.2.2
+2026-04-15T20:17:53: - Local:         http://localhost:3900
+2026-04-15T20:17:53: - Network:       http://0.0.0.0:3900
+2026-04-15T20:17:53: ✓ Ready in 0ms
+2026-04-15T20:19:03: ▲ Next.js 16.2.2
+2026-04-15T20:19:03: - Local:         http://localhost:3900
+2026-04-15T20:19:03: - Network:       http://0.0.0.0:3900
+2026-04-15T20:19:03: ✓ Ready in 0ms
+2026-04-15T20:20:21: ▲ Next.js 16.2.2
+2026-04-15T20:20:21: - Local:         http://localhost:3900
+2026-04-15T20:20:21: - Network:       http://0.0.0.0:3900
+2026-04-15T20:20:21: ✓ Ready in 0ms
+2026-04-15T20:21:27: ▲ Next.js 16.2.2
+2026-04-15T20:21:27: - Local:         http://localhost:3900
+2026-04-15T20:21:27: - Network:       http://0.0.0.0:3900
+2026-04-15T20:21:27: ✓ Ready in 0ms
+2026-04-15T20:22:32: ▲ Next.js 16.2.2
+2026-04-15T20:22:32: - Local:         http://localhost:3900
+2026-04-15T20:22:32: - Network:       http://0.0.0.0:3900
+2026-04-15T20:22:32: ✓ Ready in 0ms
+2026-04-15T20:23:37: ▲ Next.js 16.2.2
+2026-04-15T20:23:37: - Local:         http://localhost:3900
+2026-04-15T20:23:37: - Network:       http://0.0.0.0:3900
+2026-04-15T20:23:37: ✓ Ready in 0ms
+2026-04-15T20:24:49: ▲ Next.js 16.2.2
+2026-04-15T20:24:49: - Local:         http://localhost:3900
+2026-04-15T20:24:49: - Network:       http://0.0.0.0:3900
+2026-04-15T20:24:49: ✓ Ready in 0ms
+2026-04-15T20:26:03: ▲ Next.js 16.2.2
+2026-04-15T20:26:03: - Local:         http://localhost:3900
+2026-04-15T20:26:03: - Network:       http://0.0.0.0:3900
+2026-04-15T20:26:03: ✓ Ready in 0ms
+2026-04-15T20:27:23: ▲ Next.js 16.2.2
+2026-04-15T20:27:23: - Local:         http://localhost:3900
+2026-04-15T20:27:23: - Network:       http://0.0.0.0:3900
+2026-04-15T20:27:23: ✓ Ready in 0ms
+2026-04-15T20:28:33: ▲ Next.js 16.2.2
+2026-04-15T20:28:33: - Local:         http://localhost:3900
+2026-04-15T20:28:33: - Network:       http://0.0.0.0:3900
+2026-04-15T20:28:33: ✓ Ready in 0ms
+2026-04-15T20:30:01: ▲ Next.js 16.2.2
+2026-04-15T20:30:01: - Local:         http://localhost:3900
+2026-04-15T20:30:01: - Network:       http://0.0.0.0:3900
+2026-04-15T20:30:01: ✓ Ready in 0ms
+2026-04-15T20:31:05: ▲ Next.js 16.2.2
+2026-04-15T20:31:05: - Local:         http://localhost:3900
+2026-04-15T20:31:05: - Network:       http://0.0.0.0:3900
+2026-04-15T20:31:05: ✓ Ready in 0ms
+2026-04-15T20:32:19: ▲ Next.js 16.2.2
+2026-04-15T20:32:19: - Local:         http://localhost:3900
+2026-04-15T20:32:19: - Network:       http://0.0.0.0:3900
+2026-04-15T20:32:19: ✓ Ready in 0ms
+2026-04-15T20:33:25: ▲ Next.js 16.2.2
+2026-04-15T20:33:25: - Local:         http://localhost:3900
+2026-04-15T20:33:25: - Network:       http://0.0.0.0:3900
+2026-04-15T20:33:25: ✓ Ready in 0ms
+2026-04-15T20:34:28: ▲ Next.js 16.2.2
+2026-04-15T20:34:28: - Local:         http://localhost:3900
+2026-04-15T20:34:28: - Network:       http://0.0.0.0:3900
+2026-04-15T20:34:28: ✓ Ready in 0ms
+2026-04-15T20:35:37: ▲ Next.js 16.2.2
+2026-04-15T20:35:37: - Local:         http://localhost:3900
+2026-04-15T20:35:37: - Network:       http://0.0.0.0:3900
+2026-04-15T20:35:37: ✓ Ready in 0ms
+2026-04-15T20:36:41: ▲ Next.js 16.2.2
+2026-04-15T20:36:41: - Local:         http://localhost:3900
+2026-04-15T20:36:41: - Network:       http://0.0.0.0:3900
+2026-04-15T20:36:41: ✓ Ready in 0ms
+2026-04-15T20:37:53: ▲ Next.js 16.2.2
+2026-04-15T20:37:53: - Local:         http://localhost:3900
+2026-04-15T20:37:53: - Network:       http://0.0.0.0:3900
+2026-04-15T20:37:53: ✓ Ready in 0ms
+2026-04-15T20:39:17: ▲ Next.js 16.2.2
+2026-04-15T20:39:17: - Local:         http://localhost:3900
+2026-04-15T20:39:17: - Network:       http://0.0.0.0:3900
+2026-04-15T20:39:17: ✓ Ready in 0ms
+2026-04-15T20:40:40: ▲ Next.js 16.2.2
+2026-04-15T20:40:40: - Local:         http://localhost:3900
+2026-04-15T20:40:40: - Network:       http://0.0.0.0:3900
+2026-04-15T20:40:40: ✓ Ready in 0ms
+2026-04-15T20:42:19: ▲ Next.js 16.2.2
+2026-04-15T20:42:19: - Local:         http://localhost:3900
+2026-04-15T20:42:19: - Network:       http://0.0.0.0:3900
+2026-04-15T20:42:19: ✓ Ready in 0ms
+2026-04-15T20:43:28: ▲ Next.js 16.2.2
+2026-04-15T20:43:28: - Local:         http://localhost:3900
+2026-04-15T20:43:28: - Network:       http://0.0.0.0:3900
+2026-04-15T20:43:28: ✓ Ready in 0ms
+2026-04-15T20:44:35: ▲ Next.js 16.2.2
+2026-04-15T20:44:35: - Local:         http://localhost:3900
+2026-04-15T20:44:35: - Network:       http://0.0.0.0:3900
+2026-04-15T20:44:35: ✓ Ready in 0ms
+2026-04-15T20:45:49: ▲ Next.js 16.2.2
+2026-04-15T20:45:49: - Local:         http://localhost:3900
+2026-04-15T20:45:49: - Network:       http://0.0.0.0:3900
+2026-04-15T20:45:49: ✓ Ready in 0ms
+2026-04-15T20:46:57: ▲ Next.js 16.2.2
+2026-04-15T20:46:57: - Local:         http://localhost:3900
+2026-04-15T20:46:57: - Network:       http://0.0.0.0:3900
+2026-04-15T20:46:57: ✓ Ready in 0ms
+2026-04-15T20:48:24: ▲ Next.js 16.2.2
+2026-04-15T20:48:24: - Local:         http://localhost:3900
+2026-04-15T20:48:24: - Network:       http://0.0.0.0:3900
+2026-04-15T20:48:24: ✓ Ready in 0ms
+2026-04-15T20:49:29: ▲ Next.js 16.2.2
+2026-04-15T20:49:29: - Local:         http://localhost:3900
+2026-04-15T20:49:29: - Network:       http://0.0.0.0:3900
+2026-04-15T20:49:29: ✓ Ready in 0ms
+2026-04-15T20:50:37: ▲ Next.js 16.2.2
+2026-04-15T20:50:37: - Local:         http://localhost:3900
+2026-04-15T20:50:37: - Network:       http://0.0.0.0:3900
+2026-04-15T20:50:37: ✓ Ready in 0ms
+2026-04-15T20:51:54: ▲ Next.js 16.2.2
+2026-04-15T20:51:54: - Local:         http://localhost:3900
+2026-04-15T20:51:54: - Network:       http://0.0.0.0:3900
+2026-04-15T20:51:54: ✓ Ready in 0ms
+2026-04-15T20:52:51: ▲ Next.js 16.2.2
+2026-04-15T20:52:51: - Local:         http://localhost:3900
+2026-04-15T20:52:51: - Network:       http://0.0.0.0:3900
+2026-04-15T20:52:51: ✓ Ready in 0ms
+2026-04-15T20:52:59: ▲ Next.js 16.2.2
+2026-04-15T20:52:59: - Local:         http://localhost:3900
+2026-04-15T20:52:59: - Network:       http://0.0.0.0:3900
+2026-04-15T20:52:59: ✓ Ready in 0ms
+2026-04-15T20:54:05: ▲ Next.js 16.2.2
+2026-04-15T20:54:05: - Local:         http://localhost:3900
+2026-04-15T20:54:05: - Network:       http://0.0.0.0:3900
+2026-04-15T20:54:05: ✓ Ready in 0ms
+2026-04-15T20:55:21: ▲ Next.js 16.2.2
+2026-04-15T20:55:21: - Local:         http://localhost:3900
+2026-04-15T20:55:21: - Network:       http://0.0.0.0:3900
+2026-04-15T20:55:21: ✓ Ready in 0ms
+2026-04-15T20:57:39: ▲ Next.js 16.2.2
+2026-04-15T20:57:39: - Local:         http://localhost:3900
+2026-04-15T20:57:39: - Network:       http://0.0.0.0:3900
+2026-04-15T20:57:39: ✓ Ready in 0ms
+2026-04-15T20:58:51: ▲ Next.js 16.2.2
+2026-04-15T20:58:51: - Local:         http://localhost:3900
+2026-04-15T20:58:51: - Network:       http://0.0.0.0:3900
+2026-04-15T20:58:51: ✓ Ready in 0ms
+2026-04-15T21:01:05: ▲ Next.js 16.2.2
+2026-04-15T21:01:05: - Local:         http://localhost:3900
+2026-04-15T21:01:05: - Network:       http://0.0.0.0:3900
+2026-04-15T21:01:05: ✓ Ready in 0ms
+2026-04-15T21:03:08: ▲ Next.js 16.2.2
+2026-04-15T21:03:08: - Local:         http://localhost:3900
+2026-04-15T21:03:08: - Network:       http://0.0.0.0:3900
+2026-04-15T21:03:08: ✓ Ready in 0ms
+2026-04-15T21:04:11: ▲ Next.js 16.2.2
+2026-04-15T21:04:11: - Local:         http://localhost:3900
+2026-04-15T21:04:11: - Network:       http://0.0.0.0:3900
+2026-04-15T21:04:11: ✓ Ready in 0ms
+2026-04-15T21:05:15: ▲ Next.js 16.2.2
+2026-04-15T21:05:15: - Local:         http://localhost:3900
+2026-04-15T21:05:15: - Network:       http://0.0.0.0:3900
+2026-04-15T21:05:15: ✓ Ready in 0ms
+2026-04-15T21:06:30: ▲ Next.js 16.2.2
+2026-04-15T21:06:30: - Local:         http://localhost:3900
+2026-04-15T21:06:30: - Network:       http://0.0.0.0:3900
+2026-04-15T21:06:30: ✓ Ready in 0ms
+2026-04-15T21:07:35: ▲ Next.js 16.2.2
+2026-04-15T21:07:35: - Local:         http://localhost:3900
+2026-04-15T21:07:35: - Network:       http://0.0.0.0:3900
+2026-04-15T21:07:35: ✓ Ready in 0ms
+2026-04-15T21:08:59: ▲ Next.js 16.2.2
+2026-04-15T21:08:59: - Local:         http://localhost:3900
+2026-04-15T21:08:59: - Network:       http://0.0.0.0:3900
+2026-04-15T21:08:59: ✓ Ready in 0ms
+2026-04-15T21:10:44: ▲ Next.js 16.2.2
+2026-04-15T21:10:44: - Local:         http://localhost:3900
+2026-04-15T21:10:44: - Network:       http://0.0.0.0:3900
+2026-04-15T21:10:44: ✓ Ready in 0ms
+2026-04-15T21:12:30: ▲ Next.js 16.2.2
+2026-04-15T21:12:30: - Local:         http://localhost:3900
+2026-04-15T21:12:30: - Network:       http://0.0.0.0:3900
+2026-04-15T21:12:30: ✓ Ready in 0ms
+2026-04-15T21:13:41: ▲ Next.js 16.2.2
+2026-04-15T21:13:41: - Local:         http://localhost:3900
+2026-04-15T21:13:41: - Network:       http://0.0.0.0:3900
+2026-04-15T21:13:41: ✓ Ready in 0ms
+2026-04-15T21:16:40: ▲ Next.js 16.2.2
+2026-04-15T21:16:40: - Local:         http://localhost:3900
+2026-04-15T21:16:40: - Network:       http://0.0.0.0:3900
+2026-04-15T21:16:40: ✓ Ready in 0ms
+2026-04-15T21:17:49: ▲ Next.js 16.2.2
+2026-04-15T21:17:49: - Local:         http://localhost:3900
+2026-04-15T21:17:49: - Network:       http://0.0.0.0:3900
+2026-04-15T21:17:49: ✓ Ready in 0ms
+2026-04-15T21:19:04: ▲ Next.js 16.2.2
+2026-04-15T21:19:04: - Local:         http://localhost:3900
+2026-04-15T21:19:04: - Network:       http://0.0.0.0:3900
+2026-04-15T21:19:04: ✓ Ready in 0ms
+2026-04-15T21:20:25: ▲ Next.js 16.2.2
+2026-04-15T21:20:25: - Local:         http://localhost:3900
+2026-04-15T21:20:25: - Network:       http://0.0.0.0:3900
+2026-04-15T21:20:25: ✓ Ready in 0ms
+2026-04-15T21:21:29: ▲ Next.js 16.2.2
+2026-04-15T21:21:29: - Local:         http://localhost:3900
+2026-04-15T21:21:29: - Network:       http://0.0.0.0:3900
+2026-04-15T21:21:29: ✓ Ready in 0ms
+2026-04-15T21:22:33: ▲ Next.js 16.2.2
+2026-04-15T21:22:33: - Local:         http://localhost:3900
+2026-04-15T21:22:33: - Network:       http://0.0.0.0:3900
+2026-04-15T21:22:33: ✓ Ready in 0ms
+2026-04-15T21:24:14: ▲ Next.js 16.2.2
+2026-04-15T21:24:14: - Local:         http://localhost:3900
+2026-04-15T21:24:14: - Network:       http://0.0.0.0:3900
+2026-04-15T21:24:14: ✓ Ready in 0ms
+2026-04-15T21:26:51: ▲ Next.js 16.2.2
+2026-04-15T21:26:51: - Local:         http://localhost:3900
+2026-04-15T21:26:51: - Network:       http://0.0.0.0:3900
+2026-04-15T21:26:51: ✓ Ready in 0ms
+2026-04-15T21:27:57: ▲ Next.js 16.2.2
+2026-04-15T21:27:57: - Local:         http://localhost:3900
+2026-04-15T21:27:57: - Network:       http://0.0.0.0:3900
+2026-04-15T21:27:57: ✓ Ready in 0ms
+2026-04-15T21:29:02: ▲ Next.js 16.2.2
+2026-04-15T21:29:02: - Local:         http://localhost:3900
+2026-04-15T21:29:02: - Network:       http://0.0.0.0:3900
+2026-04-15T21:29:02: ✓ Ready in 0ms
+2026-04-15T21:30:27: ▲ Next.js 16.2.2
+2026-04-15T21:30:27: - Local:         http://localhost:3900
+2026-04-15T21:30:27: - Network:       http://0.0.0.0:3900
+2026-04-15T21:30:27: ✓ Ready in 0ms
+2026-04-15T21:31:39: ▲ Next.js 16.2.2
+2026-04-15T21:31:39: - Local:         http://localhost:3900
+2026-04-15T21:31:39: - Network:       http://0.0.0.0:3900
+2026-04-15T21:31:39: ✓ Ready in 0ms
+2026-04-15T21:34:04: ▲ Next.js 16.2.2
+2026-04-15T21:34:04: - Local:         http://localhost:3900
+2026-04-15T21:34:04: - Network:       http://0.0.0.0:3900
+2026-04-15T21:34:04: ✓ Ready in 0ms
+2026-04-15T21:36:06: ▲ Next.js 16.2.2
+2026-04-15T21:36:06: - Local:         http://localhost:3900
+2026-04-15T21:36:06: - Network:       http://0.0.0.0:3900
+2026-04-15T21:36:06: ✓ Ready in 0ms
+2026-04-15T21:39:12: ▲ Next.js 16.2.2
+2026-04-15T21:39:12: - Local:         http://localhost:3900
+2026-04-15T21:39:12: - Network:       http://0.0.0.0:3900
+2026-04-15T21:39:12: ✓ Ready in 0ms
+2026-04-15T21:40:25: ▲ Next.js 16.2.2
+2026-04-15T21:40:25: - Local:         http://localhost:3900
+2026-04-15T21:40:25: - Network:       http://0.0.0.0:3900
+2026-04-15T21:40:25: ✓ Ready in 0ms
+2026-04-15T21:41:34: ▲ Next.js 16.2.2
+2026-04-15T21:41:34: - Local:         http://localhost:3900
+2026-04-15T21:41:34: - Network:       http://0.0.0.0:3900
+2026-04-15T21:41:34: ✓ Ready in 0ms
+2026-04-15T21:45:50: ▲ Next.js 16.2.2
+2026-04-15T21:45:50: - Local:         http://localhost:3900
+2026-04-15T21:45:50: - Network:       http://0.0.0.0:3900
+2026-04-15T21:45:50: ✓ Ready in 0ms
+2026-04-15T21:49:23: ▲ Next.js 16.2.2
+2026-04-15T21:49:23: - Local:         http://localhost:3900
+2026-04-15T21:49:23: - Network:       http://0.0.0.0:3900
+2026-04-15T21:49:23: ✓ Ready in 0ms
+2026-04-15T21:52:10: ▲ Next.js 16.2.2
+2026-04-15T21:52:10: - Local:         http://localhost:3900
+2026-04-15T21:52:10: - Network:       http://0.0.0.0:3900
+2026-04-15T21:52:10: ✓ Ready in 0ms
+2026-04-15T21:56:27: ▲ Next.js 16.2.2
+2026-04-15T21:56:27: - Local:         http://localhost:3900
+2026-04-15T21:56:27: - Network:       http://0.0.0.0:3900
+2026-04-15T21:56:27: ✓ Ready in 0ms
+2026-04-15T21:58:23: ▲ Next.js 16.2.2
+2026-04-15T21:58:23: - Local:         http://localhost:3900
+2026-04-15T21:58:23: - Network:       http://0.0.0.0:3900
+2026-04-15T21:58:23: ✓ Ready in 0ms
+2026-04-15T22:00:23: ▲ Next.js 16.2.2
+2026-04-15T22:00:23: - Local:         http://localhost:3900
+2026-04-15T22:00:23: - Network:       http://0.0.0.0:3900
+2026-04-15T22:00:23: ✓ Ready in 0ms
+2026-04-15T22:02:02: ▲ Next.js 16.2.2
+2026-04-15T22:02:02: - Local:         http://localhost:3900
+2026-04-15T22:02:02: - Network:       http://0.0.0.0:3900
+2026-04-15T22:02:02: ✓ Ready in 0ms
+2026-04-15T22:03:17: ▲ Next.js 16.2.2
+2026-04-15T22:03:17: - Local:         http://localhost:3900
+2026-04-15T22:03:17: - Network:       http://0.0.0.0:3900
+2026-04-15T22:03:17: ✓ Ready in 0ms
+2026-04-15T22:07:06: ▲ Next.js 16.2.2
+2026-04-15T22:07:06: - Local:         http://localhost:3900
+2026-04-15T22:07:06: - Network:       http://0.0.0.0:3900
+2026-04-15T22:07:06: ✓ Ready in 0ms
+2026-04-15T22:11:12: ▲ Next.js 16.2.2
+2026-04-15T22:11:12: - Local:         http://localhost:3900
+2026-04-15T22:11:12: - Network:       http://0.0.0.0:3900
+2026-04-15T22:11:12: ✓ Ready in 0ms
+2026-04-15T22:14:18: ▲ Next.js 16.2.2
+2026-04-15T22:14:18: - Local:         http://localhost:3900
+2026-04-15T22:14:18: - Network:       http://0.0.0.0:3900
+2026-04-15T22:14:18: ✓ Ready in 0ms
+2026-04-15T22:15:57: ▲ Next.js 16.2.2
+2026-04-15T22:15:57: - Local:         http://localhost:3900
+2026-04-15T22:15:57: - Network:       http://0.0.0.0:3900
+2026-04-15T22:15:57: ✓ Ready in 0ms
+2026-04-15T22:17:38: ▲ Next.js 16.2.2
+2026-04-15T22:17:38: - Local:         http://localhost:3900
+2026-04-15T22:17:38: - Network:       http://0.0.0.0:3900
+2026-04-15T22:17:38: ✓ Ready in 0ms
+2026-04-15T22:19:15: ▲ Next.js 16.2.2
+2026-04-15T22:19:15: - Local:         http://localhost:3900
+2026-04-15T22:19:15: - Network:       http://0.0.0.0:3900
+2026-04-15T22:19:15: ✓ Ready in 0ms
+2026-04-15T22:23:14: ▲ Next.js 16.2.2
+2026-04-15T22:23:14: - Local:         http://localhost:3900
+2026-04-15T22:23:14: - Network:       http://0.0.0.0:3900
+2026-04-15T22:23:14: ✓ Ready in 0ms
+2026-04-15T22:25:04: ▲ Next.js 16.2.2
+2026-04-15T22:25:04: - Local:         http://localhost:3900
+2026-04-15T22:25:04: - Network:       http://0.0.0.0:3900
+2026-04-15T22:25:04: ✓ Ready in 0ms
+2026-04-15T22:27:59: ▲ Next.js 16.2.2
+2026-04-15T22:27:59: - Local:         http://localhost:3900
+2026-04-15T22:27:59: - Network:       http://0.0.0.0:3900
+2026-04-15T22:27:59: ✓ Ready in 0ms
+2026-04-15T22:31:30: ▲ Next.js 16.2.2
+2026-04-15T22:31:30: - Local:         http://localhost:3900
+2026-04-15T22:31:30: - Network:       http://0.0.0.0:3900
+2026-04-15T22:31:30: ✓ Ready in 0ms
+2026-04-15T22:33:26: ▲ Next.js 16.2.2
+2026-04-15T22:33:26: - Local:         http://localhost:3900
+2026-04-15T22:33:26: - Network:       http://0.0.0.0:3900
+2026-04-15T22:33:26: ✓ Ready in 0ms
+2026-04-15T22:36:07: ▲ Next.js 16.2.2
+2026-04-15T22:36:07: - Local:         http://localhost:3900
+2026-04-15T22:36:07: - Network:       http://0.0.0.0:3900
+2026-04-15T22:36:07: ✓ Ready in 0ms
+2026-04-15T22:37:10: ▲ Next.js 16.2.2
+2026-04-15T22:37:10: - Local:         http://localhost:3900
+2026-04-15T22:37:10: - Network:       http://0.0.0.0:3900
+2026-04-15T22:37:10: ✓ Ready in 0ms
+2026-04-15T22:38:31: ▲ Next.js 16.2.2
+2026-04-15T22:38:31: - Local:         http://localhost:3900
+2026-04-15T22:38:31: - Network:       http://0.0.0.0:3900
+2026-04-15T22:38:31: ✓ Ready in 0ms
+2026-04-15T22:40:53: ▲ Next.js 16.2.2
+2026-04-15T22:40:53: - Local:         http://localhost:3900
+2026-04-15T22:40:53: - Network:       http://0.0.0.0:3900
+2026-04-15T22:40:53: ✓ Ready in 0ms
+2026-04-15T22:42:34: ▲ Next.js 16.2.2
+2026-04-15T22:42:34: - Local:         http://localhost:3900
+2026-04-15T22:42:34: - Network:       http://0.0.0.0:3900
+2026-04-15T22:42:34: ✓ Ready in 0ms
+2026-04-15T22:46:17: ▲ Next.js 16.2.2
+2026-04-15T22:46:17: - Local:         http://localhost:3900
+2026-04-15T22:46:17: - Network:       http://0.0.0.0:3900
+2026-04-15T22:46:17: ✓ Ready in 0ms
+2026-04-15T22:47:38: ▲ Next.js 16.2.2
+2026-04-15T22:47:38: - Local:         http://localhost:3900
+2026-04-15T22:47:38: - Network:       http://0.0.0.0:3900
+2026-04-15T22:47:38: ✓ Ready in 0ms
+2026-04-15T22:48:42: ▲ Next.js 16.2.2
+2026-04-15T22:48:42: - Local:         http://localhost:3900
+2026-04-15T22:48:42: - Network:       http://0.0.0.0:3900
+2026-04-15T22:48:42: ✓ Ready in 0ms
+2026-04-15T22:50:27: ▲ Next.js 16.2.2
+2026-04-15T22:50:27: - Local:         http://localhost:3900
+2026-04-15T22:50:27: - Network:       http://0.0.0.0:3900
+2026-04-15T22:50:27: ✓ Ready in 0ms
+2026-04-15T22:53:42: ▲ Next.js 16.2.2
+2026-04-15T22:53:42: - Local:         http://localhost:3900
+2026-04-15T22:53:42: - Network:       http://0.0.0.0:3900
+2026-04-15T22:53:42: ✓ Ready in 0ms
+2026-04-15T22:54:54: ▲ Next.js 16.2.2
+2026-04-15T22:54:54: - Local:         http://localhost:3900
+2026-04-15T22:54:54: - Network:       http://0.0.0.0:3900
+2026-04-15T22:54:54: ✓ Ready in 0ms
+2026-04-15T22:56:34: ▲ Next.js 16.2.2
+2026-04-15T22:56:34: - Local:         http://localhost:3900
+2026-04-15T22:56:34: - Network:       http://0.0.0.0:3900
+2026-04-15T22:56:34: ✓ Ready in 0ms
+2026-04-15T22:57:47: ▲ Next.js 16.2.2
+2026-04-15T22:57:47: - Local:         http://localhost:3900
+2026-04-15T22:57:47: - Network:       http://0.0.0.0:3900
+2026-04-15T22:57:47: ✓ Ready in 0ms
+2026-04-15T22:59:52: ▲ Next.js 16.2.2
+2026-04-15T22:59:52: - Local:         http://localhost:3900
+2026-04-15T22:59:52: - Network:       http://0.0.0.0:3900
+2026-04-15T22:59:52: ✓ Ready in 0ms
+2026-04-15T23:01:27: ▲ Next.js 16.2.2
+2026-04-15T23:01:27: - Local:         http://localhost:3900
+2026-04-15T23:01:27: - Network:       http://0.0.0.0:3900
+2026-04-15T23:01:27: ✓ Ready in 0ms
+2026-04-15T23:02:33: ▲ Next.js 16.2.2
+2026-04-15T23:02:33: - Local:         http://localhost:3900
+2026-04-15T23:02:33: - Network:       http://0.0.0.0:3900
+2026-04-15T23:02:33: ✓ Ready in 0ms
+2026-04-15T23:04:55: ▲ Next.js 16.2.2
+2026-04-15T23:04:55: - Local:         http://localhost:3900
+2026-04-15T23:04:55: - Network:       http://0.0.0.0:3900
+2026-04-15T23:04:55: ✓ Ready in 0ms
+2026-04-15T23:06:24: ▲ Next.js 16.2.2
+2026-04-15T23:06:24: - Local:         http://localhost:3900
+2026-04-15T23:06:24: - Network:       http://0.0.0.0:3900
+2026-04-15T23:06:24: ✓ Ready in 0ms
+2026-04-15T23:08:09: ▲ Next.js 16.2.2
+2026-04-15T23:08:09: - Local:         http://localhost:3900
+2026-04-15T23:08:09: - Network:       http://0.0.0.0:3900
+2026-04-15T23:08:09: ✓ Ready in 0ms
+2026-04-15T23:09:56: ▲ Next.js 16.2.2
+2026-04-15T23:09:56: - Local:         http://localhost:3900
+2026-04-15T23:09:56: - Network:       http://0.0.0.0:3900
+2026-04-15T23:09:56: ✓ Ready in 0ms
+2026-04-15T23:13:01: ▲ Next.js 16.2.2
+2026-04-15T23:13:01: - Local:         http://localhost:3900
+2026-04-15T23:13:01: - Network:       http://0.0.0.0:3900
+2026-04-15T23:13:01: ✓ Ready in 0ms
+2026-04-15T23:14:15: ▲ Next.js 16.2.2
+2026-04-15T23:14:15: - Local:         http://localhost:3900
+2026-04-15T23:14:15: - Network:       http://0.0.0.0:3900
+2026-04-15T23:14:15: ✓ Ready in 0ms
+2026-04-15T23:18:16: ▲ Next.js 16.2.2
+2026-04-15T23:18:16: - Local:         http://localhost:3900
+2026-04-15T23:18:16: - Network:       http://0.0.0.0:3900
+2026-04-15T23:18:16: ✓ Ready in 0ms
+2026-04-15T23:20:48: ▲ Next.js 16.2.2
+2026-04-15T23:20:48: - Local:         http://localhost:3900
+2026-04-15T23:20:48: - Network:       http://0.0.0.0:3900
+2026-04-15T23:20:48: ✓ Ready in 0ms
+2026-04-15T23:23:02: ▲ Next.js 16.2.2
+2026-04-15T23:23:02: - Local:         http://localhost:3900
+2026-04-15T23:23:02: - Network:       http://0.0.0.0:3900
+2026-04-15T23:23:02: ✓ Ready in 0ms
+2026-04-15T23:25:47: ▲ Next.js 16.2.2
+2026-04-15T23:25:47: - Local:         http://localhost:3900
+2026-04-15T23:25:47: - Network:       http://0.0.0.0:3900
+2026-04-15T23:25:47: ✓ Ready in 0ms
+2026-04-15T23:30:22: ▲ Next.js 16.2.2
+2026-04-15T23:30:22: - Local:         http://localhost:3900
+2026-04-15T23:30:22: - Network:       http://0.0.0.0:3900
+2026-04-15T23:30:22: ✓ Ready in 0ms
+2026-04-15T23:31:26: ▲ Next.js 16.2.2
+2026-04-15T23:31:26: - Local:         http://localhost:3900
+2026-04-15T23:31:26: - Network:       http://0.0.0.0:3900
+2026-04-15T23:31:26: ✓ Ready in 0ms
+2026-04-15T23:33:57: ▲ Next.js 16.2.2
+2026-04-15T23:33:57: - Local:         http://localhost:3900
+2026-04-15T23:33:57: - Network:       http://0.0.0.0:3900
+2026-04-15T23:33:57: ✓ Ready in 0ms
+2026-04-15T23:36:02: ▲ Next.js 16.2.2
+2026-04-15T23:36:02: - Local:         http://localhost:3900
+2026-04-15T23:36:02: - Network:       http://0.0.0.0:3900
+2026-04-15T23:36:02: ✓ Ready in 0ms
+2026-04-15T23:37:27: ▲ Next.js 16.2.2
+2026-04-15T23:37:27: - Local:         http://localhost:3900
+2026-04-15T23:37:27: - Network:       http://0.0.0.0:3900
+2026-04-15T23:37:27: ✓ Ready in 0ms
+2026-04-15T23:38:53: ▲ Next.js 16.2.2
+2026-04-15T23:38:53: - Local:         http://localhost:3900
+2026-04-15T23:38:53: - Network:       http://0.0.0.0:3900
+2026-04-15T23:38:53: ✓ Ready in 0ms
+2026-04-15T23:40:10: ▲ Next.js 16.2.2
+2026-04-15T23:40:10: - Local:         http://localhost:3900
+2026-04-15T23:40:10: - Network:       http://0.0.0.0:3900
+2026-04-15T23:40:10: ✓ Ready in 0ms
+2026-04-15T23:43:07: ▲ Next.js 16.2.2
+2026-04-15T23:43:07: - Local:         http://localhost:3900
+2026-04-15T23:43:07: - Network:       http://0.0.0.0:3900
+2026-04-15T23:43:07: ✓ Ready in 0ms
+2026-04-15T23:46:36: ▲ Next.js 16.2.2
+2026-04-15T23:46:36: - Local:         http://localhost:3900
+2026-04-15T23:46:36: - Network:       http://0.0.0.0:3900
+2026-04-15T23:46:36: ✓ Ready in 0ms
+2026-04-15T23:47:51: ▲ Next.js 16.2.2
+2026-04-15T23:47:51: - Local:         http://localhost:3900
+2026-04-15T23:47:51: - Network:       http://0.0.0.0:3900
+2026-04-15T23:47:51: ✓ Ready in 0ms
+2026-04-15T23:50:55: ▲ Next.js 16.2.2
+2026-04-15T23:50:55: - Local:         http://localhost:3900
+2026-04-15T23:50:55: - Network:       http://0.0.0.0:3900
+2026-04-15T23:50:55: ✓ Ready in 0ms
+2026-04-15T23:52:21: ▲ Next.js 16.2.2
+2026-04-15T23:52:21: - Local:         http://localhost:3900
+2026-04-15T23:52:21: - Network:       http://0.0.0.0:3900
+2026-04-15T23:52:21: ✓ Ready in 0ms
+2026-04-15T23:54:01: ▲ Next.js 16.2.2
+2026-04-15T23:54:01: - Local:         http://localhost:3900
+2026-04-15T23:54:01: - Network:       http://0.0.0.0:3900
+2026-04-15T23:54:01: ✓ Ready in 0ms
+2026-04-15T23:58:22: ▲ Next.js 16.2.2
+2026-04-15T23:58:22: - Local:         http://localhost:3900
+2026-04-15T23:58:22: - Network:       http://0.0.0.0:3900
+2026-04-15T23:58:22: ✓ Ready in 0ms
+2026-04-16T00:09:57: ▲ Next.js 16.2.2
+2026-04-16T00:09:57: - Local:         http://localhost:3900
+2026-04-16T00:09:57: - Network:       http://0.0.0.0:3900
+2026-04-16T00:09:57: ✓ Ready in 0ms
+2026-04-16T00:11:29: ▲ Next.js 16.2.2
+2026-04-16T00:11:29: - Local:         http://localhost:3900
+2026-04-16T00:11:29: - Network:       http://0.0.0.0:3900
+2026-04-16T00:11:29: ✓ Ready in 0ms
+2026-04-16T00:13:09: ▲ Next.js 16.2.2
+2026-04-16T00:13:09: - Local:         http://localhost:3900
+2026-04-16T00:13:09: - Network:       http://0.0.0.0:3900
+2026-04-16T00:13:09: ✓ Ready in 0ms
+2026-04-16T00:14:01: ▲ Next.js 16.2.2
+2026-04-16T00:14:01: - Local:         http://localhost:3900
+2026-04-16T00:14:01: - Network:       http://0.0.0.0:3900
+2026-04-16T00:14:01: ✓ Ready in 0ms
+2026-04-16T00:15:45: ▲ Next.js 16.2.2
+2026-04-16T00:15:45: - Local:         http://localhost:3900
+2026-04-16T00:15:45: - Network:       http://0.0.0.0:3900
+2026-04-16T00:15:45: ✓ Ready in 0ms
+2026-04-16T00:19:38: ▲ Next.js 16.2.2
+2026-04-16T00:19:38: - Local:         http://localhost:3900
+2026-04-16T00:19:38: - Network:       http://0.0.0.0:3900
+2026-04-16T00:19:38: ✓ Ready in 0ms
+2026-04-16T00:21:16: ▲ Next.js 16.2.2
+2026-04-16T00:21:16: - Local:         http://localhost:3900
+2026-04-16T00:21:16: - Network:       http://0.0.0.0:3900
+2026-04-16T00:21:16: ✓ Ready in 0ms
+2026-04-16T00:21:27: ▲ Next.js 16.2.2
+2026-04-16T00:21:27: - Local:         http://localhost:3900
+2026-04-16T00:21:27: - Network:       http://0.0.0.0:3900
+2026-04-16T00:21:27: ✓ Ready in 0ms
+2026-04-16T00:22:10: ▲ Next.js 16.2.2
+2026-04-16T00:22:10: - Local:         http://localhost:3900
+2026-04-16T00:22:10: - Network:       http://0.0.0.0:3900
+2026-04-16T00:22:10: ✓ Ready in 0ms
+2026-04-16T00:26:26: ▲ Next.js 16.2.2
+2026-04-16T00:26:26: - Local:         http://localhost:3900
+2026-04-16T00:26:26: - Network:       http://0.0.0.0:3900
+2026-04-16T00:26:26: ✓ Ready in 0ms
+2026-04-16T00:28:59: ▲ Next.js 16.2.2
+2026-04-16T00:28:59: - Local:         http://localhost:3900
+2026-04-16T00:28:59: - Network:       http://0.0.0.0:3900
+2026-04-16T00:28:59: ✓ Ready in 0ms
+2026-04-16T00:41:14: Result lookup error: Error: Unknown column 'payment_amount' in 'SELECT'
+2026-04-16T00:41:14:     at n.execute (.next/server/chunks/[root-of-the-server]__0rba~_i._.js:5:258488)
+2026-04-16T00:41:14:     at R (.next/server/chunks/[root-of-the-server]__0rba~_i._.js:5:268208)
+2026-04-16T00:41:14:     at v (.next/server/chunks/[root-of-the-server]__07ji7~y._.js:1:1588)
+2026-04-16T00:41:14:     at async l (.next/server/chunks/[root-of-the-server]__07ji7~y._.js:7:3402)
+2026-04-16T00:41:14:     at async o (.next/server/chunks/[root-of-the-server]__07ji7~y._.js:7:4443)
+2026-04-16T00:41:14:     at async Module.N [as handler] (.next/server/chunks/[root-of-the-server]__07ji7~y._.js:7:5550) {
+2026-04-16T00:41:14:   code: 'ER_BAD_FIELD_ERROR',
+2026-04-16T00:41:14:   errno: 1054,
+2026-04-16T00:41:14:   sql: 'SELECT id, name, phone, status, payment_name, payment_address, bank_name, bank_account,\n' +
+2026-04-16T00:41:14:     "              payment_submitted_at, payment_amount, DATE_FORMAT(payment_date, '%Y-%m-%d') as payment_date\n" +
+2026-04-16T00:41:14:     '       FROM applicants\n' +
+2026-04-16T00:41:14:     "       WHERE name = ? AND REPLACE(phone, '-', '') = ?",
+2026-04-16T00:41:14:   sqlState: '42S22',
+2026-04-16T00:41:14:   sqlMessage: "Unknown column 'payment_amount' in 'SELECT'"
+2026-04-16T00:41:14: }
+2026-04-16T00:41:29: Result lookup error: Error: Unknown column 'payment_amount' in 'SELECT'
+2026-04-16T00:41:29:     at n.execute (.next/server/chunks/[root-of-the-server]__0rba~_i._.js:5:258488)
+2026-04-16T00:41:29:     at R (.next/server/chunks/[root-of-the-server]__0rba~_i._.js:5:268208)
+2026-04-16T00:41:29:     at v (.next/server/chunks/[root-of-the-server]__07ji7~y._.js:1:1588)
+2026-04-16T00:41:29:     at async l (.next/server/chunks/[root-of-the-server]__07ji7~y._.js:7:3402)
+2026-04-16T00:41:29:     at async o (.next/server/chunks/[root-of-the-server]__07ji7~y._.js:7:4443)
+2026-04-16T00:41:29:     at async Module.N [as handler] (.next/server/chunks/[root-of-the-server]__07ji7~y._.js:7:5550) {
+2026-04-16T00:41:29:   code: 'ER_BAD_FIELD_ERROR',
+2026-04-16T00:41:29:   errno: 1054,
+2026-04-16T00:41:29:   sql: 'SELECT id, name, phone, status, payment_name, payment_address, bank_name, bank_account,\n' +
+2026-04-16T00:41:29:     "              payment_submitted_at, payment_amount, DATE_FORMAT(payment_date, '%Y-%m-%d') as payment_date\n" +
+2026-04-16T00:41:29:     '       FROM applicants\n' +
+2026-04-16T00:41:29:     "       WHERE name = ? AND REPLACE(phone, '-', '') = ?",
+2026-04-16T00:41:29:   sqlState: '42S22',
+2026-04-16T00:41:29:   sqlMessage: "Unknown column 'payment_amount' in 'SELECT'"
+2026-04-16T00:41:29: }
+2026-04-16T00:42:37: ▲ Next.js 16.2.2
+2026-04-16T00:42:37: - Local:         http://localhost:3900
+2026-04-16T00:42:37: - Network:       http://0.0.0.0:3900
+2026-04-16T00:42:37: ✓ Ready in 0ms
+2026-04-16T00:47:09: ⨯ Error: Cannot find module './web/sandbox'
+2026-04-16T00:47:09: Require stack:
+2026-04-16T00:47:09: - /volume3/web/camp9in/.next/standalone/node_modules/next/dist/server/next-server.js
+2026-04-16T00:47:09: - /volume3/web/camp9in/.next/standalone/node_modules/next/dist/server/next.js
+2026-04-16T00:47:09: - /volume3/web/camp9in/.next/standalone/server.js
+2026-04-16T00:47:09:     at ignore-listed frames {
+2026-04-16T00:47:09:   code: 'MODULE_NOT_FOUND',
+2026-04-16T00:47:09:   requireStack: [
+2026-04-16T00:47:09:     '/volume3/web/camp9in/.next/standalone/node_modules/next/dist/server/next-server.js',
+2026-04-16T00:47:09:     '/volume3/web/camp9in/.next/standalone/node_modules/next/dist/server/next.js',
+2026-04-16T00:47:09:     '/volume3/web/camp9in/.next/standalone/server.js'
+2026-04-16T00:47:09:   ]
+2026-04-16T00:47:09: }
+2026-04-16T00:47:09: ⨯ Error: Cannot find module './web/sandbox'
+2026-04-16T00:47:09: Require stack:
+2026-04-16T00:47:09: - /volume3/web/camp9in/.next/standalone/node_modules/next/dist/server/next-server.js
+2026-04-16T00:47:09: - /volume3/web/camp9in/.next/standalone/node_modules/next/dist/server/next.js
+2026-04-16T00:47:09: - /volume3/web/camp9in/.next/standalone/server.js
+2026-04-16T00:47:09:     at ignore-listed frames {
+2026-04-16T00:47:09:   code: 'MODULE_NOT_FOUND',
+2026-04-16T00:47:09:   requireStack: [
+2026-04-16T00:47:09:     '/volume3/web/camp9in/.next/standalone/node_modules/next/dist/server/next-server.js',
+2026-04-16T00:47:09:     '/volume3/web/camp9in/.next/standalone/node_modules/next/dist/server/next.js',
+2026-04-16T00:47:09:     '/volume3/web/camp9in/.next/standalone/server.js'
+2026-04-16T00:47:09:   ]
+2026-04-16T00:47:09: }
+2026-04-16T00:47:09: ⨯ Error: Failed to load static file for page: /500 ENOENT: no such file or directory, open '/volume3/web/camp9in/.next/standalone/.next/server/pages/500.html'
+2026-04-16T00:47:09:     at ignore-listed frames
+2026-04-16T00:47:47: ▲ Next.js 16.2.2
+2026-04-16T00:47:47: - Local:         http://localhost:3900
+2026-04-16T00:47:47: - Network:       http://0.0.0.0:3900
+2026-04-16T00:47:47: ✓ Ready in 0ms
+2026-04-16T00:55:56: ▲ Next.js 16.2.2
+2026-04-16T00:55:56: - Local:         http://localhost:3900
+2026-04-16T00:55:56: - Network:       http://0.0.0.0:3900
+2026-04-16T00:55:56: ✓ Ready in 0ms
+2026-04-16T01:00:00: ▲ Next.js 16.2.2
+2026-04-16T01:00:00: - Local:         http://localhost:3900
+2026-04-16T01:00:00: - Network:       http://0.0.0.0:3900
+2026-04-16T01:00:00: ✓ Ready in 0ms
+2026-04-16T01:09:17: ▲ Next.js 16.2.2
+2026-04-16T01:09:17: - Local:         http://localhost:3900
+2026-04-16T01:09:17: - Network:       http://0.0.0.0:3900
+2026-04-16T01:09:17: ✓ Ready in 0ms
+2026-04-16T01:15:15: ▲ Next.js 16.2.2
+2026-04-16T01:15:15: - Local:         http://localhost:3900
+2026-04-16T01:15:15: - Network:       http://0.0.0.0:3900
+2026-04-16T01:15:15: ✓ Ready in 0ms
+2026-04-16T01:17:32: ▲ Next.js 16.2.2
+2026-04-16T01:17:32: - Local:         http://localhost:3900
+2026-04-16T01:17:32: - Network:       http://0.0.0.0:3900
+2026-04-16T01:17:32: ✓ Ready in 0ms
+2026-04-16T01:19:03: ⨯ Error: Cannot find module './web/sandbox'
+2026-04-16T01:19:03: Require stack:
+2026-04-16T01:19:03: - /volume3/web/camp9in/.next/standalone/node_modules/next/dist/server/next-server.js
+2026-04-16T01:19:03: - /volume3/web/camp9in/.next/standalone/node_modules/next/dist/server/next.js
+2026-04-16T01:19:03: - /volume3/web/camp9in/.next/standalone/server.js
+2026-04-16T01:19:03:     at ignore-listed frames {
+2026-04-16T01:19:03:   code: 'MODULE_NOT_FOUND',
+2026-04-16T01:19:03:   requireStack: [
+2026-04-16T01:19:03:     '/volume3/web/camp9in/.next/standalone/node_modules/next/dist/server/next-server.js',
+2026-04-16T01:19:03:     '/volume3/web/camp9in/.next/standalone/node_modules/next/dist/server/next.js',
+2026-04-16T01:19:03:     '/volume3/web/camp9in/.next/standalone/server.js'
+2026-04-16T01:19:03:   ]
+2026-04-16T01:19:03: }
+2026-04-16T01:19:03: ⨯ Error: Cannot find module './web/sandbox'
+2026-04-16T01:19:03: Require stack:
+2026-04-16T01:19:03: - /volume3/web/camp9in/.next/standalone/node_modules/next/dist/server/next-server.js
+2026-04-16T01:19:03: - /volume3/web/camp9in/.next/standalone/node_modules/next/dist/server/next.js
+2026-04-16T01:19:03: - /volume3/web/camp9in/.next/standalone/server.js
+2026-04-16T01:19:03:     at ignore-listed frames {
+2026-04-16T01:19:03:   code: 'MODULE_NOT_FOUND',
+2026-04-16T01:19:03:   requireStack: [
+2026-04-16T01:19:03:     '/volume3/web/camp9in/.next/standalone/node_modules/next/dist/server/next-server.js',
+2026-04-16T01:19:03:     '/volume3/web/camp9in/.next/standalone/node_modules/next/dist/server/next.js',
+2026-04-16T01:19:03:     '/volume3/web/camp9in/.next/standalone/server.js'
+2026-04-16T01:19:03:   ]
+2026-04-16T01:19:03: }
+2026-04-16T01:19:03: ⨯ Error: Failed to load static file for page: /500 ENOENT: no such file or directory, open '/volume3/web/camp9in/.next/standalone/.next/server/pages/500.html'
+2026-04-16T01:19:03:     at ignore-listed frames
+2026-04-16T01:19:04: ⨯ Error: Cannot find module './web/sandbox'
+2026-04-16T01:19:04: Require stack:
+2026-04-16T01:19:04: - /volume3/web/camp9in/.next/standalone/node_modules/next/dist/server/next-server.js
+2026-04-16T01:19:04: - /volume3/web/camp9in/.next/standalone/node_modules/next/dist/server/next.js
+2026-04-16T01:19:04: - /volume3/web/camp9in/.next/standalone/server.js
+2026-04-16T01:19:04:     at ignore-listed frames {
+2026-04-16T01:19:04:   code: 'MODULE_NOT_FOUND',
+2026-04-16T01:19:04:   requireStack: [
+2026-04-16T01:19:04:     '/volume3/web/camp9in/.next/standalone/node_modules/next/dist/server/next-server.js',
+2026-04-16T01:19:04:     '/volume3/web/camp9in/.next/standalone/node_modules/next/dist/server/next.js',
+2026-04-16T01:19:04:     '/volume3/web/camp9in/.next/standalone/server.js'
+2026-04-16T01:19:04:   ]
+2026-04-16T01:19:04: }
+2026-04-16T01:19:04: ⨯ Error: Cannot find module './web/sandbox'
+2026-04-16T01:19:04: Require stack:
+2026-04-16T01:19:04: - /volume3/web/camp9in/.next/standalone/node_modules/next/dist/server/next-server.js
+2026-04-16T01:19:04: - /volume3/web/camp9in/.next/standalone/node_modules/next/dist/server/next.js
+2026-04-16T01:19:04: - /volume3/web/camp9in/.next/standalone/server.js
+2026-04-16T01:19:04:     at ignore-listed frames {
+2026-04-16T01:19:04:   code: 'MODULE_NOT_FOUND',
+2026-04-16T01:19:04:   requireStack: [
+2026-04-16T01:19:04:     '/volume3/web/camp9in/.next/standalone/node_modules/next/dist/server/next-server.js',
+2026-04-16T01:19:04:     '/volume3/web/camp9in/.next/standalone/node_modules/next/dist/server/next.js',
+2026-04-16T01:19:04:     '/volume3/web/camp9in/.next/standalone/server.js'
+2026-04-16T01:19:04:   ]
+2026-04-16T01:19:04: }
+2026-04-16T01:19:04: ⨯ Error: Failed to load static file for page: /500 ENOENT: no such file or directory, open '/volume3/web/camp9in/.next/standalone/.next/server/pages/500.html'
+2026-04-16T01:19:04:     at ignore-listed frames
+2026-04-16T01:19:19: ▲ Next.js 16.2.2
+2026-04-16T01:19:19: - Local:         http://localhost:3900
+2026-04-16T01:19:19: - Network:       http://0.0.0.0:3900
+2026-04-16T01:19:19: ✓ Ready in 0ms
+2026-04-16T01:19:31: ▲ Next.js 16.2.2
+2026-04-16T01:19:31: - Local:         http://localhost:3900
+2026-04-16T01:19:31: - Network:       http://0.0.0.0:3900
+2026-04-16T01:19:31: ✓ Ready in 0ms
+2026-04-16T01:21:15: ▲ Next.js 16.2.2
+2026-04-16T01:21:15: - Local:         http://localhost:3900
+2026-04-16T01:21:15: - Network:       http://0.0.0.0:3900
+2026-04-16T01:21:15: ✓ Ready in 0ms
+2026-04-16T01:28:19: ▲ Next.js 16.2.2
+2026-04-16T01:28:19: - Local:         http://localhost:3900
+2026-04-16T01:28:19: - Network:       http://0.0.0.0:3900
+2026-04-16T01:28:19: ✓ Ready in 0ms
+2026-04-16T01:28:21: ▲ Next.js 16.2.2
+2026-04-16T01:28:21: - Local:         http://localhost:3900
+2026-04-16T01:28:21: - Network:       http://0.0.0.0:3900
+2026-04-16T01:28:21: ✓ Ready in 0ms
+2026-04-16T01:34:51: ▲ Next.js 16.2.2
+2026-04-16T01:34:51: - Local:         http://localhost:3900
+2026-04-16T01:34:51: - Network:       http://0.0.0.0:3900
+2026-04-16T01:34:51: ✓ Ready in 0ms
+2026-04-16T01:38:16: ▲ Next.js 16.2.2
+2026-04-16T01:38:16: - Local:         http://localhost:3900
+2026-04-16T01:38:16: - Network:       http://0.0.0.0:3900
+2026-04-16T01:38:16: ✓ Ready in 0ms
+2026-04-16T01:40:15: ▲ Next.js 16.2.2
+2026-04-16T01:40:15: - Local:         http://localhost:3900
+2026-04-16T01:40:15: - Network:       http://0.0.0.0:3900
+2026-04-16T01:40:15: ✓ Ready in 0ms
+2026-04-16T01:46:02: ▲ Next.js 16.2.2
+2026-04-16T01:46:02: - Local:         http://localhost:3900
+2026-04-16T01:46:02: - Network:       http://0.0.0.0:3900
+2026-04-16T01:46:02: ✓ Ready in 0ms
+2026-04-16T01:48:21: ▲ Next.js 16.2.2
+2026-04-16T01:48:21: - Local:         http://localhost:3900
+2026-04-16T01:48:21: - Network:       http://0.0.0.0:3900
+2026-04-16T01:48:21: ✓ Ready in 0ms
+2026-04-16T01:52:08: ▲ Next.js 16.2.2
+2026-04-16T01:52:08: - Local:         http://localhost:3900
+2026-04-16T01:52:08: - Network:       http://0.0.0.0:3900
+2026-04-16T01:52:08: ✓ Ready in 0ms
+2026-04-16T01:57:53: ▲ Next.js 16.2.2
+2026-04-16T01:57:53: - Local:         http://localhost:3900
+2026-04-16T01:57:53: - Network:       http://0.0.0.0:3900
+2026-04-16T01:57:53: ✓ Ready in 0ms
+2026-04-16T02:02:43: ▲ Next.js 16.2.2
+2026-04-16T02:02:43: - Local:         http://localhost:3900
+2026-04-16T02:02:43: - Network:       http://0.0.0.0:3900
+2026-04-16T02:02:43: ✓ Ready in 0ms
+2026-04-16T02:14:08: ▲ Next.js 16.2.2
+2026-04-16T02:14:08: - Local:         http://localhost:3900
+2026-04-16T02:14:08: - Network:       http://0.0.0.0:3900
+2026-04-16T02:14:08: ✓ Ready in 0ms
+2026-04-16T02:20:18: ▲ Next.js 16.2.2
+2026-04-16T02:20:18: - Local:         http://localhost:3900
+2026-04-16T02:20:18: - Network:       http://0.0.0.0:3900
+2026-04-16T02:20:18: ✓ Ready in 0ms
+2026-04-16T02:49:31: ▲ Next.js 16.2.2
+2026-04-16T02:49:31: - Local:         http://localhost:3900
+2026-04-16T02:49:31: - Network:       http://0.0.0.0:3900
+2026-04-16T02:49:31: ✓ Ready in 0ms
+2026-04-16T02:56:11: ▲ Next.js 16.2.2
+2026-04-16T02:56:11: - Local:         http://localhost:3900
+2026-04-16T02:56:11: - Network:       http://0.0.0.0:3900
+2026-04-16T02:56:11: ✓ Ready in 0ms
+2026-04-16T03:01:04: ▲ Next.js 16.2.2
+2026-04-16T03:01:04: - Local:         http://localhost:3900
+2026-04-16T03:01:04: - Network:       http://0.0.0.0:3900
+2026-04-16T03:01:04: ✓ Ready in 0ms
+2026-04-16T03:12:05: ▲ Next.js 16.2.2
+2026-04-16T03:12:05: - Local:         http://localhost:3900
+2026-04-16T03:12:05: - Network:       http://0.0.0.0:3900
+2026-04-16T03:12:05: ✓ Ready in 0ms
+2026-04-16T03:20:12: ▲ Next.js 16.2.2
+2026-04-16T03:20:12: - Local:         http://localhost:3900
+2026-04-16T03:20:12: - Network:       http://0.0.0.0:3900
+2026-04-16T03:20:12: ✓ Ready in 0ms
+2026-04-16T03:35:28: ▲ Next.js 16.2.2
+2026-04-16T03:35:28: - Local:         http://localhost:3900
+2026-04-16T03:35:28: - Network:       http://0.0.0.0:3900
+2026-04-16T03:35:28: ✓ Ready in 0ms
+2026-04-16T04:20:55: ▲ Next.js 16.2.2
+2026-04-16T04:20:55: - Local:         http://localhost:3900
+2026-04-16T04:20:55: - Network:       http://0.0.0.0:3900
+2026-04-16T04:20:55: ✓ Ready in 0ms
+2026-04-16T04:29:11: ▲ Next.js 16.2.2
+2026-04-16T04:29:11: - Local:         http://localhost:3900
+2026-04-16T04:29:11: - Network:       http://0.0.0.0:3900
+2026-04-16T04:29:11: ✓ Ready in 0ms
+2026-04-16T05:00:33: ▲ Next.js 16.2.2
+2026-04-16T05:00:33: - Local:         http://localhost:3900
+2026-04-16T05:00:33: - Network:       http://0.0.0.0:3900
+2026-04-16T05:00:33: ✓ Ready in 0ms
+2026-04-16T05:19:34: ▲ Next.js 16.2.2
+2026-04-16T05:19:34: - Local:         http://localhost:3900
+2026-04-16T05:19:34: - Network:       http://0.0.0.0:3900
+2026-04-16T05:19:34: ✓ Ready in 0ms
+2026-04-16T05:24:58: ▲ Next.js 16.2.2
+2026-04-16T05:24:58: - Local:         http://localhost:3900
+2026-04-16T05:24:58: - Network:       http://0.0.0.0:3900
+2026-04-16T05:24:58: ✓ Ready in 0ms
+2026-04-16T05:28:08: ▲ Next.js 16.2.2
+2026-04-16T05:28:08: - Local:         http://localhost:3900
+2026-04-16T05:28:08: - Network:       http://0.0.0.0:3900
+2026-04-16T05:28:08: ✓ Ready in 0ms
+2026-04-16T05:38:31: ▲ Next.js 16.2.2
+2026-04-16T05:38:31: - Local:         http://localhost:3900
+2026-04-16T05:38:31: - Network:       http://0.0.0.0:3900
+2026-04-16T05:38:31: ✓ Ready in 0ms
+2026-04-16T05:52:38: ▲ Next.js 16.2.2
+2026-04-16T05:52:38: - Local:         http://localhost:3900
+2026-04-16T05:52:38: - Network:       http://0.0.0.0:3900
+2026-04-16T05:52:38: ✓ Ready in 0ms
+2026-04-16T05:53:47: ▲ Next.js 16.2.2
+2026-04-16T05:53:47: - Local:         http://localhost:3900
+2026-04-16T05:53:47: - Network:       http://0.0.0.0:3900
+2026-04-16T05:53:47: ✓ Ready in 0ms
+2026-04-16T05:55:48: ▲ Next.js 16.2.2
+2026-04-16T05:55:48: - Local:         http://localhost:3900
+2026-04-16T05:55:48: - Network:       http://0.0.0.0:3900
+2026-04-16T05:55:48: ✓ Ready in 0ms
+2026-04-16T05:57:20: ▲ Next.js 16.2.2
+2026-04-16T05:57:20: - Local:         http://localhost:3900
+2026-04-16T05:57:20: - Network:       http://0.0.0.0:3900
+2026-04-16T05:57:20: ✓ Ready in 0ms
+2026-04-16T06:01:05: ▲ Next.js 16.2.2
+2026-04-16T06:01:05: - Local:         http://localhost:3900
+2026-04-16T06:01:05: - Network:       http://0.0.0.0:3900
+2026-04-16T06:01:05: ✓ Ready in 0ms
+2026-04-16T06:03:24: ▲ Next.js 16.2.2
+2026-04-16T06:03:24: - Local:         http://localhost:3900
+2026-04-16T06:03:24: - Network:       http://0.0.0.0:3900
+2026-04-16T06:03:24: ✓ Ready in 0ms
+2026-04-16T06:11:20: ▲ Next.js 16.2.2
+2026-04-16T06:11:20: - Local:         http://localhost:3900
+2026-04-16T06:11:20: - Network:       http://0.0.0.0:3900
+2026-04-16T06:11:20: ✓ Ready in 0ms
+2026-04-16T06:29:31: ▲ Next.js 16.2.2
+2026-04-16T06:29:31: - Local:         http://localhost:3900
+2026-04-16T06:29:31: - Network:       http://0.0.0.0:3900
+2026-04-16T06:29:31: ✓ Ready in 0ms
+2026-04-16T06:31:03: ▲ Next.js 16.2.2
+2026-04-16T06:31:03: - Local:         http://localhost:3900
+2026-04-16T06:31:03: - Network:       http://0.0.0.0:3900
+2026-04-16T06:31:03: ✓ Ready in 0ms
+2026-04-16T06:33:48: ▲ Next.js 16.2.2
+2026-04-16T06:33:48: - Local:         http://localhost:3900
+2026-04-16T06:33:48: - Network:       http://0.0.0.0:3900
+2026-04-16T06:33:48: ✓ Ready in 0ms
+2026-04-16T06:37:43: ▲ Next.js 16.2.2
+2026-04-16T06:37:43: - Local:         http://localhost:3900
+2026-04-16T06:37:43: - Network:       http://0.0.0.0:3900
+2026-04-16T06:37:43: ✓ Ready in 0ms
+2026-04-16T06:57:13: ▲ Next.js 16.2.2
+2026-04-16T06:57:13: - Local:         http://localhost:3900
+2026-04-16T06:57:13: - Network:       http://0.0.0.0:3900
+2026-04-16T06:57:13: ✓ Ready in 0ms
+2026-04-16T07:09:54: ▲ Next.js 16.2.2
+2026-04-16T07:09:54: - Local:         http://localhost:3900
+2026-04-16T07:09:54: - Network:       http://0.0.0.0:3900
+2026-04-16T07:09:54: ✓ Ready in 0ms
+2026-04-16T07:12:38: ▲ Next.js 16.2.2
+2026-04-16T07:12:38: - Local:         http://localhost:3900
+2026-04-16T07:12:38: - Network:       http://0.0.0.0:3900
+2026-04-16T07:12:38: ✓ Ready in 0ms
+2026-04-16T07:15:32: ▲ Next.js 16.2.2
+2026-04-16T07:15:32: - Local:         http://localhost:3900
+2026-04-16T07:15:32: - Network:       http://0.0.0.0:3900
+2026-04-16T07:15:32: ✓ Ready in 0ms
+2026-04-16T07:17:01: ▲ Next.js 16.2.2
+2026-04-16T07:17:01: - Local:         http://localhost:3900
+2026-04-16T07:17:01: - Network:       http://0.0.0.0:3900
+2026-04-16T07:17:01: ✓ Ready in 0ms
+2026-04-16T07:20:06: ▲ Next.js 16.2.2
+2026-04-16T07:20:06: - Local:         http://localhost:3900
+2026-04-16T07:20:06: - Network:       http://0.0.0.0:3900
+2026-04-16T07:20:06: ✓ Ready in 0ms
+2026-04-16T07:31:33: ▲ Next.js 16.2.2
+2026-04-16T07:31:33: - Local:         http://localhost:3900
+2026-04-16T07:31:33: - Network:       http://0.0.0.0:3900
+2026-04-16T07:31:33: ✓ Ready in 0ms
+2026-04-16T07:34:56: ▲ Next.js 16.2.2
+2026-04-16T07:34:56: - Local:         http://localhost:3900
+2026-04-16T07:34:56: - Network:       http://0.0.0.0:3900
+2026-04-16T07:34:56: ✓ Ready in 0ms
+2026-04-16T07:37:49: ▲ Next.js 16.2.2
+2026-04-16T07:37:49: - Local:         http://localhost:3900
+2026-04-16T07:37:49: - Network:       http://0.0.0.0:3900
+2026-04-16T07:37:49: ✓ Ready in 0ms
+2026-04-16T07:49:53: ▲ Next.js 16.2.2
+2026-04-16T07:49:53: - Local:         http://localhost:3900
+2026-04-16T07:49:53: - Network:       http://0.0.0.0:3900
+2026-04-16T07:49:53: ✓ Ready in 0ms
+2026-04-16T07:53:55: ▲ Next.js 16.2.2
+2026-04-16T07:53:55: - Local:         http://localhost:3900
+2026-04-16T07:53:55: - Network:       http://0.0.0.0:3900
+2026-04-16T07:53:55: ✓ Ready in 0ms
+2026-04-16T08:00:26: ▲ Next.js 16.2.2
+2026-04-16T08:00:26: - Local:         http://localhost:3900
+2026-04-16T08:00:26: - Network:       http://0.0.0.0:3900
+2026-04-16T08:00:26: ✓ Ready in 0ms
+2026-04-16T08:01:37: ▲ Next.js 16.2.2
+2026-04-16T08:01:37: - Local:         http://localhost:3900
+2026-04-16T08:01:37: - Network:       http://0.0.0.0:3900
+2026-04-16T08:01:37: ✓ Ready in 0ms
+2026-04-16T08:03:36: ▲ Next.js 16.2.2
+2026-04-16T08:03:36: - Local:         http://localhost:3900
+2026-04-16T08:03:36: - Network:       http://0.0.0.0:3900
+2026-04-16T08:03:36: ✓ Ready in 0ms
+2026-04-16T08:04:39: ▲ Next.js 16.2.2
+2026-04-16T08:04:39: - Local:         http://localhost:3900
+2026-04-16T08:04:39: - Network:       http://0.0.0.0:3900
+2026-04-16T08:04:39: ✓ Ready in 0ms
+2026-04-16T08:09:37: ▲ Next.js 16.2.2
+2026-04-16T08:09:37: - Local:         http://localhost:3900
+2026-04-16T08:09:37: - Network:       http://0.0.0.0:3900
+2026-04-16T08:09:37: ✓ Ready in 0ms
+2026-04-16T08:10:48: ▲ Next.js 16.2.2
+2026-04-16T08:10:48: - Local:         http://localhost:3900
+2026-04-16T08:10:48: - Network:       http://0.0.0.0:3900
+2026-04-16T08:10:48: ✓ Ready in 0ms
+2026-04-16T08:12:50: ▲ Next.js 16.2.2
+2026-04-16T08:12:50: - Local:         http://localhost:3900
+2026-04-16T08:12:50: - Network:       http://0.0.0.0:3900
+2026-04-16T08:12:50: ✓ Ready in 0ms
+2026-04-16T08:14:35: ▲ Next.js 16.2.2
+2026-04-16T08:14:35: - Local:         http://localhost:3900
+2026-04-16T08:14:35: - Network:       http://0.0.0.0:3900
+2026-04-16T08:14:35: ✓ Ready in 0ms
+2026-04-16T08:15:52: ▲ Next.js 16.2.2
+2026-04-16T08:15:52: - Local:         http://localhost:3900
+2026-04-16T08:15:52: - Network:       http://0.0.0.0:3900
+2026-04-16T08:15:52: ✓ Ready in 0ms
+2026-04-16T08:17:46: ▲ Next.js 16.2.2
+2026-04-16T08:17:46: - Local:         http://localhost:3900
+2026-04-16T08:17:46: - Network:       http://0.0.0.0:3900
+2026-04-16T08:17:46: ✓ Ready in 0ms
+2026-04-16T08:19:21: ▲ Next.js 16.2.2
+2026-04-16T08:19:21: - Local:         http://localhost:3900
+2026-04-16T08:19:21: - Network:       http://0.0.0.0:3900
+2026-04-16T08:19:21: ✓ Ready in 0ms
+2026-04-16T08:21:00: ▲ Next.js 16.2.2
+2026-04-16T08:21:00: - Local:         http://localhost:3900
+2026-04-16T08:21:00: - Network:       http://0.0.0.0:3900
+2026-04-16T08:21:00: ✓ Ready in 0ms
+2026-04-16T08:22:19: ▲ Next.js 16.2.2
+2026-04-16T08:22:19: - Local:         http://localhost:3900
+2026-04-16T08:22:19: - Network:       http://0.0.0.0:3900
+2026-04-16T08:22:19: ✓ Ready in 0ms
+2026-04-16T08:26:08: ▲ Next.js 16.2.2
+2026-04-16T08:26:08: - Local:         http://localhost:3900
+2026-04-16T08:26:08: - Network:       http://0.0.0.0:3900
+2026-04-16T08:26:08: ✓ Ready in 0ms
+2026-04-16T08:31:17: ▲ Next.js 16.2.2
+2026-04-16T08:31:17: - Local:         http://localhost:3900
+2026-04-16T08:31:17: - Network:       http://0.0.0.0:3900
+2026-04-16T08:31:17: ✓ Ready in 0ms
+2026-04-16T08:32:23: ▲ Next.js 16.2.2
+2026-04-16T08:32:23: - Local:         http://localhost:3900
+2026-04-16T08:32:23: - Network:       http://0.0.0.0:3900
+2026-04-16T08:32:23: ✓ Ready in 0ms
+2026-04-16T08:33:47: ▲ Next.js 16.2.2
+2026-04-16T08:33:47: - Local:         http://localhost:3900
+2026-04-16T08:33:47: - Network:       http://0.0.0.0:3900
+2026-04-16T08:33:47: ✓ Ready in 0ms
+2026-04-16T08:35:28: ▲ Next.js 16.2.2
+2026-04-16T08:35:28: - Local:         http://localhost:3900
+2026-04-16T08:35:28: - Network:       http://0.0.0.0:3900
+2026-04-16T08:35:28: ✓ Ready in 0ms
+2026-04-16T08:37:39: ▲ Next.js 16.2.2
+2026-04-16T08:37:39: - Local:         http://localhost:3900
+2026-04-16T08:37:39: - Network:       http://0.0.0.0:3900
+2026-04-16T08:37:39: ✓ Ready in 0ms
+2026-04-16T08:39:45: ▲ Next.js 16.2.2
+2026-04-16T08:39:45: - Local:         http://localhost:3900
+2026-04-16T08:39:45: - Network:       http://0.0.0.0:3900
+2026-04-16T08:39:45: ✓ Ready in 0ms
+2026-04-16T08:41:41: ▲ Next.js 16.2.2
+2026-04-16T08:41:41: - Local:         http://localhost:3900
+2026-04-16T08:41:41: - Network:       http://0.0.0.0:3900
+2026-04-16T08:41:41: ✓ Ready in 0ms
+2026-04-16T08:42:46: ▲ Next.js 16.2.2
+2026-04-16T08:42:46: - Local:         http://localhost:3900
+2026-04-16T08:42:46: - Network:       http://0.0.0.0:3900
+2026-04-16T08:42:46: ✓ Ready in 0ms
+2026-04-16T08:44:46: ▲ Next.js 16.2.2
+2026-04-16T08:44:46: - Local:         http://localhost:3900
+2026-04-16T08:44:46: - Network:       http://0.0.0.0:3900
+2026-04-16T08:44:46: ✓ Ready in 0ms
+2026-04-16T08:46:49: ▲ Next.js 16.2.2
+2026-04-16T08:46:49: - Local:         http://localhost:3900
+2026-04-16T08:46:49: - Network:       http://0.0.0.0:3900
+2026-04-16T08:46:49: ✓ Ready in 0ms
+2026-04-16T08:48:38: ▲ Next.js 16.2.2
+2026-04-16T08:48:38: - Local:         http://localhost:3900
+2026-04-16T08:48:38: - Network:       http://0.0.0.0:3900
+2026-04-16T08:48:38: ✓ Ready in 0ms
+2026-04-16T08:50:09: ▲ Next.js 16.2.2
+2026-04-16T08:50:09: - Local:         http://localhost:3900
+2026-04-16T08:50:09: - Network:       http://0.0.0.0:3900
+2026-04-16T08:50:09: ✓ Ready in 0ms
+2026-04-16T08:51:24: ▲ Next.js 16.2.2
+2026-04-16T08:51:24: - Local:         http://localhost:3900
+2026-04-16T08:51:24: - Network:       http://0.0.0.0:3900
+2026-04-16T08:51:24: ✓ Ready in 0ms
+2026-04-16T08:54:30: ▲ Next.js 16.2.2
+2026-04-16T08:54:30: - Local:         http://localhost:3900
+2026-04-16T08:54:30: - Network:       http://0.0.0.0:3900
+2026-04-16T08:54:30: ✓ Ready in 0ms
+2026-04-16T08:57:10: ▲ Next.js 16.2.2
+2026-04-16T08:57:10: - Local:         http://localhost:3900
+2026-04-16T08:57:10: - Network:       http://0.0.0.0:3900
+2026-04-16T08:57:10: ✓ Ready in 0ms
+2026-04-16T08:58:59: ▲ Next.js 16.2.2
+2026-04-16T08:58:59: - Local:         http://localhost:3900
+2026-04-16T08:58:59: - Network:       http://0.0.0.0:3900
+2026-04-16T08:58:59: ✓ Ready in 0ms
+2026-04-16T09:03:10: ▲ Next.js 16.2.2
+2026-04-16T09:03:10: - Local:         http://localhost:3900
+2026-04-16T09:03:10: - Network:       http://0.0.0.0:3900
+2026-04-16T09:03:10: ✓ Ready in 0ms
+2026-04-16T09:05:53: ▲ Next.js 16.2.2
+2026-04-16T09:05:53: - Local:         http://localhost:3900
+2026-04-16T09:05:53: - Network:       http://0.0.0.0:3900
+2026-04-16T09:05:53: ✓ Ready in 0ms
+2026-04-16T09:07:22: ▲ Next.js 16.2.2
+2026-04-16T09:07:22: - Local:         http://localhost:3900
+2026-04-16T09:07:22: - Network:       http://0.0.0.0:3900
+2026-04-16T09:07:22: ✓ Ready in 0ms
+2026-04-16T09:09:14: ▲ Next.js 16.2.2
+2026-04-16T09:09:14: - Local:         http://localhost:3900
+2026-04-16T09:09:14: - Network:       http://0.0.0.0:3900
+2026-04-16T09:09:14: ✓ Ready in 0ms
+2026-04-16T09:11:48: ▲ Next.js 16.2.2
+2026-04-16T09:11:48: - Local:         http://localhost:3900
+2026-04-16T09:11:48: - Network:       http://0.0.0.0:3900
+2026-04-16T09:11:48: ✓ Ready in 0ms
+2026-04-16T09:15:32: ▲ Next.js 16.2.2
+2026-04-16T09:15:32: - Local:         http://localhost:3900
+2026-04-16T09:15:32: - Network:       http://0.0.0.0:3900
+2026-04-16T09:15:32: ✓ Ready in 0ms
+2026-04-16T09:17:14: ▲ Next.js 16.2.2
+2026-04-16T09:17:14: - Local:         http://localhost:3900
+2026-04-16T09:17:14: - Network:       http://0.0.0.0:3900
+2026-04-16T09:17:14: ✓ Ready in 0ms
+2026-04-16T09:22:15: ▲ Next.js 16.2.2
+2026-04-16T09:22:15: - Local:         http://localhost:3900
+2026-04-16T09:22:15: - Network:       http://0.0.0.0:3900
+2026-04-16T09:22:15: ✓ Ready in 0ms
+2026-04-16T09:23:20: ▲ Next.js 16.2.2
+2026-04-16T09:23:20: - Local:         http://localhost:3900
+2026-04-16T09:23:20: - Network:       http://0.0.0.0:3900
+2026-04-16T09:23:20: ✓ Ready in 0ms
+2026-04-16T09:25:14: ▲ Next.js 16.2.2
+2026-04-16T09:25:14: - Local:         http://localhost:3900
+2026-04-16T09:25:14: - Network:       http://0.0.0.0:3900
+2026-04-16T09:25:14: ✓ Ready in 0ms
+2026-04-16T09:27:32: ▲ Next.js 16.2.2
+2026-04-16T09:27:32: - Local:         http://localhost:3900
+2026-04-16T09:27:32: - Network:       http://0.0.0.0:3900
+2026-04-16T09:27:32: ✓ Ready in 0ms
+2026-04-16T09:28:45: ▲ Next.js 16.2.2
+2026-04-16T09:28:45: - Local:         http://localhost:3900
+2026-04-16T09:28:45: - Network:       http://0.0.0.0:3900
+2026-04-16T09:28:45: ✓ Ready in 0ms
+2026-04-16T09:30:21: ▲ Next.js 16.2.2
+2026-04-16T09:30:21: - Local:         http://localhost:3900
+2026-04-16T09:30:21: - Network:       http://0.0.0.0:3900
+2026-04-16T09:30:21: ✓ Ready in 0ms
+2026-04-16T09:31:26: ▲ Next.js 16.2.2
+2026-04-16T09:31:26: - Local:         http://localhost:3900
+2026-04-16T09:31:26: - Network:       http://0.0.0.0:3900
+2026-04-16T09:31:26: ✓ Ready in 0ms
+2026-04-16T09:32:55: ▲ Next.js 16.2.2
+2026-04-16T09:32:55: - Local:         http://localhost:3900
+2026-04-16T09:32:55: - Network:       http://0.0.0.0:3900
+2026-04-16T09:32:55: ✓ Ready in 0ms
+2026-04-16T09:34:06: ▲ Next.js 16.2.2
+2026-04-16T09:34:06: - Local:         http://localhost:3900
+2026-04-16T09:34:06: - Network:       http://0.0.0.0:3900
+2026-04-16T09:34:06: ✓ Ready in 0ms
+2026-04-16T09:38:27: ▲ Next.js 16.2.2
+2026-04-16T09:38:27: - Local:         http://localhost:3900
+2026-04-16T09:38:27: - Network:       http://0.0.0.0:3900
+2026-04-16T09:38:27: ✓ Ready in 0ms
+2026-04-16T09:42:25: ▲ Next.js 16.2.2
+2026-04-16T09:42:25: - Local:         http://localhost:3900
+2026-04-16T09:42:25: - Network:       http://0.0.0.0:3900
+2026-04-16T09:42:25: ✓ Ready in 0ms
+2026-04-16T09:44:12: ▲ Next.js 16.2.2
+2026-04-16T09:44:12: - Local:         http://localhost:3900
+2026-04-16T09:44:12: - Network:       http://0.0.0.0:3900
+2026-04-16T09:44:12: ✓ Ready in 0ms
+2026-04-16T09:46:42: ▲ Next.js 16.2.2
+2026-04-16T09:46:42: - Local:         http://localhost:3900
+2026-04-16T09:46:42: - Network:       http://0.0.0.0:3900
+2026-04-16T09:46:42: ✓ Ready in 0ms
+2026-04-16T09:47:45: ▲ Next.js 16.2.2
+2026-04-16T09:47:45: - Local:         http://localhost:3900
+2026-04-16T09:47:45: - Network:       http://0.0.0.0:3900
+2026-04-16T09:47:45: ✓ Ready in 0ms
+2026-04-16T09:48:54: ▲ Next.js 16.2.2
+2026-04-16T09:48:54: - Local:         http://localhost:3900
+2026-04-16T09:48:54: - Network:       http://0.0.0.0:3900
+2026-04-16T09:48:54: ✓ Ready in 0ms
+2026-04-16T09:50:11: ▲ Next.js 16.2.2
+2026-04-16T09:50:11: - Local:         http://localhost:3900
+2026-04-16T09:50:11: - Network:       http://0.0.0.0:3900
+2026-04-16T09:50:11: ✓ Ready in 0ms
+2026-04-16T09:52:25: ▲ Next.js 16.2.2
+2026-04-16T09:52:25: - Local:         http://localhost:3900
+2026-04-16T09:52:25: - Network:       http://0.0.0.0:3900
+2026-04-16T09:52:25: ✓ Ready in 0ms
+2026-04-16T09:53:30: ▲ Next.js 16.2.2
+2026-04-16T09:53:30: - Local:         http://localhost:3900
+2026-04-16T09:53:30: - Network:       http://0.0.0.0:3900
+2026-04-16T09:53:30: ✓ Ready in 0ms
+2026-04-16T09:54:52: ▲ Next.js 16.2.2
+2026-04-16T09:54:52: - Local:         http://localhost:3900
+2026-04-16T09:54:52: - Network:       http://0.0.0.0:3900
+2026-04-16T09:54:52: ✓ Ready in 0ms
+2026-04-16T09:56:22: ▲ Next.js 16.2.2
+2026-04-16T09:56:22: - Local:         http://localhost:3900
+2026-04-16T09:56:22: - Network:       http://0.0.0.0:3900
+2026-04-16T09:56:22: ✓ Ready in 0ms
+2026-04-16T09:58:17: ▲ Next.js 16.2.2
+2026-04-16T09:58:17: - Local:         http://localhost:3900
+2026-04-16T09:58:17: - Network:       http://0.0.0.0:3900
+2026-04-16T09:58:17: ✓ Ready in 0ms
+2026-04-16T10:00:58: ▲ Next.js 16.2.2
+2026-04-16T10:00:58: - Local:         http://localhost:3900
+2026-04-16T10:00:58: - Network:       http://0.0.0.0:3900
+2026-04-16T10:00:58: ✓ Ready in 0ms
+2026-04-16T10:02:45: ▲ Next.js 16.2.2
+2026-04-16T10:02:45: - Local:         http://localhost:3900
+2026-04-16T10:02:45: - Network:       http://0.0.0.0:3900
+2026-04-16T10:02:45: ✓ Ready in 0ms
+2026-04-16T10:05:03: ▲ Next.js 16.2.2
+2026-04-16T10:05:03: - Local:         http://localhost:3900
+2026-04-16T10:05:03: - Network:       http://0.0.0.0:3900
+2026-04-16T10:05:03: ✓ Ready in 0ms
+2026-04-16T10:06:29: ▲ Next.js 16.2.2
+2026-04-16T10:06:29: - Local:         http://localhost:3900
+2026-04-16T10:06:29: - Network:       http://0.0.0.0:3900
+2026-04-16T10:06:29: ✓ Ready in 0ms
+2026-04-16T10:08:17: ▲ Next.js 16.2.2
+2026-04-16T10:08:17: - Local:         http://localhost:3900
+2026-04-16T10:08:17: - Network:       http://0.0.0.0:3900
+2026-04-16T10:08:17: ✓ Ready in 0ms
+2026-04-16T10:09:35: ▲ Next.js 16.2.2
+2026-04-16T10:09:35: - Local:         http://localhost:3900
+2026-04-16T10:09:35: - Network:       http://0.0.0.0:3900
+2026-04-16T10:09:35: ✓ Ready in 0ms
+2026-04-16T10:10:48: ▲ Next.js 16.2.2
+2026-04-16T10:10:48: - Local:         http://localhost:3900
+2026-04-16T10:10:48: - Network:       http://0.0.0.0:3900
+2026-04-16T10:10:48: ✓ Ready in 0ms
+2026-04-16T10:12:25: ▲ Next.js 16.2.2
+2026-04-16T10:12:25: - Local:         http://localhost:3900
+2026-04-16T10:12:25: - Network:       http://0.0.0.0:3900
+2026-04-16T10:12:25: ✓ Ready in 0ms
+2026-04-16T10:13:33: ▲ Next.js 16.2.2
+2026-04-16T10:13:33: - Local:         http://localhost:3900
+2026-04-16T10:13:33: - Network:       http://0.0.0.0:3900
+2026-04-16T10:13:33: ✓ Ready in 0ms
+2026-04-16T10:16:45: ▲ Next.js 16.2.2
+2026-04-16T10:16:45: - Local:         http://localhost:3900
+2026-04-16T10:16:45: - Network:       http://0.0.0.0:3900
+2026-04-16T10:16:45: ✓ Ready in 0ms
+2026-04-16T10:18:15: ▲ Next.js 16.2.2
+2026-04-16T10:18:15: - Local:         http://localhost:3900
+2026-04-16T10:18:15: - Network:       http://0.0.0.0:3900
+2026-04-16T10:18:15: ✓ Ready in 0ms
+2026-04-16T10:20:10: ▲ Next.js 16.2.2
+2026-04-16T10:20:10: - Local:         http://localhost:3900
+2026-04-16T10:20:10: - Network:       http://0.0.0.0:3900
+2026-04-16T10:20:10: ✓ Ready in 0ms
+2026-04-16T10:23:10: ▲ Next.js 16.2.2
+2026-04-16T10:23:10: - Local:         http://localhost:3900
+2026-04-16T10:23:10: - Network:       http://0.0.0.0:3900
+2026-04-16T10:23:10: ✓ Ready in 0ms
+2026-04-16T10:24:38: ▲ Next.js 16.2.2
+2026-04-16T10:24:38: - Local:         http://localhost:3900
+2026-04-16T10:24:38: - Network:       http://0.0.0.0:3900
+2026-04-16T10:24:38: ✓ Ready in 0ms
+2026-04-16T10:25:42: ▲ Next.js 16.2.2
+2026-04-16T10:25:42: - Local:         http://localhost:3900
+2026-04-16T10:25:42: - Network:       http://0.0.0.0:3900
+2026-04-16T10:25:42: ✓ Ready in 0ms
+2026-04-16T10:28:00: ▲ Next.js 16.2.2
+2026-04-16T10:28:00: - Local:         http://localhost:3900
+2026-04-16T10:28:00: - Network:       http://0.0.0.0:3900
+2026-04-16T10:28:00: ✓ Ready in 0ms
+2026-04-16T10:29:53: ▲ Next.js 16.2.2
+2026-04-16T10:29:53: - Local:         http://localhost:3900
+2026-04-16T10:29:53: - Network:       http://0.0.0.0:3900
+2026-04-16T10:29:53: ✓ Ready in 0ms
+2026-04-16T10:35:16: ▲ Next.js 16.2.2
+2026-04-16T10:35:16: - Local:         http://localhost:3900
+2026-04-16T10:35:16: - Network:       http://0.0.0.0:3900
+2026-04-16T10:35:16: ✓ Ready in 0ms
+2026-04-16T10:36:37: ▲ Next.js 16.2.2
+2026-04-16T10:36:37: - Local:         http://localhost:3900
+2026-04-16T10:36:37: - Network:       http://0.0.0.0:3900
+2026-04-16T10:36:37: ✓ Ready in 0ms
+2026-04-16T10:42:01: ▲ Next.js 16.2.2
+2026-04-16T10:42:01: - Local:         http://localhost:3900
+2026-04-16T10:42:01: - Network:       http://0.0.0.0:3900
+2026-04-16T10:42:01: ✓ Ready in 0ms
+2026-04-16T10:44:34: ▲ Next.js 16.2.2
+2026-04-16T10:44:34: - Local:         http://localhost:3900
+2026-04-16T10:44:34: - Network:       http://0.0.0.0:3900
+2026-04-16T10:44:34: ✓ Ready in 0ms
+2026-04-16T10:46:47: ▲ Next.js 16.2.2
+2026-04-16T10:46:47: - Local:         http://localhost:3900
+2026-04-16T10:46:47: - Network:       http://0.0.0.0:3900
+2026-04-16T10:46:47: ✓ Ready in 0ms
+2026-04-16T10:57:06: ▲ Next.js 16.2.2
+2026-04-16T10:57:06: - Local:         http://localhost:3900
+2026-04-16T10:57:06: - Network:       http://0.0.0.0:3900
+2026-04-16T10:57:06: ✓ Ready in 0ms
+2026-04-16T10:58:51: ▲ Next.js 16.2.2
+2026-04-16T10:58:51: - Local:         http://localhost:3900
+2026-04-16T10:58:51: - Network:       http://0.0.0.0:3900
+2026-04-16T10:58:51: ✓ Ready in 0ms
+2026-04-16T11:01:26: ▲ Next.js 16.2.2
+2026-04-16T11:01:26: - Local:         http://localhost:3900
+2026-04-16T11:01:26: - Network:       http://0.0.0.0:3900
+2026-04-16T11:01:26: ✓ Ready in 0ms
+2026-04-16T11:03:43: ▲ Next.js 16.2.2
+2026-04-16T11:03:43: - Local:         http://localhost:3900
+2026-04-16T11:03:43: - Network:       http://0.0.0.0:3900
+2026-04-16T11:03:43: ✓ Ready in 0ms
+2026-04-16T11:04:58: ▲ Next.js 16.2.2
+2026-04-16T11:04:58: - Local:         http://localhost:3900
+2026-04-16T11:04:58: - Network:       http://0.0.0.0:3900
+2026-04-16T11:04:58: ✓ Ready in 0ms
+2026-04-16T11:11:15: ▲ Next.js 16.2.2
+2026-04-16T11:11:15: - Local:         http://localhost:3900
+2026-04-16T11:11:15: - Network:       http://0.0.0.0:3900
+2026-04-16T11:11:15: ✓ Ready in 0ms
+2026-04-16T11:13:25: ▲ Next.js 16.2.2
+2026-04-16T11:13:25: - Local:         http://localhost:3900
+2026-04-16T11:13:25: - Network:       http://0.0.0.0:3900
+2026-04-16T11:13:25: ✓ Ready in 0ms
+2026-04-16T11:14:38: ▲ Next.js 16.2.2
+2026-04-16T11:14:38: - Local:         http://localhost:3900
+2026-04-16T11:14:38: - Network:       http://0.0.0.0:3900
+2026-04-16T11:14:38: ✓ Ready in 0ms
+2026-04-16T11:15:50: ▲ Next.js 16.2.2
+2026-04-16T11:15:50: - Local:         http://localhost:3900
+2026-04-16T11:15:50: - Network:       http://0.0.0.0:3900
+2026-04-16T11:15:50: ✓ Ready in 0ms
+2026-04-16T11:19:31: ▲ Next.js 16.2.2
+2026-04-16T11:19:31: - Local:         http://localhost:3900
+2026-04-16T11:19:31: - Network:       http://0.0.0.0:3900
+2026-04-16T11:19:31: ✓ Ready in 0ms
+2026-04-16T11:27:23: ▲ Next.js 16.2.2
+2026-04-16T11:27:23: - Local:         http://localhost:3900
+2026-04-16T11:27:23: - Network:       http://0.0.0.0:3900
+2026-04-16T11:27:23: ✓ Ready in 0ms
+2026-04-16T11:32:50: ▲ Next.js 16.2.2
+2026-04-16T11:32:50: - Local:         http://localhost:3900
+2026-04-16T11:32:50: - Network:       http://0.0.0.0:3900
+2026-04-16T11:32:50: ✓ Ready in 0ms
+2026-04-16T11:38:03: ▲ Next.js 16.2.2
+2026-04-16T11:38:03: - Local:         http://localhost:3900
+2026-04-16T11:38:03: - Network:       http://0.0.0.0:3900
+2026-04-16T11:38:03: ✓ Ready in 0ms
+2026-04-16T11:41:01: ▲ Next.js 16.2.2
+2026-04-16T11:41:01: - Local:         http://localhost:3900
+2026-04-16T11:41:01: - Network:       http://0.0.0.0:3900
+2026-04-16T11:41:01: ✓ Ready in 0ms
+2026-04-16T11:43:56: ▲ Next.js 16.2.2
+2026-04-16T11:43:56: - Local:         http://localhost:3900
+2026-04-16T11:43:56: - Network:       http://0.0.0.0:3900
+2026-04-16T11:43:56: ✓ Ready in 0ms
+2026-04-16T11:56:38: ▲ Next.js 16.2.2
+2026-04-16T11:56:38: - Local:         http://localhost:3900
+2026-04-16T11:56:38: - Network:       http://0.0.0.0:3900
+2026-04-16T11:56:38: ✓ Ready in 0ms
+2026-04-16T12:00:25: ▲ Next.js 16.2.2
+2026-04-16T12:00:25: - Local:         http://localhost:3900
+2026-04-16T12:00:25: - Network:       http://0.0.0.0:3900
+2026-04-16T12:00:25: ✓ Ready in 0ms
+2026-04-16T12:04:54: ▲ Next.js 16.2.2
+2026-04-16T12:04:54: - Local:         http://localhost:3900
+2026-04-16T12:04:54: - Network:       http://0.0.0.0:3900
+2026-04-16T12:04:54: ✓ Ready in 0ms
+2026-04-16T12:07:20: ▲ Next.js 16.2.2
+2026-04-16T12:07:20: - Local:         http://localhost:3900
+2026-04-16T12:07:20: - Network:       http://0.0.0.0:3900
+2026-04-16T12:07:20: ✓ Ready in 0ms
+2026-04-16T12:09:15: ▲ Next.js 16.2.2
+2026-04-16T12:09:15: - Local:         http://localhost:3900
+2026-04-16T12:09:15: - Network:       http://0.0.0.0:3900
+2026-04-16T12:09:15: ✓ Ready in 0ms
+2026-04-16T12:12:52: ▲ Next.js 16.2.2
+2026-04-16T12:12:52: - Local:         http://localhost:3900
+2026-04-16T12:12:52: - Network:       http://0.0.0.0:3900
+2026-04-16T12:12:52: ✓ Ready in 0ms
+2026-04-16T12:14:08: ▲ Next.js 16.2.2
+2026-04-16T12:14:08: - Local:         http://localhost:3900
+2026-04-16T12:14:08: - Network:       http://0.0.0.0:3900
+2026-04-16T12:14:08: ✓ Ready in 0ms
+2026-04-16T12:17:43: ▲ Next.js 16.2.2
+2026-04-16T12:17:43: - Local:         http://localhost:3900
+2026-04-16T12:17:43: - Network:       http://0.0.0.0:3900
+2026-04-16T12:17:43: ✓ Ready in 0ms
+2026-04-16T12:18:53: ▲ Next.js 16.2.2
+2026-04-16T12:18:53: - Local:         http://localhost:3900
+2026-04-16T12:18:53: - Network:       http://0.0.0.0:3900
+2026-04-16T12:18:53: ✓ Ready in 0ms
+2026-04-16T12:20:02: ▲ Next.js 16.2.2
+2026-04-16T12:20:02: - Local:         http://localhost:3900
+2026-04-16T12:20:02: - Network:       http://0.0.0.0:3900
+2026-04-16T12:20:02: ✓ Ready in 0ms
+2026-04-16T12:22:11: ▲ Next.js 16.2.2
+2026-04-16T12:22:11: - Local:         http://localhost:3900
+2026-04-16T12:22:11: - Network:       http://0.0.0.0:3900
+2026-04-16T12:22:11: ✓ Ready in 0ms
+2026-04-16T12:23:50: ▲ Next.js 16.2.2
+2026-04-16T12:23:50: - Local:         http://localhost:3900
+2026-04-16T12:23:50: - Network:       http://0.0.0.0:3900
+2026-04-16T12:23:50: ✓ Ready in 0ms
+2026-04-16T12:25:53: ▲ Next.js 16.2.2
+2026-04-16T12:25:53: - Local:         http://localhost:3900
+2026-04-16T12:25:53: - Network:       http://0.0.0.0:3900
+2026-04-16T12:25:53: ✓ Ready in 0ms
+2026-04-16T12:27:24: ▲ Next.js 16.2.2
+2026-04-16T12:27:24: - Local:         http://localhost:3900
+2026-04-16T12:27:24: - Network:       http://0.0.0.0:3900
+2026-04-16T12:27:24: ✓ Ready in 0ms
+2026-04-16T12:28:37: ▲ Next.js 16.2.2
+2026-04-16T12:28:37: - Local:         http://localhost:3900
+2026-04-16T12:28:37: - Network:       http://0.0.0.0:3900
+2026-04-16T12:28:37: ✓ Ready in 0ms
+2026-04-16T12:30:07: ▲ Next.js 16.2.2
+2026-04-16T12:30:07: - Local:         http://localhost:3900
+2026-04-16T12:30:07: - Network:       http://0.0.0.0:3900
+2026-04-16T12:30:07: ✓ Ready in 0ms
+2026-04-16T12:32:21: ▲ Next.js 16.2.2
+2026-04-16T12:32:21: - Local:         http://localhost:3900
+2026-04-16T12:32:21: - Network:       http://0.0.0.0:3900
+2026-04-16T12:32:21: ✓ Ready in 0ms
+2026-04-16T12:33:33: ▲ Next.js 16.2.2
+2026-04-16T12:33:33: - Local:         http://localhost:3900
+2026-04-16T12:33:33: - Network:       http://0.0.0.0:3900
+2026-04-16T12:33:33: ✓ Ready in 0ms
+2026-04-16T12:35:15: ▲ Next.js 16.2.2
+2026-04-16T12:35:15: - Local:         http://localhost:3900
+2026-04-16T12:35:15: - Network:       http://0.0.0.0:3900
+2026-04-16T12:35:15: ✓ Ready in 0ms
+2026-04-16T12:40:23: ▲ Next.js 16.2.2
+2026-04-16T12:40:23: - Local:         http://localhost:3900
+2026-04-16T12:40:23: - Network:       http://0.0.0.0:3900
+2026-04-16T12:40:23: ✓ Ready in 0ms
+2026-04-16T12:42:03: ▲ Next.js 16.2.2
+2026-04-16T12:42:03: - Local:         http://localhost:3900
+2026-04-16T12:42:03: - Network:       http://0.0.0.0:3900
+2026-04-16T12:42:03: ✓ Ready in 0ms
+2026-04-16T12:49:54: ▲ Next.js 16.2.2
+2026-04-16T12:49:54: - Local:         http://localhost:3900
+2026-04-16T12:49:54: - Network:       http://0.0.0.0:3900
+2026-04-16T12:49:54: ✓ Ready in 0ms
+2026-04-16T12:54:34: ▲ Next.js 16.2.2
+2026-04-16T12:54:34: - Local:         http://localhost:3900
+2026-04-16T12:54:34: - Network:       http://0.0.0.0:3900
+2026-04-16T12:54:34: ✓ Ready in 0ms
+2026-04-16T13:04:39: ▲ Next.js 16.2.2
+2026-04-16T13:04:39: - Local:         http://localhost:3900
+2026-04-16T13:04:39: - Network:       http://0.0.0.0:3900
+2026-04-16T13:04:39: ✓ Ready in 0ms
+2026-04-16T13:15:18: ▲ Next.js 16.2.2
+2026-04-16T13:15:18: - Local:         http://localhost:3900
+2026-04-16T13:15:18: - Network:       http://0.0.0.0:3900
+2026-04-16T13:15:18: ✓ Ready in 0ms
+2026-04-16T13:19:51: ▲ Next.js 16.2.2
+2026-04-16T13:19:51: - Local:         http://localhost:3900
+2026-04-16T13:19:51: - Network:       http://0.0.0.0:3900
+2026-04-16T13:19:51: ✓ Ready in 0ms
+2026-04-16T13:22:14: ▲ Next.js 16.2.2
+2026-04-16T13:22:14: - Local:         http://localhost:3900
+2026-04-16T13:22:14: - Network:       http://0.0.0.0:3900
+2026-04-16T13:22:14: ✓ Ready in 0ms
+2026-04-16T13:31:46: ▲ Next.js 16.2.2
+2026-04-16T13:31:46: - Local:         http://localhost:3900
+2026-04-16T13:31:46: - Network:       http://0.0.0.0:3900
+2026-04-16T13:31:46: ✓ Ready in 0ms
+2026-04-16T13:34:28: ▲ Next.js 16.2.2
+2026-04-16T13:34:28: - Local:         http://localhost:3900
+2026-04-16T13:34:28: - Network:       http://0.0.0.0:3900
+2026-04-16T13:34:28: ✓ Ready in 0ms
+2026-04-16T13:36:26: ▲ Next.js 16.2.2
+2026-04-16T13:36:26: - Local:         http://localhost:3900
+2026-04-16T13:36:26: - Network:       http://0.0.0.0:3900
+2026-04-16T13:36:26: ✓ Ready in 0ms
+2026-04-16T13:39:45: ▲ Next.js 16.2.2
+2026-04-16T13:39:45: - Local:         http://localhost:3900
+2026-04-16T13:39:45: - Network:       http://0.0.0.0:3900
+2026-04-16T13:39:45: ✓ Ready in 0ms
+2026-04-16T13:41:34: ▲ Next.js 16.2.2
+2026-04-16T13:41:34: - Local:         http://localhost:3900
+2026-04-16T13:41:34: - Network:       http://0.0.0.0:3900
+2026-04-16T13:41:34: ✓ Ready in 0ms
+2026-04-16T13:46:58: ▲ Next.js 16.2.2
+2026-04-16T13:46:58: - Local:         http://localhost:3900
+2026-04-16T13:46:58: - Network:       http://0.0.0.0:3900
+2026-04-16T13:46:58: ✓ Ready in 0ms
+2026-04-16T13:52:44: ▲ Next.js 16.2.2
+2026-04-16T13:52:44: - Local:         http://localhost:3900
+2026-04-16T13:52:44: - Network:       http://0.0.0.0:3900
+2026-04-16T13:52:44: ✓ Ready in 0ms
+2026-04-16T14:01:18: ▲ Next.js 16.2.2
+2026-04-16T14:01:18: - Local:         http://localhost:3900
+2026-04-16T14:01:18: - Network:       http://0.0.0.0:3900
+2026-04-16T14:01:18: ✓ Ready in 0ms
+2026-04-16T14:02:46: ▲ Next.js 16.2.2
+2026-04-16T14:02:46: - Local:         http://localhost:3900
+2026-04-16T14:02:46: - Network:       http://0.0.0.0:3900
+2026-04-16T14:02:46: ✓ Ready in 0ms
+2026-04-16T14:04:10: ▲ Next.js 16.2.2
+2026-04-16T14:04:10: - Local:         http://localhost:3900
+2026-04-16T14:04:10: - Network:       http://0.0.0.0:3900
+2026-04-16T14:04:10: ✓ Ready in 0ms
+2026-04-16T14:21:42: ▲ Next.js 16.2.2
+2026-04-16T14:21:42: - Local:         http://localhost:3900
+2026-04-16T14:21:42: - Network:       http://0.0.0.0:3900
+2026-04-16T14:21:42: ✓ Ready in 0ms
+2026-04-16T14:29:15: ▲ Next.js 16.2.2
+2026-04-16T14:29:15: - Local:         http://localhost:3900
+2026-04-16T14:29:15: - Network:       http://0.0.0.0:3900
+2026-04-16T14:29:15: ✓ Ready in 0ms
+2026-04-16T14:33:37: ▲ Next.js 16.2.2
+2026-04-16T14:33:37: - Local:         http://localhost:3900
+2026-04-16T14:33:37: - Network:       http://0.0.0.0:3900
+2026-04-16T14:33:37: ✓ Ready in 0ms
+2026-04-16T14:37:39: ▲ Next.js 16.2.2
+2026-04-16T14:37:39: - Local:         http://localhost:3900
+2026-04-16T14:37:39: - Network:       http://0.0.0.0:3900
+2026-04-16T14:37:39: ✓ Ready in 0ms
+2026-04-16T14:40:42: ▲ Next.js 16.2.2
+2026-04-16T14:40:42: - Local:         http://localhost:3900
+2026-04-16T14:40:42: - Network:       http://0.0.0.0:3900
+2026-04-16T14:40:42: ✓ Ready in 0ms
+2026-04-16T14:42:06: ▲ Next.js 16.2.2
+2026-04-16T14:42:06: - Local:         http://localhost:3900
+2026-04-16T14:42:06: - Network:       http://0.0.0.0:3900
+2026-04-16T14:42:06: ✓ Ready in 0ms
+2026-04-16T14:44:38: ▲ Next.js 16.2.2
+2026-04-16T14:44:38: - Local:         http://localhost:3900
+2026-04-16T14:44:38: - Network:       http://0.0.0.0:3900
+2026-04-16T14:44:38: ✓ Ready in 0ms
+2026-04-16T14:48:19: ▲ Next.js 16.2.2
+2026-04-16T14:48:19: - Local:         http://localhost:3900
+2026-04-16T14:48:19: - Network:       http://0.0.0.0:3900
+2026-04-16T14:48:19: ✓ Ready in 0ms
+2026-04-16T14:49:25: ▲ Next.js 16.2.2
+2026-04-16T14:49:25: - Local:         http://localhost:3900
+2026-04-16T14:49:25: - Network:       http://0.0.0.0:3900
+2026-04-16T14:49:25: ✓ Ready in 0ms
+2026-04-16T15:00:36: ▲ Next.js 16.2.2
+2026-04-16T15:00:36: - Local:         http://localhost:3900
+2026-04-16T15:00:36: - Network:       http://0.0.0.0:3900
+2026-04-16T15:00:36: ✓ Ready in 0ms
+2026-04-16T15:01:50: ▲ Next.js 16.2.2
+2026-04-16T15:01:50: - Local:         http://localhost:3900
+2026-04-16T15:01:50: - Network:       http://0.0.0.0:3900
+2026-04-16T15:01:50: ✓ Ready in 0ms
+2026-04-16T15:05:17: ▲ Next.js 16.2.2
+2026-04-16T15:05:17: - Local:         http://localhost:3900
+2026-04-16T15:05:17: - Network:       http://0.0.0.0:3900
+2026-04-16T15:05:17: ✓ Ready in 0ms
+2026-04-16T15:07:26: ▲ Next.js 16.2.2
+2026-04-16T15:07:26: - Local:         http://localhost:3900
+2026-04-16T15:07:26: - Network:       http://0.0.0.0:3900
+2026-04-16T15:07:26: ✓ Ready in 0ms
+2026-04-16T15:10:38: ▲ Next.js 16.2.2
+2026-04-16T15:10:38: - Local:         http://localhost:3900
+2026-04-16T15:10:38: - Network:       http://0.0.0.0:3900
+2026-04-16T15:10:38: ✓ Ready in 0ms
+2026-04-16T15:13:38: ▲ Next.js 16.2.2
+2026-04-16T15:13:38: - Local:         http://localhost:3900
+2026-04-16T15:13:38: - Network:       http://0.0.0.0:3900
+2026-04-16T15:13:38: ✓ Ready in 0ms
+2026-04-16T15:22:44: ▲ Next.js 16.2.2
+2026-04-16T15:22:44: - Local:         http://localhost:3900
+2026-04-16T15:22:44: - Network:       http://0.0.0.0:3900
+2026-04-16T15:22:44: ✓ Ready in 0ms
+2026-04-16T15:23:52: ▲ Next.js 16.2.2
+2026-04-16T15:23:52: - Local:         http://localhost:3900
+2026-04-16T15:23:52: - Network:       http://0.0.0.0:3900
+2026-04-16T15:23:52: ✓ Ready in 0ms
+2026-04-16T15:27:37: ▲ Next.js 16.2.2
+2026-04-16T15:27:37: - Local:         http://localhost:3900
+2026-04-16T15:27:37: - Network:       http://0.0.0.0:3900
+2026-04-16T15:27:37: ✓ Ready in 0ms
+2026-04-16T15:33:59: ▲ Next.js 16.2.2
+2026-04-16T15:33:59: - Local:         http://localhost:3900
+2026-04-16T15:33:59: - Network:       http://0.0.0.0:3900
+2026-04-16T15:33:59: ✓ Ready in 0ms
+2026-04-16T15:35:06: ▲ Next.js 16.2.2
+2026-04-16T15:35:06: - Local:         http://localhost:3900
+2026-04-16T15:35:06: - Network:       http://0.0.0.0:3900
+2026-04-16T15:35:06: ✓ Ready in 0ms
+2026-04-16T15:38:10: ▲ Next.js 16.2.2
+2026-04-16T15:38:10: - Local:         http://localhost:3900
+2026-04-16T15:38:10: - Network:       http://0.0.0.0:3900
+2026-04-16T15:38:10: ✓ Ready in 0ms
+2026-04-16T15:39:52: ▲ Next.js 16.2.2
+2026-04-16T15:39:52: - Local:         http://localhost:3900
+2026-04-16T15:39:52: - Network:       http://0.0.0.0:3900
+2026-04-16T15:39:52: ✓ Ready in 0ms
+2026-04-16T15:58:40: ▲ Next.js 16.2.2
+2026-04-16T15:58:40: - Local:         http://localhost:3900
+2026-04-16T15:58:40: - Network:       http://0.0.0.0:3900
+2026-04-16T15:58:40: ✓ Ready in 0ms
+2026-04-16T16:00:20: ▲ Next.js 16.2.2
+2026-04-16T16:00:20: - Local:         http://localhost:3900
+2026-04-16T16:00:20: - Network:       http://0.0.0.0:3900
+2026-04-16T16:00:20: ✓ Ready in 0ms
+2026-04-16T16:01:38: ▲ Next.js 16.2.2
+2026-04-16T16:01:38: - Local:         http://localhost:3900
+2026-04-16T16:01:38: - Network:       http://0.0.0.0:3900
+2026-04-16T16:01:38: ✓ Ready in 0ms
+2026-04-16T16:03:02: ▲ Next.js 16.2.2
+2026-04-16T16:03:02: - Local:         http://localhost:3900
+2026-04-16T16:03:02: - Network:       http://0.0.0.0:3900
+2026-04-16T16:03:02: ✓ Ready in 0ms
+2026-04-16T16:04:49: ▲ Next.js 16.2.2
+2026-04-16T16:04:49: - Local:         http://localhost:3900
+2026-04-16T16:04:49: - Network:       http://0.0.0.0:3900
+2026-04-16T16:04:49: ✓ Ready in 0ms
+2026-04-16T16:11:46: ▲ Next.js 16.2.2
+2026-04-16T16:11:46: - Local:         http://localhost:3900
+2026-04-16T16:11:46: - Network:       http://0.0.0.0:3900
+2026-04-16T16:11:46: ✓ Ready in 0ms
+2026-04-16T16:13:47: ▲ Next.js 16.2.2
+2026-04-16T16:13:47: - Local:         http://localhost:3900
+2026-04-16T16:13:47: - Network:       http://0.0.0.0:3900
+2026-04-16T16:13:47: ✓ Ready in 0ms
+2026-04-16T16:15:12: ▲ Next.js 16.2.2
+2026-04-16T16:15:12: - Local:         http://localhost:3900
+2026-04-16T16:15:12: - Network:       http://0.0.0.0:3900
+2026-04-16T16:15:12: ✓ Ready in 0ms
+2026-04-16T16:16:30: ▲ Next.js 16.2.2
+2026-04-16T16:16:30: - Local:         http://localhost:3900
+2026-04-16T16:16:30: - Network:       http://0.0.0.0:3900
+2026-04-16T16:16:30: ✓ Ready in 0ms
+2026-04-16T16:18:15: ▲ Next.js 16.2.2
+2026-04-16T16:18:15: - Local:         http://localhost:3900
+2026-04-16T16:18:15: - Network:       http://0.0.0.0:3900
+2026-04-16T16:18:15: ✓ Ready in 0ms
+2026-04-16T16:30:29: ▲ Next.js 16.2.2
+2026-04-16T16:30:29: - Local:         http://localhost:3900
+2026-04-16T16:30:29: - Network:       http://0.0.0.0:3900
+2026-04-16T16:30:29: ✓ Ready in 0ms
+2026-04-16T16:33:12: ▲ Next.js 16.2.2
+2026-04-16T16:33:12: - Local:         http://localhost:3900
+2026-04-16T16:33:12: - Network:       http://0.0.0.0:3900
+2026-04-16T16:33:12: ✓ Ready in 0ms
+2026-04-16T16:35:43: ▲ Next.js 16.2.2
+2026-04-16T16:35:43: - Local:         http://localhost:3900
+2026-04-16T16:35:43: - Network:       http://0.0.0.0:3900
+2026-04-16T16:35:43: ✓ Ready in 0ms
+2026-04-16T16:37:42: ▲ Next.js 16.2.2
+2026-04-16T16:37:42: - Local:         http://localhost:3900
+2026-04-16T16:37:42: - Network:       http://0.0.0.0:3900
+2026-04-16T16:37:42: ✓ Ready in 0ms
+2026-04-16T16:46:08: ▲ Next.js 16.2.2
+2026-04-16T16:46:08: - Local:         http://localhost:3900
+2026-04-16T16:46:08: - Network:       http://0.0.0.0:3900
+2026-04-16T16:46:08: ✓ Ready in 0ms
+2026-04-16T16:47:46: ▲ Next.js 16.2.2
+2026-04-16T16:47:46: - Local:         http://localhost:3900
+2026-04-16T16:47:46: - Network:       http://0.0.0.0:3900
+2026-04-16T16:47:46: ✓ Ready in 0ms
+2026-04-16T16:50:44: ▲ Next.js 16.2.2
+2026-04-16T16:50:44: - Local:         http://localhost:3900
+2026-04-16T16:50:44: - Network:       http://0.0.0.0:3900
+2026-04-16T16:50:44: ✓ Ready in 0ms
+2026-04-16T16:52:57: ▲ Next.js 16.2.2
+2026-04-16T16:52:57: - Local:         http://localhost:3900
+2026-04-16T16:52:57: - Network:       http://0.0.0.0:3900
+2026-04-16T16:52:57: ✓ Ready in 0ms
+2026-04-16T16:59:01: ▲ Next.js 16.2.2
+2026-04-16T16:59:01: - Local:         http://localhost:3900
+2026-04-16T16:59:01: - Network:       http://0.0.0.0:3900
+2026-04-16T16:59:01: ✓ Ready in 0ms
+2026-04-16T17:00:14: ▲ Next.js 16.2.2
+2026-04-16T17:00:14: - Local:         http://localhost:3900
+2026-04-16T17:00:14: - Network:       http://0.0.0.0:3900
+2026-04-16T17:00:14: ✓ Ready in 0ms
+2026-04-16T17:01:33: ▲ Next.js 16.2.2
+2026-04-16T17:01:33: - Local:         http://localhost:3900
+2026-04-16T17:01:33: - Network:       http://0.0.0.0:3900
+2026-04-16T17:01:33: ✓ Ready in 0ms
+2026-04-16T17:02:45: ▲ Next.js 16.2.2
+2026-04-16T17:02:45: - Local:         http://localhost:3900
+2026-04-16T17:02:45: - Network:       http://0.0.0.0:3900
+2026-04-16T17:02:45: ✓ Ready in 0ms
+2026-04-16T17:03:56: ▲ Next.js 16.2.2
+2026-04-16T17:03:56: - Local:         http://localhost:3900
+2026-04-16T17:03:56: - Network:       http://0.0.0.0:3900
+2026-04-16T17:03:56: ✓ Ready in 0ms
+2026-04-16T17:05:13: ▲ Next.js 16.2.2
+2026-04-16T17:05:13: - Local:         http://localhost:3900
+2026-04-16T17:05:13: - Network:       http://0.0.0.0:3900
+2026-04-16T17:05:13: ✓ Ready in 0ms
+2026-04-16T17:06:56: ▲ Next.js 16.2.2
+2026-04-16T17:06:56: - Local:         http://localhost:3900
+2026-04-16T17:06:56: - Network:       http://0.0.0.0:3900
+2026-04-16T17:06:56: ✓ Ready in 0ms
+2026-04-16T17:11:00: ▲ Next.js 16.2.2
+2026-04-16T17:11:00: - Local:         http://localhost:3900
+2026-04-16T17:11:00: - Network:       http://0.0.0.0:3900
+2026-04-16T17:11:00: ✓ Ready in 0ms
+2026-04-16T17:12:41: ▲ Next.js 16.2.2
+2026-04-16T17:12:41: - Local:         http://localhost:3900
+2026-04-16T17:12:41: - Network:       http://0.0.0.0:3900
+2026-04-16T17:12:41: ✓ Ready in 0ms
+2026-04-16T17:18:40: ▲ Next.js 16.2.2
+2026-04-16T17:18:40: - Local:         http://localhost:3900
+2026-04-16T17:18:40: - Network:       http://0.0.0.0:3900
+2026-04-16T17:18:40: ✓ Ready in 0ms
+2026-04-16T17:20:58: ▲ Next.js 16.2.2
+2026-04-16T17:20:58: - Local:         http://localhost:3900
+2026-04-16T17:20:58: - Network:       http://0.0.0.0:3900
+2026-04-16T17:20:58: ✓ Ready in 0ms
+2026-04-16T17:22:33: ▲ Next.js 16.2.2
+2026-04-16T17:22:33: - Local:         http://localhost:3900
+2026-04-16T17:22:33: - Network:       http://0.0.0.0:3900
+2026-04-16T17:22:33: ✓ Ready in 0ms
+2026-04-16T17:23:52: ▲ Next.js 16.2.2
+2026-04-16T17:23:52: - Local:         http://localhost:3900
+2026-04-16T17:23:52: - Network:       http://0.0.0.0:3900
+2026-04-16T17:23:52: ✓ Ready in 0ms
+2026-04-16T17:27:06: ▲ Next.js 16.2.2
+2026-04-16T17:27:06: - Local:         http://localhost:3900
+2026-04-16T17:27:06: - Network:       http://0.0.0.0:3900
+2026-04-16T17:27:06: ✓ Ready in 0ms
+2026-04-16T17:28:38: ▲ Next.js 16.2.2
+2026-04-16T17:28:38: - Local:         http://localhost:3900
+2026-04-16T17:28:38: - Network:       http://0.0.0.0:3900
+2026-04-16T17:28:38: ✓ Ready in 0ms
+2026-04-16T17:36:40: ▲ Next.js 16.2.2
+2026-04-16T17:36:40: - Local:         http://localhost:3900
+2026-04-16T17:36:40: - Network:       http://0.0.0.0:3900
+2026-04-16T17:36:40: ✓ Ready in 0ms
+2026-04-16T17:37:52: ▲ Next.js 16.2.2
+2026-04-16T17:37:52: - Local:         http://localhost:3900
+2026-04-16T17:37:52: - Network:       http://0.0.0.0:3900
+2026-04-16T17:37:52: ✓ Ready in 0ms
+2026-04-16T17:39:41: ▲ Next.js 16.2.2
+2026-04-16T17:39:41: - Local:         http://localhost:3900
+2026-04-16T17:39:41: - Network:       http://0.0.0.0:3900
+2026-04-16T17:39:41: ✓ Ready in 0ms
+2026-04-16T17:41:38: ▲ Next.js 16.2.2
+2026-04-16T17:41:38: - Local:         http://localhost:3900
+2026-04-16T17:41:38: - Network:       http://0.0.0.0:3900
+2026-04-16T17:41:38: ✓ Ready in 0ms
+2026-04-16T17:59:53: ▲ Next.js 16.2.2
+2026-04-16T17:59:53: - Local:         http://localhost:3900
+2026-04-16T17:59:53: - Network:       http://0.0.0.0:3900
+2026-04-16T17:59:53: ✓ Ready in 0ms
+2026-04-16T18:06:48: ▲ Next.js 16.2.2
+2026-04-16T18:06:48: - Local:         http://localhost:3900
+2026-04-16T18:06:48: - Network:       http://0.0.0.0:3900
+2026-04-16T18:06:48: ✓ Ready in 0ms
+2026-04-16T18:11:28: ▲ Next.js 16.2.2
+2026-04-16T18:11:28: - Local:         http://localhost:3900
+2026-04-16T18:11:28: - Network:       http://0.0.0.0:3900
+2026-04-16T18:11:28: ✓ Ready in 0ms
+2026-04-16T18:17:03: ▲ Next.js 16.2.2
+2026-04-16T18:17:03: - Local:         http://localhost:3900
+2026-04-16T18:17:03: - Network:       http://0.0.0.0:3900
+2026-04-16T18:17:03: ✓ Ready in 0ms
+2026-04-16T18:22:23: ▲ Next.js 16.2.2
+2026-04-16T18:22:23: - Local:         http://localhost:3900
+2026-04-16T18:22:23: - Network:       http://0.0.0.0:3900
+2026-04-16T18:22:23: ✓ Ready in 0ms
+2026-04-16T18:29:28: ▲ Next.js 16.2.2
+2026-04-16T18:29:28: - Local:         http://localhost:3900
+2026-04-16T18:29:28: - Network:       http://0.0.0.0:3900
+2026-04-16T18:29:28: ✓ Ready in 0ms
+2026-04-16T18:35:08: ▲ Next.js 16.2.2
+2026-04-16T18:35:08: - Local:         http://localhost:3900
+2026-04-16T18:35:08: - Network:       http://0.0.0.0:3900
+2026-04-16T18:35:08: ✓ Ready in 0ms
+2026-04-16T18:37:05: ▲ Next.js 16.2.2
+2026-04-16T18:37:05: - Local:         http://localhost:3900
+2026-04-16T18:37:05: - Network:       http://0.0.0.0:3900
+2026-04-16T18:37:05: ✓ Ready in 0ms
+2026-04-16T18:43:35: ▲ Next.js 16.2.2
+2026-04-16T18:43:35: - Local:         http://localhost:3900
+2026-04-16T18:43:35: - Network:       http://0.0.0.0:3900
+2026-04-16T18:43:35: ✓ Ready in 0ms
+2026-04-16T18:46:43: ▲ Next.js 16.2.2
+2026-04-16T18:46:43: - Local:         http://localhost:3900
+2026-04-16T18:46:43: - Network:       http://0.0.0.0:3900
+2026-04-16T18:46:43: ✓ Ready in 0ms
+2026-04-16T18:52:56: ▲ Next.js 16.2.2
+2026-04-16T18:52:56: - Local:         http://localhost:3900
+2026-04-16T18:52:56: - Network:       http://0.0.0.0:3900
+2026-04-16T18:52:56: ✓ Ready in 0ms
+2026-04-16T18:55:57: ▲ Next.js 16.2.2
+2026-04-16T18:55:57: - Local:         http://localhost:3900
+2026-04-16T18:55:57: - Network:       http://0.0.0.0:3900
+2026-04-16T18:55:57: ✓ Ready in 0ms
+2026-04-16T19:08:14: ▲ Next.js 16.2.2
+2026-04-16T19:08:14: - Local:         http://localhost:3900
+2026-04-16T19:08:14: - Network:       http://0.0.0.0:3900
+2026-04-16T19:08:14: ✓ Ready in 0ms
+2026-04-16T19:27:55: ▲ Next.js 16.2.2
+2026-04-16T19:27:55: - Local:         http://localhost:3900
+2026-04-16T19:27:55: - Network:       http://0.0.0.0:3900
+2026-04-16T19:27:55: ✓ Ready in 0ms
+2026-04-16T19:37:06: ▲ Next.js 16.2.2
+2026-04-16T19:37:06: - Local:         http://localhost:3900
+2026-04-16T19:37:06: - Network:       http://0.0.0.0:3900
+2026-04-16T19:37:06: ✓ Ready in 0ms
+2026-04-16T19:42:01: ▲ Next.js 16.2.2
+2026-04-16T19:42:01: - Local:         http://localhost:3900
+2026-04-16T19:42:01: - Network:       http://0.0.0.0:3900
+2026-04-16T19:42:01: ✓ Ready in 0ms
+2026-04-16T19:46:11: ▲ Next.js 16.2.2
+2026-04-16T19:46:11: - Local:         http://localhost:3900
+2026-04-16T19:46:11: - Network:       http://0.0.0.0:3900
+2026-04-16T19:46:11: ✓ Ready in 0ms
+2026-04-16T19:54:34: ▲ Next.js 16.2.2
+2026-04-16T19:54:34: - Local:         http://localhost:3900
+2026-04-16T19:54:34: - Network:       http://0.0.0.0:3900
+2026-04-16T19:54:34: ✓ Ready in 0ms
+2026-04-16T20:00:40: ▲ Next.js 16.2.2
+2026-04-16T20:00:40: - Local:         http://localhost:3900
+2026-04-16T20:00:40: - Network:       http://0.0.0.0:3900
+2026-04-16T20:00:40: ✓ Ready in 0ms
+2026-04-16T20:19:53: ▲ Next.js 16.2.2
+2026-04-16T20:19:53: - Local:         http://localhost:3900
+2026-04-16T20:19:53: - Network:       http://0.0.0.0:3900
+2026-04-16T20:19:53: ✓ Ready in 0ms
+2026-04-16T20:28:26: ▲ Next.js 16.2.2
+2026-04-16T20:28:26: - Local:         http://localhost:3900
+2026-04-16T20:28:26: - Network:       http://0.0.0.0:3900
+2026-04-16T20:28:26: ✓ Ready in 0ms
+2026-04-16T20:31:37: ▲ Next.js 16.2.2
+2026-04-16T20:31:37: - Local:         http://localhost:3900
+2026-04-16T20:31:37: - Network:       http://0.0.0.0:3900
+2026-04-16T20:31:37: ✓ Ready in 0ms
+2026-04-16T20:36:08: ▲ Next.js 16.2.2
+2026-04-16T20:36:08: - Local:         http://localhost:3900
+2026-04-16T20:36:08: - Network:       http://0.0.0.0:3900
+2026-04-16T20:36:08: ✓ Ready in 0ms
+2026-04-16T20:50:14: ▲ Next.js 16.2.2
+2026-04-16T20:50:14: - Local:         http://localhost:3900
+2026-04-16T20:50:14: - Network:       http://0.0.0.0:3900
+2026-04-16T20:50:14: ✓ Ready in 0ms
+2026-04-16T20:51:19: ▲ Next.js 16.2.2
+2026-04-16T20:51:19: - Local:         http://localhost:3900
+2026-04-16T20:51:19: - Network:       http://0.0.0.0:3900
+2026-04-16T20:51:19: ✓ Ready in 0ms
+2026-04-16T20:57:31: ▲ Next.js 16.2.2
+2026-04-16T20:57:31: - Local:         http://localhost:3900
+2026-04-16T20:57:31: - Network:       http://0.0.0.0:3900
+2026-04-16T20:57:31: ✓ Ready in 0ms
+2026-04-16T21:01:37: ▲ Next.js 16.2.2
+2026-04-16T21:01:37: - Local:         http://localhost:3900
+2026-04-16T21:01:37: - Network:       http://0.0.0.0:3900
+2026-04-16T21:01:37: ✓ Ready in 0ms
+2026-04-16T21:06:06: ▲ Next.js 16.2.2
+2026-04-16T21:06:06: - Local:         http://localhost:3900
+2026-04-16T21:06:06: - Network:       http://0.0.0.0:3900
+2026-04-16T21:06:06: ✓ Ready in 0ms
+2026-04-16T21:10:38: ▲ Next.js 16.2.2
+2026-04-16T21:10:38: - Local:         http://localhost:3900
+2026-04-16T21:10:38: - Network:       http://0.0.0.0:3900
+2026-04-16T21:10:38: ✓ Ready in 0ms
+2026-04-16T21:11:52: ▲ Next.js 16.2.2
+2026-04-16T21:11:52: - Local:         http://localhost:3900
+2026-04-16T21:11:52: - Network:       http://0.0.0.0:3900
+2026-04-16T21:11:52: ✓ Ready in 0ms
+2026-04-16T21:20:13: ▲ Next.js 16.2.2
+2026-04-16T21:20:13: - Local:         http://localhost:3900
+2026-04-16T21:20:13: - Network:       http://0.0.0.0:3900
+2026-04-16T21:20:13: ✓ Ready in 0ms
+2026-04-16T21:34:41: ▲ Next.js 16.2.2
+2026-04-16T21:34:41: - Local:         http://localhost:3900
+2026-04-16T21:34:41: - Network:       http://0.0.0.0:3900
+2026-04-16T21:34:41: ✓ Ready in 0ms
+2026-04-16T21:42:39: ▲ Next.js 16.2.2
+2026-04-16T21:42:39: - Local:         http://localhost:3900
+2026-04-16T21:42:39: - Network:       http://0.0.0.0:3900
+2026-04-16T21:42:39: ✓ Ready in 0ms
+2026-04-16T21:53:31: ▲ Next.js 16.2.2
+2026-04-16T21:53:31: - Local:         http://localhost:3900
+2026-04-16T21:53:31: - Network:       http://0.0.0.0:3900
+2026-04-16T21:53:31: ✓ Ready in 0ms
+2026-04-16T22:12:07: ▲ Next.js 16.2.2
+2026-04-16T22:12:07: - Local:         http://localhost:3900
+2026-04-16T22:12:07: - Network:       http://0.0.0.0:3900
+2026-04-16T22:12:07: ✓ Ready in 0ms
+2026-04-16T22:21:48: ▲ Next.js 16.2.2
+2026-04-16T22:21:48: - Local:         http://localhost:3900
+2026-04-16T22:21:48: - Network:       http://0.0.0.0:3900
+2026-04-16T22:21:48: ✓ Ready in 0ms
+2026-04-16T22:23:28: ▲ Next.js 16.2.2
+2026-04-16T22:23:28: - Local:         http://localhost:3900
+2026-04-16T22:23:28: - Network:       http://0.0.0.0:3900
+2026-04-16T22:23:28: ✓ Ready in 0ms
+2026-04-16T22:28:02: ▲ Next.js 16.2.2
+2026-04-16T22:28:02: - Local:         http://localhost:3900
+2026-04-16T22:28:02: - Network:       http://0.0.0.0:3900
+2026-04-16T22:28:02: ✓ Ready in 0ms
+2026-04-16T22:29:11: ▲ Next.js 16.2.2
+2026-04-16T22:29:11: - Local:         http://localhost:3900
+2026-04-16T22:29:11: - Network:       http://0.0.0.0:3900
+2026-04-16T22:29:11: ✓ Ready in 0ms
+2026-04-16T22:31:26: ▲ Next.js 16.2.2
+2026-04-16T22:31:26: - Local:         http://localhost:3900
+2026-04-16T22:31:26: - Network:       http://0.0.0.0:3900
+2026-04-16T22:31:26: ✓ Ready in 0ms
+2026-04-16T23:27:22: ▲ Next.js 16.2.2
+2026-04-16T23:27:22: - Local:         http://localhost:3900
+2026-04-16T23:27:22: - Network:       http://0.0.0.0:3900
+2026-04-16T23:27:22: ✓ Ready in 0ms
+2026-04-16T23:33:14: ▲ Next.js 16.2.2
+2026-04-16T23:33:14: - Local:         http://localhost:3900
+2026-04-16T23:33:14: - Network:       http://0.0.0.0:3900
+2026-04-16T23:33:14: ✓ Ready in 0ms
+2026-04-17T00:06:51: ▲ Next.js 16.2.2
+2026-04-17T00:06:51: - Local:         http://localhost:3900
+2026-04-17T00:06:51: - Network:       http://0.0.0.0:3900
+2026-04-17T00:06:51: ✓ Ready in 0ms
+2026-04-17T00:52:35: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-04-17T00:52:35: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-04-17T00:52:35:     at ignore-listed frames
+2026-04-17T00:52:35: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-04-17T00:52:35: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-04-17T00:52:35:     at ignore-listed frames
+2026-04-17T01:00:53: ▲ Next.js 16.2.2
+2026-04-17T01:00:53: - Local:         http://localhost:3900
+2026-04-17T01:00:53: - Network:       http://0.0.0.0:3900
+2026-04-17T01:00:53: ✓ Ready in 0ms
+2026-04-17T01:05:02: ▲ Next.js 16.2.2
+2026-04-17T01:05:02: - Local:         http://localhost:3900
+2026-04-17T01:05:02: - Network:       http://0.0.0.0:3900
+2026-04-17T01:05:02: ✓ Ready in 0ms
+2026-04-17T01:08:35: ▲ Next.js 16.2.2
+2026-04-17T01:08:35: - Local:         http://localhost:3900
+2026-04-17T01:08:35: - Network:       http://0.0.0.0:3900
+2026-04-17T01:08:35: ✓ Ready in 0ms
+2026-04-17T01:11:05: ▲ Next.js 16.2.2
+2026-04-17T01:11:05: - Local:         http://localhost:3900
+2026-04-17T01:11:05: - Network:       http://0.0.0.0:3900
+2026-04-17T01:11:05: ✓ Ready in 0ms
+2026-04-17T01:25:37: ▲ Next.js 16.2.2
+2026-04-17T01:25:37: - Local:         http://localhost:3900
+2026-04-17T01:25:37: - Network:       http://0.0.0.0:3900
+2026-04-17T01:25:37: ✓ Ready in 0ms
+2026-04-17T01:47:05: ▲ Next.js 16.2.2
+2026-04-17T01:47:05: - Local:         http://localhost:3900
+2026-04-17T01:47:05: - Network:       http://0.0.0.0:3900
+2026-04-17T01:47:05: ✓ Ready in 0ms
+2026-04-17T02:56:54: ▲ Next.js 16.2.2
+2026-04-17T02:56:54: - Local:         http://localhost:3900
+2026-04-17T02:56:54: - Network:       http://0.0.0.0:3900
+2026-04-17T02:56:54: ✓ Ready in 0ms
+2026-04-17T06:31:52: ▲ Next.js 16.2.2
+2026-04-17T06:31:52: - Local:         http://localhost:3900
+2026-04-17T06:31:52: - Network:       http://0.0.0.0:3900
+2026-04-17T06:31:52: ✓ Ready in 0ms
+2026-04-17T07:39:33: Error: Failed to find Server Action "x". This request might be from an older or newer deployment.
+2026-04-17T07:39:33: Read more: https://nextjs.org/docs/messages/failed-to-find-server-action
+2026-04-17T07:39:33:     at ignore-listed frames
+2026-04-17T08:29:43: ▲ Next.js 16.2.2
+2026-04-17T08:29:43: - Local:         http://localhost:3900
+2026-04-17T08:29:43: - Network:       http://0.0.0.0:3900
+2026-04-17T08:29:43: ✓ Ready in 0ms
+2026-04-17T08:44:24: ▲ Next.js 16.2.2
+2026-04-17T08:44:24: - Local:         http://localhost:3900
+2026-04-17T08:44:24: - Network:       http://0.0.0.0:3900
+2026-04-17T08:44:24: ✓ Ready in 0ms
+2026-04-17T08:47:56: ▲ Next.js 16.2.2
+2026-04-17T08:47:56: - Local:         http://localhost:3900
+2026-04-17T08:47:56: - Network:       http://0.0.0.0:3900
+2026-04-17T08:47:56: ✓ Ready in 0ms
+2026-04-17T08:59:04: ▲ Next.js 16.2.2
+2026-04-17T08:59:04: - Local:         http://localhost:3900
+2026-04-17T08:59:04: - Network:       http://0.0.0.0:3900
+2026-04-17T08:59:04: ✓ Ready in 0ms
+2026-04-17T09:06:47: ▲ Next.js 16.2.2
+2026-04-17T09:06:47: - Local:         http://localhost:3900
+2026-04-17T09:06:47: - Network:       http://0.0.0.0:3900
+2026-04-17T09:06:47: ✓ Ready in 0ms
+2026-04-17T09:09:51: ▲ Next.js 16.2.2
+2026-04-17T09:09:51: - Local:         http://localhost:3900
+2026-04-17T09:09:51: - Network:       http://0.0.0.0:3900
+2026-04-17T09:09:51: ✓ Ready in 0ms
+2026-04-17T09:42:45: ▲ Next.js 16.2.2
+2026-04-17T09:42:45: - Local:         http://localhost:3900
+2026-04-17T09:42:45: - Network:       http://0.0.0.0:3900
+2026-04-17T09:42:45: ✓ Ready in 0ms
+2026-04-17T09:59:14: ▲ Next.js 16.2.2
+2026-04-17T09:59:14: - Local:         http://localhost:3900
+2026-04-17T09:59:14: - Network:       http://0.0.0.0:3900
+2026-04-17T09:59:14: ✓ Ready in 0ms
+2026-04-17T10:07:05: ▲ Next.js 16.2.2
+2026-04-17T10:07:05: - Local:         http://localhost:3900
+2026-04-17T10:07:05: - Network:       http://0.0.0.0:3900
+2026-04-17T10:07:05: ✓ Ready in 0ms
+2026-04-17T10:08:16: ▲ Next.js 16.2.2
+2026-04-17T10:08:16: - Local:         http://localhost:3900
+2026-04-17T10:08:16: - Network:       http://0.0.0.0:3900
+2026-04-17T10:08:16: ✓ Ready in 0ms
+2026-04-17T10:36:39: ▲ Next.js 16.2.2
+2026-04-17T10:36:39: - Local:         http://localhost:3900
+2026-04-17T10:36:39: - Network:       http://0.0.0.0:3900
+2026-04-17T10:36:39: ✓ Ready in 0ms
+2026-04-17T10:42:27: ▲ Next.js 16.2.2
+2026-04-17T10:42:27: - Local:         http://localhost:3900
+2026-04-17T10:42:27: - Network:       http://0.0.0.0:3900
+2026-04-17T10:42:27: ✓ Ready in 0ms
+2026-04-17T10:44:19: ▲ Next.js 16.2.2
+2026-04-17T10:44:19: - Local:         http://localhost:3900
+2026-04-17T10:44:19: - Network:       http://0.0.0.0:3900
+2026-04-17T10:44:19: ✓ Ready in 0ms
+2026-04-17T10:48:18: ▲ Next.js 16.2.2
+2026-04-17T10:48:18: - Local:         http://localhost:3900
+2026-04-17T10:48:18: - Network:       http://0.0.0.0:3900
+2026-04-17T10:48:18: ✓ Ready in 0ms
+2026-04-17T10:51:00: ▲ Next.js 16.2.2
+2026-04-17T10:51:00: - Local:         http://localhost:3900
+2026-04-17T10:51:00: - Network:       http://0.0.0.0:3900
+2026-04-17T10:51:00: ✓ Ready in 0ms
+2026-04-17T10:55:43: ▲ Next.js 16.2.2
+2026-04-17T10:55:43: - Local:         http://localhost:3900
+2026-04-17T10:55:43: - Network:       http://0.0.0.0:3900
+2026-04-17T10:55:43: ✓ Ready in 0ms
+2026-04-17T11:25:39: ▲ Next.js 16.2.2
+2026-04-17T11:25:39: - Local:         http://localhost:3900
+2026-04-17T11:25:39: - Network:       http://0.0.0.0:3900
+2026-04-17T11:25:39: ✓ Ready in 0ms
+2026-04-17T11:30:30: ▲ Next.js 16.2.2
+2026-04-17T11:30:30: - Local:         http://localhost:3900
+2026-04-17T11:30:30: - Network:       http://0.0.0.0:3900
+2026-04-17T11:30:30: ✓ Ready in 0ms
+2026-04-17T11:54:54: ▲ Next.js 16.2.2
+2026-04-17T11:54:54: - Local:         http://localhost:3900
+2026-04-17T11:54:54: - Network:       http://0.0.0.0:3900
+2026-04-17T11:54:54: ✓ Ready in 0ms
+2026-04-17T12:24:09: ▲ Next.js 16.2.2
+2026-04-17T12:24:09: - Local:         http://localhost:3900
+2026-04-17T12:24:09: - Network:       http://0.0.0.0:3900
+2026-04-17T12:24:09: ✓ Ready in 0ms
+2026-04-17T12:30:59: ▲ Next.js 16.2.2
+2026-04-17T12:30:59: - Local:         http://localhost:3900
+2026-04-17T12:30:59: - Network:       http://0.0.0.0:3900
+2026-04-17T12:30:59: ✓ Ready in 0ms
+2026-04-17T12:44:20: ▲ Next.js 16.2.2
+2026-04-17T12:44:20: - Local:         http://localhost:3900
+2026-04-17T12:44:20: - Network:       http://0.0.0.0:3900
+2026-04-17T12:44:20: ✓ Ready in 0ms
+2026-04-17T12:54:16: ▲ Next.js 16.2.2
+2026-04-17T12:54:16: - Local:         http://localhost:3900
+2026-04-17T12:54:16: - Network:       http://0.0.0.0:3900
+2026-04-17T12:54:16: ✓ Ready in 0ms
+2026-04-17T14:30:08: ▲ Next.js 16.2.2
+2026-04-17T14:30:08: - Local:         http://localhost:3900
+2026-04-17T14:30:08: - Network:       http://0.0.0.0:3900
+2026-04-17T14:30:08: ✓ Ready in 0ms
+2026-04-17T15:31:00: ▲ Next.js 16.2.2
+2026-04-17T15:31:00: - Local:         http://localhost:3900
+2026-04-17T15:31:00: - Network:       http://0.0.0.0:3900
+2026-04-17T15:31:00: ✓ Ready in 0ms
+2026-04-17T15:33:08: ▲ Next.js 16.2.2
+2026-04-17T15:33:08: - Local:         http://localhost:3900
+2026-04-17T15:33:08: - Network:       http://0.0.0.0:3900
+2026-04-17T15:33:08: ✓ Ready in 0ms
+2026-04-17T15:41:23: ▲ Next.js 16.2.2
+2026-04-17T15:41:23: - Local:         http://localhost:3900
+2026-04-17T15:41:23: - Network:       http://0.0.0.0:3900
+2026-04-17T15:41:23: ✓ Ready in 0ms
+2026-04-17T15:52:53: ▲ Next.js 16.2.2
+2026-04-17T15:52:53: - Local:         http://localhost:3900
+2026-04-17T15:52:53: - Network:       http://0.0.0.0:3900
+2026-04-17T15:52:53: ✓ Ready in 0ms
+2026-04-17T15:56:26: ▲ Next.js 16.2.2
+2026-04-17T15:56:26: - Local:         http://localhost:3900
+2026-04-17T15:56:26: - Network:       http://0.0.0.0:3900
+2026-04-17T15:56:26: ✓ Ready in 0ms
+2026-04-17T15:59:45: ▲ Next.js 16.2.2
+2026-04-17T15:59:45: - Local:         http://localhost:3900
+2026-04-17T15:59:45: - Network:       http://0.0.0.0:3900
+2026-04-17T15:59:45: ✓ Ready in 0ms
+2026-04-17T16:01:14: ▲ Next.js 16.2.2
+2026-04-17T16:01:14: - Local:         http://localhost:3900
+2026-04-17T16:01:14: - Network:       http://0.0.0.0:3900
+2026-04-17T16:01:14: ✓ Ready in 0ms
+2026-04-17T16:03:10: ▲ Next.js 16.2.2
+2026-04-17T16:03:10: - Local:         http://localhost:3900
+2026-04-17T16:03:10: - Network:       http://0.0.0.0:3900
+2026-04-17T16:03:10: ✓ Ready in 0ms
+2026-04-17T16:06:39: ▲ Next.js 16.2.2
+2026-04-17T16:06:39: - Local:         http://localhost:3900
+2026-04-17T16:06:39: - Network:       http://0.0.0.0:3900
+2026-04-17T16:06:39: ✓ Ready in 0ms
+2026-04-17T16:11:06: ▲ Next.js 16.2.2
+2026-04-17T16:11:06: - Local:         http://localhost:3900
+2026-04-17T16:11:06: - Network:       http://0.0.0.0:3900
+2026-04-17T16:11:06: ✓ Ready in 0ms
+2026-04-17T16:13:58: ▲ Next.js 16.2.2
+2026-04-17T16:13:58: - Local:         http://localhost:3900
+2026-04-17T16:13:58: - Network:       http://0.0.0.0:3900
+2026-04-17T16:13:58: ✓ Ready in 0ms
+2026-04-17T16:30:56: ▲ Next.js 16.2.2
+2026-04-17T16:30:56: - Local:         http://localhost:3900
+2026-04-17T16:30:56: - Network:       http://0.0.0.0:3900
+2026-04-17T16:30:56: ✓ Ready in 0ms
+2026-04-17T16:42:54: ▲ Next.js 16.2.2
+2026-04-17T16:42:54: - Local:         http://localhost:3900
+2026-04-17T16:42:54: - Network:       http://0.0.0.0:3900
+2026-04-17T16:42:54: ✓ Ready in 0ms
+2026-04-17T17:25:30: ▲ Next.js 16.2.2
+2026-04-17T17:25:30: - Local:         http://localhost:3900
+2026-04-17T17:25:30: - Network:       http://0.0.0.0:3900
+2026-04-17T17:25:30: ✓ Ready in 0ms
+2026-04-17T17:53:28: ▲ Next.js 16.2.2
+2026-04-17T17:53:28: - Local:         http://localhost:3900
+2026-04-17T17:53:28: - Network:       http://0.0.0.0:3900
+2026-04-17T17:53:28: ✓ Ready in 0ms
+2026-04-17T17:56:07: ▲ Next.js 16.2.2
+2026-04-17T17:56:07: - Local:         http://localhost:3900
+2026-04-17T17:56:07: - Network:       http://0.0.0.0:3900
+2026-04-17T17:56:07: ✓ Ready in 0ms
+2026-04-17T17:58:53: ▲ Next.js 16.2.2
+2026-04-17T17:58:53: - Local:         http://localhost:3900
+2026-04-17T17:58:53: - Network:       http://0.0.0.0:3900
+2026-04-17T17:58:53: ✓ Ready in 0ms
+2026-04-17T18:02:02: ▲ Next.js 16.2.2
+2026-04-17T18:02:02: - Local:         http://localhost:3900
+2026-04-17T18:02:02: - Network:       http://0.0.0.0:3900
+2026-04-17T18:02:02: ✓ Ready in 0ms
+2026-04-17T18:40:16: ▲ Next.js 16.2.2
+2026-04-17T18:40:16: - Local:         http://localhost:3900
+2026-04-17T18:40:16: - Network:       http://0.0.0.0:3900
+2026-04-17T18:40:16: ✓ Ready in 0ms
+2026-04-17T18:42:06: ▲ Next.js 16.2.2
+2026-04-17T18:42:06: - Local:         http://localhost:3900
+2026-04-17T18:42:06: - Network:       http://0.0.0.0:3900
+2026-04-17T18:42:06: ✓ Ready in 0ms
+2026-04-17T18:46:15: ▲ Next.js 16.2.2
+2026-04-17T18:46:15: - Local:         http://localhost:3900
+2026-04-17T18:46:15: - Network:       http://0.0.0.0:3900
+2026-04-17T18:46:15: ✓ Ready in 0ms
+2026-04-17T18:49:22: ▲ Next.js 16.2.2
+2026-04-17T18:49:22: - Local:         http://localhost:3900
+2026-04-17T18:49:22: - Network:       http://0.0.0.0:3900
+2026-04-17T18:49:22: ✓ Ready in 0ms
+2026-04-17T20:15:44: ▲ Next.js 16.2.2
+2026-04-17T20:15:44: - Local:         http://localhost:3900
+2026-04-17T20:15:44: - Network:       http://0.0.0.0:3900
+2026-04-17T20:15:44: ✓ Ready in 0ms
+2026-04-17T21:19:09: ▲ Next.js 16.2.2
+2026-04-17T21:19:09: - Local:         http://localhost:3900
+2026-04-17T21:19:09: - Network:       http://0.0.0.0:3900
+2026-04-17T21:19:09: ✓ Ready in 0ms
+2026-04-17T23:19:31: ▲ Next.js 16.2.2
+2026-04-17T23:19:31: - Local:         http://localhost:3900
+2026-04-17T23:19:31: - Network:       http://0.0.0.0:3900
+2026-04-17T23:19:31: ✓ Ready in 0ms
+2026-04-18T09:43:55: ▲ Next.js 16.2.2
+2026-04-18T09:43:55: - Local:         http://localhost:3900
+2026-04-18T09:43:55: - Network:       http://0.0.0.0:3900
+2026-04-18T09:43:55: ✓ Ready in 0ms
+2026-04-18T09:59:09: ▲ Next.js 16.2.2
+2026-04-18T09:59:09: - Local:         http://localhost:3900
+2026-04-18T09:59:09: - Network:       http://0.0.0.0:3900
+2026-04-18T09:59:09: ✓ Ready in 0ms
+2026-04-18T10:18:23: ▲ Next.js 16.2.2
+2026-04-18T10:18:23: - Local:         http://localhost:3900
+2026-04-18T10:18:23: - Network:       http://0.0.0.0:3900
+2026-04-18T10:18:23: ✓ Ready in 0ms
+2026-04-18T11:59:06: ▲ Next.js 16.2.2
+2026-04-18T11:59:06: - Local:         http://localhost:3900
+2026-04-18T11:59:06: - Network:       http://0.0.0.0:3900
+2026-04-18T11:59:06: ✓ Ready in 0ms
+2026-04-18T13:48:26: ▲ Next.js 16.2.2
+2026-04-18T13:48:26: - Local:         http://localhost:3900
+2026-04-18T13:48:26: - Network:       http://0.0.0.0:3900
+2026-04-18T13:48:26: ✓ Ready in 0ms
+2026-04-18T14:49:46: ▲ Next.js 16.2.2
+2026-04-18T14:49:46: - Local:         http://localhost:3900
+2026-04-18T14:49:46: - Network:       http://0.0.0.0:3900
+2026-04-18T14:49:46: ✓ Ready in 0ms
+2026-04-18T15:12:57: ▲ Next.js 16.2.2
+2026-04-18T15:12:57: - Local:         http://localhost:3900
+2026-04-18T15:12:57: - Network:       http://0.0.0.0:3900
+2026-04-18T15:12:57: ✓ Ready in 0ms
+2026-04-18T16:18:56: ▲ Next.js 16.2.2
+2026-04-18T16:18:56: - Local:         http://localhost:3900
+2026-04-18T16:18:56: - Network:       http://0.0.0.0:3900
+2026-04-18T16:18:56: ✓ Ready in 0ms
+2026-04-18T16:21:17: ▲ Next.js 16.2.2
+2026-04-18T16:21:17: - Local:         http://localhost:3900
+2026-04-18T16:21:17: - Network:       http://0.0.0.0:3900
+2026-04-18T16:21:17: ✓ Ready in 0ms
+2026-04-18T16:55:29: ▲ Next.js 16.2.2
+2026-04-18T16:55:29: - Local:         http://localhost:3900
+2026-04-18T16:55:29: - Network:       http://0.0.0.0:3900
+2026-04-18T16:55:29: ✓ Ready in 0ms
+2026-04-18T17:40:58: ▲ Next.js 16.2.2
+2026-04-18T17:40:58: - Local:         http://localhost:3900
+2026-04-18T17:40:58: - Network:       http://0.0.0.0:3900
+2026-04-18T17:40:58: ✓ Ready in 0ms
+2026-04-18T19:24:26: ▲ Next.js 16.2.2
+2026-04-18T19:24:26: - Local:         http://localhost:3900
+2026-04-18T19:24:26: - Network:       http://0.0.0.0:3900
+2026-04-18T19:24:26: ✓ Ready in 0ms
+2026-04-18T21:40:21: ▲ Next.js 16.2.2
+2026-04-18T21:40:21: - Local:         http://localhost:3900
+2026-04-18T21:40:21: - Network:       http://0.0.0.0:3900
+2026-04-18T21:40:21: ✓ Ready in 0ms
+2026-04-19T15:31:16: ▲ Next.js 16.2.2
+2026-04-19T15:31:16: - Local:         http://localhost:3900
+2026-04-19T15:31:16: - Network:       http://0.0.0.0:3900
+2026-04-19T15:31:16: ✓ Ready in 0ms
+2026-04-19T15:39:57: ▲ Next.js 16.2.2
+2026-04-19T15:39:57: - Local:         http://localhost:3900
+2026-04-19T15:39:57: - Network:       http://0.0.0.0:3900
+2026-04-19T15:39:57: ✓ Ready in 0ms
+2026-04-19T19:43:52: ▲ Next.js 16.2.2
+2026-04-19T19:43:52: - Local:         http://localhost:3900
+2026-04-19T19:43:52: - Network:       http://0.0.0.0:3900
+2026-04-19T19:43:52: ✓ Ready in 0ms
+2026-04-19T20:29:18: ▲ Next.js 16.2.2
+2026-04-19T20:29:18: - Local:         http://localhost:3900
+2026-04-19T20:29:18: - Network:       http://0.0.0.0:3900
+2026-04-19T20:29:18: ✓ Ready in 0ms
+2026-04-19T22:39:17: ▲ Next.js 16.2.2
+2026-04-19T22:39:17: - Local:         http://localhost:3900
+2026-04-19T22:39:17: - Network:       http://0.0.0.0:3900
+2026-04-19T22:39:17: ✓ Ready in 0ms
+2026-04-20T01:30:21: ▲ Next.js 16.2.2
+2026-04-20T01:30:21: - Local:         http://localhost:3900
+2026-04-20T01:30:21: - Network:       http://0.0.0.0:3900
+2026-04-20T01:30:21: ✓ Ready in 0ms
+2026-04-22T14:03:43: ▲ Next.js 16.2.2
+2026-04-22T14:03:43: - Local:         http://localhost:3900
+2026-04-22T14:03:43: - Network:       http://0.0.0.0:3900
+2026-04-22T14:03:43: ✓ Ready in 0ms
+2026-04-23T17:39:06: ▲ Next.js 16.2.2
+2026-04-23T17:39:06: - Local:         http://localhost:3900
+2026-04-23T17:39:06: - Network:       http://0.0.0.0:3900
+2026-04-23T17:39:06: ✓ Ready in 0ms
+2026-04-23T17:43:01: ▲ Next.js 16.2.2
+2026-04-23T17:43:01: - Local:         http://localhost:3900
+2026-04-23T17:43:01: - Network:       http://0.0.0.0:3900
+2026-04-23T17:43:01: ✓ Ready in 0ms
+2026-04-23T17:51:34: ▲ Next.js 16.2.2
+2026-04-23T17:51:34: - Local:         http://localhost:3900
+2026-04-23T17:51:34: - Network:       http://0.0.0.0:3900
+2026-04-23T17:51:34: ✓ Ready in 0ms
+2026-04-23T19:10:36: ▲ Next.js 16.2.2
+2026-04-23T19:10:36: - Local:         http://localhost:3900
+2026-04-23T19:10:36: - Network:       http://0.0.0.0:3900
+2026-04-23T19:10:36: ✓ Ready in 0ms

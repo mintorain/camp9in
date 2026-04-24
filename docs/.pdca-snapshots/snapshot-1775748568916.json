@@ -1,0 +1,45 @@
+{
+  "timestamp": "2026-04-09T15:29:28.912Z",
+  "reason": "compaction",
+  "status": {
+    "version": "2.0",
+    "lastUpdated": "2026-04-09T15:18:22.584Z",
+    "activeFeatures": [
+      "apply"
+    ],
+    "primaryFeature": "apply",
+    "features": {
+      "apply": {
+        "phase": "do",
+        "phaseNumber": 3,
+        "matchRate": null,
+        "iterationCount": 0,
+        "requirements": [],
+        "documents": {},
+        "timestamps": {
+          "started": "2026-04-09T15:18:22.584Z",
+          "lastUpdated": "2026-04-09T15:18:22.584Z"
+        },
+        "lastFile": "I:\\camp9in\\src\\app\\apply\\page.tsx"
+      }
+    },
+    "pipeline": {
+      "currentPhase": 1,
+      "level": "Dynamic",
+      "phaseHistory": []
+    },
+    "session": {
+      "startedAt": "2026-04-07T15:51:39.351Z",
+      "onboardingCompleted": false,
+      "lastActivity": "2026-04-09T15:18:22.584Z"
+    },
+    "history": [
+      {
+        "timestamp": "2026-04-09T15:18:22.584Z",
+        "feature": "apply",
+        "phase": "do",
+        "action": "updated"
+      }
+    ]
+  }
+}

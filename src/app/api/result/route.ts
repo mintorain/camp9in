@@ -27,6 +27,7 @@ interface AssignmentRow {
   subject_id: string;
   grade: string | null;
   payment_amount: number | null;
+  payment_date: string | null;
 }
 
 // 합격 조회
@@ -85,18 +86,28 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // 합격자만 배정 정보 조회 (배정별 금액 포함)
+    // 합격자만 배정 정보 조회 (배정별 금액/입금일 포함)
     let assignments: AssignmentRow[];
     try {
       assignments = await query<AssignmentRow>(
-        "SELECT school_id, subject_id, grade, payment_amount FROM applicant_assignments WHERE applicant_id = ?",
+        `SELECT school_id, subject_id, grade, payment_amount,
+                DATE_FORMAT(payment_date, '%Y-%m-%d') as payment_date
+         FROM applicant_assignments WHERE applicant_id = ?`,
         [applicant.id]
       );
     } catch {
-      assignments = await query<AssignmentRow>(
-        "SELECT school_id, subject_id, grade, NULL as payment_amount FROM applicant_assignments WHERE applicant_id = ?",
-        [applicant.id]
-      );
+      try {
+        // payment_date 컬럼이 없는 경우
+        assignments = await query<AssignmentRow>(
+          "SELECT school_id, subject_id, grade, payment_amount, NULL as payment_date FROM applicant_assignments WHERE applicant_id = ?",
+          [applicant.id]
+        );
+      } catch {
+        assignments = await query<AssignmentRow>(
+          "SELECT school_id, subject_id, grade, NULL as payment_amount, NULL as payment_date FROM applicant_assignments WHERE applicant_id = ?",
+          [applicant.id]
+        );
+      }
     }
 
     // 배정별 금액 합계 또는 applicants 테이블의 금액
@@ -113,6 +124,7 @@ export async function POST(request: NextRequest) {
           subject_id: a.subject_id,
           grade: a.grade,
           paymentAmount: a.payment_amount,
+          paymentDate: a.payment_date,
         })),
         paymentSubmitted: !!applicant.payment_submitted_at,
         paymentName: applicant.payment_name,

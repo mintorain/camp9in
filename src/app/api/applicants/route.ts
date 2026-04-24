@@ -17,6 +17,7 @@ interface ApplicantRow {
   introduction: string | null;
   privacy_agreed: number;
   status: string;
+  review_note: string | null;
   confirmed_subject: string | null;
   confirmed_school: string | null;
   payment_name: string | null;
@@ -43,6 +44,7 @@ interface AssignmentRow {
   subject_id: string;
   grade: string | null;
   payment_amount: number | null;
+  payment_date: string | null;
 }
 
 interface ExistingApplicant {
@@ -231,12 +233,20 @@ export async function GET(request: NextRequest) {
     let assignmentRows: AssignmentRow[];
     try {
       assignmentRows = await query<AssignmentRow>(
-        "SELECT applicant_id, school_id, subject_id, grade, payment_amount FROM applicant_assignments ORDER BY id ASC"
+        `SELECT applicant_id, school_id, subject_id, grade, payment_amount,
+                DATE_FORMAT(payment_date, '%Y-%m-%d') as payment_date
+         FROM applicant_assignments ORDER BY id ASC`
       );
     } catch {
-      assignmentRows = await query<AssignmentRow>(
-        "SELECT applicant_id, school_id, subject_id, grade, NULL as payment_amount FROM applicant_assignments ORDER BY id ASC"
-      );
+      try {
+        assignmentRows = await query<AssignmentRow>(
+          "SELECT applicant_id, school_id, subject_id, grade, payment_amount, NULL as payment_date FROM applicant_assignments ORDER BY id ASC"
+        );
+      } catch {
+        assignmentRows = await query<AssignmentRow>(
+          "SELECT applicant_id, school_id, subject_id, grade, NULL as payment_amount, NULL as payment_date FROM applicant_assignments ORDER BY id ASC"
+        );
+      }
     }
 
     let result = applicants.map((a) => ({
@@ -249,7 +259,7 @@ export async function GET(request: NextRequest) {
         .map((s) => ({ subject_id: s.subject_id })),
       assignments: assignmentRows
         .filter((s) => s.applicant_id === a.id)
-        .map((s) => ({ school_id: s.school_id, subject_id: s.subject_id, grade: s.grade, payment_amount: s.payment_amount })),
+        .map((s) => ({ school_id: s.school_id, subject_id: s.subject_id, grade: s.grade, payment_amount: s.payment_amount, payment_date: s.payment_date })),
     }));
 
     if (school) {

@@ -29,6 +29,22 @@ export async function PATCH(
       ]);
     }
 
+    // 검토 비고 (합격/불합격 사유 등)
+    if (body.reviewNote !== undefined) {
+      const note =
+        typeof body.reviewNote === "string" && body.reviewNote.trim()
+          ? body.reviewNote.trim().slice(0, 500)
+          : null;
+      try {
+        await query("UPDATE applicants SET review_note = ? WHERE id = ?", [
+          note,
+          id,
+        ]);
+      } catch {
+        // 컬럼이 아직 없으면 조용히 무시 (마이그레이션 전 상태)
+      }
+    }
+
     if (body.assignments !== undefined) {
       await query(
         "DELETE FROM applicant_assignments WHERE applicant_id = ?",
@@ -58,17 +74,26 @@ export async function PATCH(
       ]);
     }
 
-    // 배정별 강사료 저장
+    // 배정별 강사료 및 입금일 저장
     if (body.assignment_payments && Array.isArray(body.assignment_payments)) {
       for (const ap of body.assignment_payments) {
         try {
           await query(
-            `UPDATE applicant_assignments SET payment_amount = ?
+            `UPDATE applicant_assignments SET payment_amount = ?, payment_date = ?
              WHERE applicant_id = ? AND school_id = ? AND subject_id = ?`,
-            [ap.payment_amount, id, ap.school_id, ap.subject_id]
+            [ap.payment_amount, ap.payment_date || null, id, ap.school_id, ap.subject_id]
           );
         } catch {
-          // payment_amount 컬럼이 없으면 무시
+          // payment_date 컬럼이 아직 없는 구버전 DB: payment_amount만
+          try {
+            await query(
+              `UPDATE applicant_assignments SET payment_amount = ?
+               WHERE applicant_id = ? AND school_id = ? AND subject_id = ?`,
+              [ap.payment_amount, id, ap.school_id, ap.subject_id]
+            );
+          } catch {
+            // payment_amount 컬럼도 없으면 무시
+          }
         }
       }
     }

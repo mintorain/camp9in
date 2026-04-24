@@ -1,11 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { SCHOOLS, SUBJECTS, SUBJECT_CLOSE_THRESHOLD } from "@/lib/constants";
+import { SUBJECT_CLOSE_THRESHOLD } from "@/lib/constants";
+import type { School, Subject } from "@/lib/data";
 import TiltCard from "./TiltCard";
 import ScrollReveal from "./ScrollReveal";
 
-export default function SubjectGrid() {
+interface Props {
+  subjects: Subject[];
+  schools: School[];
+}
+
+export default function SubjectGrid({ subjects, schools }: Props) {
   const [counts, setCounts] = useState<Record<string, number>>({});
   const [dbClosedIds, setDbClosedIds] = useState<string[]>([]);
   const [showCounts, setShowCounts] = useState(true);
@@ -28,15 +34,16 @@ export default function SubjectGrid() {
       .catch(() => {});
   }, []);
 
-  function isClosed(subjectId: string) {
-    if (dbClosedIds.includes(subjectId)) return true;
-    return (counts[subjectId] || 0) >= SUBJECT_CLOSE_THRESHOLD;
+  function isClosed(subject: Subject) {
+    if (subject.closed) return true; // DB 마감 플래그
+    if (dbClosedIds.includes(subject.id)) return true; // counts API의 closedIds (legacy 호환)
+    return (counts[subject.id] || 0) >= SUBJECT_CLOSE_THRESHOLD;
   }
 
   return (
     <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      {SUBJECTS.map((subject, i) => {
-        const closed = isClosed(subject.id);
+      {subjects.map((subject, i) => {
+        const closed = isClosed(subject);
         const count = counts[subject.id] || 0;
 
         return (
@@ -71,7 +78,7 @@ export default function SubjectGrid() {
                   {subject.description}
                 </p>
                 <div className="flex flex-wrap gap-1 mb-3">
-                  {subject.skills.split(", ").map((skill) => (
+                  {subject.skills.split(", ").filter(Boolean).map((skill) => (
                     <span
                       key={skill}
                       className="inline-block px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-600 text-xs font-medium"
@@ -81,16 +88,16 @@ export default function SubjectGrid() {
                   ))}
                 </div>
                 <div className="flex flex-wrap gap-1">
-                  {SCHOOLS.filter((sc) =>
-                    (sc.subjects as readonly string[]).includes(subject.id)
-                  ).map((sc) => (
-                    <span
-                      key={sc.id}
-                      className="inline-block px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 text-[10px]"
-                    >
-                      {sc.shortName}
-                    </span>
-                  ))}
+                  {schools
+                    .filter((sc) => sc.subjects.includes(subject.id))
+                    .map((sc) => (
+                      <span
+                        key={sc.id}
+                        className="inline-block px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 text-[10px]"
+                      >
+                        {sc.hideName ? "정보 비공개" : sc.shortName}
+                      </span>
+                    ))}
                 </div>
               </article>
             </TiltCard>

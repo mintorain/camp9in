@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Loader2, Plus, X, UserPlus, Download, DollarSign, Calendar } from "lucide-react";
-import { SCHOOLS, SUBJECTS } from "@/lib/constants";
+import { useCampData } from "@/lib/useCampData";
 import { adminFetch, getAdminToken } from "@/lib/admin";
 
 interface Applicant {
@@ -22,7 +22,7 @@ interface Applicant {
   payment_submitted_at: string | null;
   applicant_schools: { school_id: string }[];
   applicant_subjects: { subject_id: string }[];
-  assignments: { school_id: string; subject_id: string; grade: string | null; payment_amount?: number | null }[];
+  assignments: { school_id: string; subject_id: string; grade: string | null; payment_amount?: number | null; payment_date?: string | null }[];
 }
 
 interface SlotTarget {
@@ -33,6 +33,7 @@ interface SlotTarget {
 
 export default function AssignedPage() {
   const router = useRouter();
+  const { schools: SCHOOLS, subjects: SUBJECTS } = useCampData();
   const [applicants, setApplicants] = useState<Applicant[]>([]);
   const [allApplicants, setAllApplicants] = useState<Applicant[]>([]);
   const [loading, setLoading] = useState(true);
@@ -43,6 +44,7 @@ export default function AssignedPage() {
   const [paymentTarget, setPaymentTarget] = useState<Applicant | null>(null);
   const [paymentAmount, setPaymentAmount] = useState("");
   const [paymentAmounts, setPaymentAmounts] = useState<Record<string, string>>({});
+  const [paymentDates, setPaymentDates] = useState<Record<string, string>>({});
   const [paymentDate, setPaymentDate] = useState("");
   const [savingPayment, setSavingPayment] = useState(false);
   const paymentRef = useRef<HTMLDivElement>(null);
@@ -104,13 +106,17 @@ export default function AssignedPage() {
   function openPaymentModal(applicant: Applicant) {
     setPaymentTarget(applicant);
     setPaymentDate(applicant.payment_date || "");
-    // 배정별 금액 초기화
+    // 배정별 금액/입금일 초기화
     const amounts: Record<string, string> = {};
+    const dates: Record<string, string> = {};
     applicant.assignments.forEach((a, i) => {
       const key = `${a.school_id}_${a.subject_id}_${i}`;
       amounts[key] = a.payment_amount?.toString() || "";
+      // 배정별 payment_date가 있으면 그것, 없으면 applicant 레벨 fallback
+      dates[key] = a.payment_date || applicant.payment_date || "";
     });
     setPaymentAmounts(amounts);
+    setPaymentDates(dates);
     // 총액은 배정별 합계로 계산
     const total = applicant.assignments.reduce((sum, a) => sum + (a.payment_amount || 0), 0);
     setPaymentAmount(total > 0 ? total.toString() : (applicant.payment_amount?.toString() || ""));
@@ -121,11 +127,18 @@ export default function AssignedPage() {
     if (!paymentTarget) return;
     setSavingPayment(true);
     try {
-      // 배정별 금액 저장
+      // 배정별 금액 + 입금일 저장
       const assignmentPayments = paymentTarget.assignments.map((a, i) => {
         const key = `${a.school_id}_${a.subject_id}_${i}`;
         const amt = paymentAmounts[key] ? parseInt(paymentAmounts[key], 10) : null;
-        return { school_id: a.school_id, subject_id: a.subject_id, grade: a.grade, payment_amount: amt };
+        const date = paymentDates[key] || null;
+        return {
+          school_id: a.school_id,
+          subject_id: a.subject_id,
+          grade: a.grade,
+          payment_amount: amt,
+          payment_date: date,
+        };
       });
 
       // 총액 계산
@@ -314,11 +327,34 @@ export default function AssignedPage() {
 
       <main className="max-w-7xl mx-auto px-4 py-6 space-y-8">
         {/* 강사료 관리 요약 */}
-        {applicants.length > 0 && (
+        {applicants.length > 0 && (() => {
+          // 1인 × 학교 = 1행으로 분리 (배정이 없으면 단일 행으로 "-" 표기)
+          type PaymentRow = {
+            applicant: Applicant;
+            assignment: Applicant["assignments"][number] | null;
+            rowSpan: number; // 같은 지원자의 첫 행에만 값; 이후 행은 0
+          };
+          const paymentRows: PaymentRow[] = [];
+          for (const a of applicants) {
+            if (a.assignments.length === 0) {
+              paymentRows.push({ applicant: a, assignment: null, rowSpan: 1 });
+            } else {
+              a.assignments.forEach((asn, idx) => {
+                paymentRows.push({
+                  applicant: a,
+                  assignment: asn,
+                  rowSpan: idx === 0 ? a.assignments.length : 0,
+                });
+              });
+            }
+          }
+
+          return (
           <div className="bg-white rounded-xl border border-gray-200 p-5">
             <h2 className="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
               <DollarSign className="w-4 h-4 text-emerald-600" />
               강사료 관리
+              <span className="ml-1 text-[11px] font-normal text-gray-400">(학교별 분리 표시)</span>
             </h2>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -326,6 +362,8 @@ export default function AssignedPage() {
                   <tr className="bg-gray-50 border-b border-gray-200">
                     <th scope="col" className="text-left px-3 py-2 font-medium text-gray-600">이름</th>
                     <th scope="col" className="text-left px-3 py-2 font-medium text-gray-600">연락처</th>
+                    <th scope="col" className="text-left px-3 py-2 font-medium text-gray-600">학교</th>
+                    <th scope="col" className="text-left px-3 py-2 font-medium text-gray-600">과목 / 학년</th>
                     <th scope="col" className="text-left px-3 py-2 font-medium text-gray-600">지급정보</th>
                     <th scope="col" className="text-right px-3 py-2 font-medium text-gray-600">강사료</th>
                     <th scope="col" className="text-right px-3 py-2 font-medium text-gray-600">원천징수(3.3%)</th>
@@ -335,21 +373,54 @@ export default function AssignedPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {applicants.map((a) => {
-                    const amount = a.payment_amount || 0;
+                  {paymentRows.map((row, rowIdx) => {
+                    const a = row.applicant;
+                    const asn = row.assignment;
+                    const school = asn ? SCHOOLS.find((s) => s.id === asn.school_id) : null;
+                    const subject = asn ? SUBJECTS.find((s) => s.id === asn.subject_id) : null;
+                    const amount = (asn?.payment_amount ?? 0) || 0;
                     const tax = Math.floor(amount * 0.033);
                     const net = amount - tax;
+                    const showGroupCols = row.rowSpan > 0;
+                    // 같은 지원자 마지막 행인지 확인 → 다음 행이 다른 지원자면 테두리 강조
+                    const nextRow = paymentRows[rowIdx + 1];
+                    const isLastOfApplicant = !nextRow || nextRow.applicant.id !== a.id;
                     return (
-                      <tr key={a.id} className="border-b border-gray-100 last:border-0">
-                        <td className="px-3 py-2.5 font-medium text-gray-900">{a.name}</td>
-                        <td className="px-3 py-2.5 text-gray-500 text-xs">{a.phone}</td>
-                        <td className="px-3 py-2.5">
-                          {a.payment_submitted_at ? (
-                            <span className="text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full font-medium">제출완료</span>
+                      <tr
+                        key={`${a.id}-${rowIdx}`}
+                        className={`border-gray-100 ${isLastOfApplicant ? "border-b" : "border-b border-dashed border-gray-50"}`}
+                      >
+                        {showGroupCols ? (
+                          <td rowSpan={row.rowSpan} className="px-3 py-2.5 font-medium text-gray-900 align-top">{a.name}</td>
+                        ) : null}
+                        {showGroupCols ? (
+                          <td rowSpan={row.rowSpan} className="px-3 py-2.5 text-gray-500 text-xs align-top">{a.phone}</td>
+                        ) : null}
+                        <td className="px-3 py-2.5 text-gray-700 text-xs">
+                          {school ? school.shortName : <span className="text-gray-300">-</span>}
+                        </td>
+                        <td className="px-3 py-2.5 text-gray-700 text-xs">
+                          {subject ? (
+                            <>
+                              <span className="mr-1">{subject.icon}</span>
+                              {subject.name}
+                              {asn?.grade && (
+                                <span className="ml-1 text-gray-400">· {asn.grade}</span>
+                              )}
+                            </>
                           ) : (
-                            <span className="text-[10px] bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded-full font-medium">미제출</span>
+                            <span className="text-gray-300">-</span>
                           )}
                         </td>
+                        {showGroupCols ? (
+                          <td rowSpan={row.rowSpan} className="px-3 py-2.5 align-top">
+                            {a.payment_submitted_at ? (
+                              <span className="text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full font-medium">제출완료</span>
+                            ) : (
+                              <span className="text-[10px] bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded-full font-medium">미제출</span>
+                            )}
+                          </td>
+                        ) : null}
                         <td className="px-3 py-2.5 text-right font-mono text-gray-900">
                           {amount > 0 ? amount.toLocaleString() : "-"}
                         </td>
@@ -359,22 +430,26 @@ export default function AssignedPage() {
                         <td className="px-3 py-2.5 text-right font-mono font-semibold text-emerald-700">
                           {amount > 0 ? net.toLocaleString() : "-"}
                         </td>
-                        <td className="px-3 py-2.5 text-center text-xs">
-                          {a.payment_date ? (
-                            <span className="text-emerald-600 font-medium">{a.payment_date}</span>
-                          ) : (
-                            <span className="text-gray-300">-</span>
-                          )}
-                        </td>
-                        <td className="px-3 py-2.5 text-center">
-                          <button
-                            type="button"
-                            onClick={() => openPaymentModal(a)}
-                            className="text-xs px-2 py-1 rounded-lg bg-indigo-50 text-indigo-600 hover:bg-indigo-100 font-medium transition-colors"
-                          >
-                            설정
-                          </button>
-                        </td>
+                        {showGroupCols ? (
+                          <td rowSpan={row.rowSpan} className="px-3 py-2.5 text-center text-xs align-top">
+                            {a.payment_date ? (
+                              <span className="text-emerald-600 font-medium">{a.payment_date}</span>
+                            ) : (
+                              <span className="text-gray-300">-</span>
+                            )}
+                          </td>
+                        ) : null}
+                        {showGroupCols ? (
+                          <td rowSpan={row.rowSpan} className="px-3 py-2.5 text-center align-top">
+                            <button
+                              type="button"
+                              onClick={() => openPaymentModal(a)}
+                              className="text-xs px-2 py-1 rounded-lg bg-indigo-50 text-indigo-600 hover:bg-indigo-100 font-medium transition-colors"
+                            >
+                              설정
+                            </button>
+                          </td>
+                        ) : null}
                       </tr>
                     );
                   })}
@@ -382,7 +457,8 @@ export default function AssignedPage() {
               </table>
             </div>
           </div>
-        )}
+          );
+        })()}
 
         {SCHOOLS.map((school) => {
           const schoolApplicants = applicants.filter((a) =>
@@ -603,6 +679,7 @@ export default function AssignedPage() {
                               statusLabel={statusLabel}
                               statusColor={statusColor}
                               highlight
+                              subjectsCatalog={SUBJECTS}
                             />
                           ))}
                         </ul>
@@ -624,6 +701,7 @@ export default function AssignedPage() {
                               statusLabel={statusLabel}
                               statusColor={statusColor}
                               highlight={false}
+                              subjectsCatalog={SUBJECTS}
                             />
                           ))}
                         </ul>
@@ -670,35 +748,47 @@ export default function AssignedPage() {
                 )}
               </div>
 
-              {/* 배정별 강사료 입력 */}
+              {/* 배정별 강사료 + 입금일 입력 */}
               <div>
-                <p className="text-sm font-medium text-gray-700 mb-2">배정별 강사료 (원)</p>
+                <p className="text-sm font-medium text-gray-700 mb-2">배정별 강사료 & 입금일</p>
                 <div className="space-y-2">
                   {paymentTarget.assignments.map((a, i) => {
                     const school = SCHOOLS.find((s) => s.id === a.school_id);
                     const subject = SUBJECTS.find((s) => s.id === a.subject_id);
                     const key = `${a.school_id}_${a.subject_id}_${i}`;
                     return (
-                      <div key={key} className="flex items-center gap-2">
-                        <div className="flex-1 text-xs text-gray-700">
+                      <div key={key} className="border border-gray-100 rounded-lg p-2.5 bg-gray-50/50">
+                        <div className="text-xs text-gray-700 mb-2">
                           <span className="font-semibold">{school?.shortName || a.school_id}</span>
                           <span className="text-gray-400"> · </span>
                           <span>{subject?.name || a.subject_id}</span>
+                          {a.grade && <span className="text-gray-400"> · {a.grade}</span>}
                         </div>
-                        <input
-                          type="number"
-                          value={paymentAmounts[key] || ""}
-                          onChange={(e) => {
-                            const newAmounts = { ...paymentAmounts, [key]: e.target.value };
-                            setPaymentAmounts(newAmounts);
-                            const total = Object.values(newAmounts).reduce(
-                              (sum, v) => sum + (v ? parseInt(v, 10) || 0 : 0), 0
-                            );
-                            setPaymentAmount(total > 0 ? total.toString() : "");
-                          }}
-                          className="w-28 border border-gray-200 rounded-lg px-3 py-2 text-sm text-right font-mono focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                          placeholder="금액"
-                        />
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="number"
+                            value={paymentAmounts[key] || ""}
+                            onChange={(e) => {
+                              const newAmounts = { ...paymentAmounts, [key]: e.target.value };
+                              setPaymentAmounts(newAmounts);
+                              const total = Object.values(newAmounts).reduce(
+                                (sum, v) => sum + (v ? parseInt(v, 10) || 0 : 0), 0
+                              );
+                              setPaymentAmount(total > 0 ? total.toString() : "");
+                            }}
+                            className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-sm text-right font-mono focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white"
+                            placeholder="금액 (원)"
+                          />
+                          <input
+                            type="date"
+                            value={paymentDates[key] || ""}
+                            onChange={(e) => {
+                              setPaymentDates({ ...paymentDates, [key]: e.target.value });
+                            }}
+                            className="border border-gray-200 rounded-lg px-2 py-2 text-xs focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white"
+                            title="입금일"
+                          />
+                        </div>
                       </div>
                     );
                   })}
@@ -741,19 +831,38 @@ export default function AssignedPage() {
                 );
               })()}
 
-              {/* 입금일자 */}
-              <div>
-                <label htmlFor="pay-date" className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-1">
+              {/* 입금일자 일괄 적용 */}
+              <div className="border-t pt-3">
+                <label htmlFor="pay-date" className="block text-xs font-medium text-gray-500 mb-1 flex items-center gap-1">
                   <Calendar className="w-3.5 h-3.5" />
-                  입금일자
+                  입금일 일괄 적용 (모든 배정에 같은 날짜로 설정)
                 </label>
-                <input
-                  id="pay-date"
-                  type="date"
-                  value={paymentDate}
-                  onChange={(e) => setPaymentDate(e.target.value)}
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                />
+                <div className="flex items-center gap-2">
+                  <input
+                    id="pay-date"
+                    type="date"
+                    value={paymentDate}
+                    onChange={(e) => setPaymentDate(e.target.value)}
+                    className="flex-1 border border-gray-200 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (!paymentDate || !paymentTarget) return;
+                      const next: Record<string, string> = {};
+                      paymentTarget.assignments.forEach((a, i) => {
+                        const key = `${a.school_id}_${a.subject_id}_${i}`;
+                        next[key] = paymentDate;
+                      });
+                      setPaymentDates(next);
+                    }}
+                    disabled={!paymentDate}
+                    className="px-3 py-2 bg-gray-100 hover:bg-gray-200 disabled:opacity-40 text-xs font-medium rounded-lg text-gray-700"
+                  >
+                    일괄 적용
+                  </button>
+                </div>
+                <p className="text-[11px] text-gray-400 mt-1">배정별로 다른 날짜가 필요하면 위 배정 카드에서 개별 설정</p>
               </div>
 
               {/* 저장 버튼 */}
@@ -790,6 +899,7 @@ function CandidateRow({
   statusLabel,
   statusColor,
   highlight,
+  subjectsCatalog,
 }: {
   applicant: Applicant;
   slot: SlotTarget;
@@ -798,10 +908,11 @@ function CandidateRow({
   statusLabel: Record<string, string>;
   statusColor: Record<string, string>;
   highlight: boolean;
+  subjectsCatalog: { id: string; name: string; icon: string }[];
 }) {
   const isAssigning = assigning === applicant.id;
   const subjects = applicant.applicant_subjects
-    ?.map((s) => SUBJECTS.find((sub) => sub.id === s.subject_id))
+    ?.map((s) => subjectsCatalog.find((sub) => sub.id === s.subject_id))
     .filter(Boolean);
 
   return (
