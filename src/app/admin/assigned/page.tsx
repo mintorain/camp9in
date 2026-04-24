@@ -46,6 +46,7 @@ export default function AssignedPage() {
   const [paymentAmounts, setPaymentAmounts] = useState<Record<string, string>>({});
   const [paymentDates, setPaymentDates] = useState<Record<string, string>>({});
   const [paymentDate, setPaymentDate] = useState("");
+  const [viewMode, setViewMode] = useState<"school" | "instructor">("school");
   const [savingPayment, setSavingPayment] = useState(false);
   const paymentRef = useRef<HTMLDivElement>(null);
 
@@ -460,7 +461,36 @@ export default function AssignedPage() {
           );
         })()}
 
-        {SCHOOLS.map((school) => {
+        {/* 뷰 모드 토글 */}
+        <div className="flex items-center gap-2 border-b border-gray-200 pb-3">
+          <span className="text-sm font-semibold text-gray-700">배정 현황</span>
+          <div className="ml-auto inline-flex rounded-lg bg-gray-100 p-1 text-sm">
+            <button
+              type="button"
+              onClick={() => setViewMode("school")}
+              className={`px-3 py-1.5 rounded-md font-medium transition-colors ${
+                viewMode === "school"
+                  ? "bg-white text-indigo-700 shadow-sm"
+                  : "text-gray-500 hover:text-gray-800"
+              }`}
+            >
+              학교별 보기
+            </button>
+            <button
+              type="button"
+              onClick={() => setViewMode("instructor")}
+              className={`px-3 py-1.5 rounded-md font-medium transition-colors ${
+                viewMode === "instructor"
+                  ? "bg-white text-indigo-700 shadow-sm"
+                  : "text-gray-500 hover:text-gray-800"
+              }`}
+            >
+              강사별 보기
+            </button>
+          </div>
+        </div>
+
+        {viewMode === "school" && SCHOOLS.map((school) => {
           const schoolApplicants = applicants.filter((a) =>
             a.assignments?.some((asn) => asn.school_id === school.id)
           );
@@ -534,24 +564,49 @@ export default function AssignedPage() {
                               </span>
                             </td>
                             <td className="px-4 py-3 align-top">
-                              <div className="flex flex-wrap items-center gap-1">
-                                {assigned.map((a) => (
-                                  <button
-                                    key={a.id}
-                                    type="button"
-                                    onClick={() => unassignApplicant(a, slot)}
-                                    className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-green-100 text-green-800 text-xs font-medium hover:bg-red-100 hover:text-red-700 transition-colors group"
-                                    title={`${a.name} 배정 해제`}
-                                  >
-                                    {a.name}
-                                    <X className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                  </button>
-                                ))}
+                              <div className="flex flex-wrap items-start gap-2">
+                                {assigned.map((a) => {
+                                  const thisAsn = a.assignments?.find(
+                                    (asn) =>
+                                      asn.school_id === school.id &&
+                                      asn.subject_id === subId &&
+                                      asn.grade === gs.grade
+                                  );
+                                  const amt = thisAsn?.payment_amount;
+                                  const pd = thisAsn?.payment_date;
+                                  return (
+                                    <div key={a.id} className="inline-flex flex-col items-start">
+                                      <button
+                                        type="button"
+                                        onClick={() => unassignApplicant(a, slot)}
+                                        className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium hover:bg-red-100 hover:text-red-700 transition-colors group ${
+                                          pd ? "bg-emerald-100 text-emerald-800" : "bg-green-100 text-green-800"
+                                        }`}
+                                        title={`${a.name} 배정 해제`}
+                                      >
+                                        {a.name}
+                                        <X className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                      </button>
+                                      {(amt != null && amt > 0) && (
+                                        <span className="text-[10px] font-mono mt-0.5 ml-1">
+                                          <span className={pd ? "text-emerald-600" : "text-gray-500"}>
+                                            {amt.toLocaleString()}원
+                                          </span>
+                                          {pd && (
+                                            <span className="ml-1 text-emerald-600">
+                                              · {pd.slice(5)} 지급
+                                            </span>
+                                          )}
+                                        </span>
+                                      )}
+                                    </div>
+                                  );
+                                })}
                                 {!isFull && (
                                   <button
                                     type="button"
                                     onClick={() => { setModalSlot(slot); setSearch(""); }}
-                                    className="inline-flex items-center gap-1 px-2 py-1 rounded-lg border border-dashed border-gray-300 text-gray-400 text-xs hover:border-indigo-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
+                                    className="inline-flex items-center gap-1 px-2 py-1 rounded-lg border border-dashed border-gray-300 text-gray-400 text-xs hover:border-indigo-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors self-center"
                                   >
                                     <UserPlus className="w-3.5 h-3.5" />
                                     {assigned.length === 0 ? "미배정" : "추가"}
@@ -574,6 +629,196 @@ export default function AssignedPage() {
             </section>
           );
         })}
+
+        {/* 강사별 보기 */}
+        {viewMode === "instructor" && (
+          <section className="space-y-3">
+            {applicants.length === 0 ? (
+              <div className="rounded-xl border border-dashed border-gray-200 bg-gray-50 p-6 text-center text-sm text-gray-500">
+                배정된 강사가 없습니다.
+              </div>
+            ) : (
+              applicants.map((a) => {
+                const total = a.assignments.reduce(
+                  (sum, asn) => sum + (asn.payment_amount || 0),
+                  0
+                );
+                const tax = Math.floor(total * 0.033);
+                const net = total - tax;
+                return (
+                  <div key={a.id} className="bg-white rounded-xl border border-gray-200 p-4">
+                    <div className="flex items-start justify-between gap-3 mb-3">
+                      <div>
+                        <p className="font-bold text-gray-900">{a.name}</p>
+                        <p className="text-xs text-gray-500 mt-0.5">{a.phone}</p>
+                        {a.payment_submitted_at ? (
+                          <span className="inline-block mt-1 text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full font-medium">지급정보 제출완료</span>
+                        ) : (
+                          <span className="inline-block mt-1 text-[10px] bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded-full font-medium">지급정보 미제출</span>
+                        )}
+                      </div>
+                      <div className="text-right">
+                        {total > 0 && (
+                          <>
+                            <p className="text-xs text-gray-500">총 강사료</p>
+                            <p className="text-lg font-mono font-bold text-gray-900">{total.toLocaleString()}원</p>
+                            <p className="text-[11px] text-emerald-700 font-mono">실지급 {net.toLocaleString()} <span className="text-red-400">(-{tax.toLocaleString()})</span></p>
+                          </>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => openPaymentModal(a)}
+                          className="mt-1.5 text-xs px-2 py-1 rounded-lg bg-indigo-50 text-indigo-600 hover:bg-indigo-100 font-medium transition-colors"
+                        >
+                          강사료 설정
+                        </button>
+                      </div>
+                    </div>
+                    <ul className="space-y-1.5">
+                      {a.assignments.length === 0 ? (
+                        <li className="text-xs text-gray-400">배정 없음</li>
+                      ) : (
+                        a.assignments.map((asn, i) => {
+                          const school = SCHOOLS.find((s) => s.id === asn.school_id);
+                          const subject = SUBJECTS.find((s) => s.id === asn.subject_id);
+                          return (
+                            <li
+                              key={i}
+                              className={`flex items-center gap-2 text-sm px-3 py-2 rounded-lg ${
+                                asn.payment_date ? "bg-emerald-50" : "bg-gray-50"
+                              }`}
+                            >
+                              <span className="font-semibold text-gray-900 w-16 shrink-0">{school?.shortName || asn.school_id}</span>
+                              <span className="text-gray-700">{subject?.icon} {subject?.name || asn.subject_id}</span>
+                              {asn.grade && <span className="text-xs text-gray-400">{asn.grade}</span>}
+                              <div className="ml-auto flex items-center gap-3 text-xs">
+                                {asn.payment_amount != null && asn.payment_amount > 0 ? (
+                                  <span className="font-mono font-semibold text-gray-900">
+                                    {asn.payment_amount.toLocaleString()}원
+                                  </span>
+                                ) : (
+                                  <span className="text-gray-300">금액 미설정</span>
+                                )}
+                                {asn.payment_date ? (
+                                  <span className="text-emerald-700 font-medium">{asn.payment_date} 지급</span>
+                                ) : (
+                                  <span className="text-amber-600">대기</span>
+                                )}
+                              </div>
+                            </li>
+                          );
+                        })
+                      )}
+                    </ul>
+                  </div>
+                );
+              })
+            )}
+          </section>
+        )}
+
+        {/* 학교별 지급 총액 요약 */}
+        {applicants.length > 0 && (
+          <section className="bg-white rounded-xl border border-gray-200 p-5">
+            <h2 className="text-sm font-bold text-gray-800 mb-3 flex items-center gap-2">
+              <DollarSign className="w-4 h-4 text-emerald-600" />
+              학교별 지급 총액 요약
+            </h2>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-gray-50 border-b border-gray-200">
+                    <th scope="col" className="text-left px-3 py-2 font-medium text-gray-600">학교</th>
+                    <th scope="col" className="text-right px-3 py-2 font-medium text-gray-600">배정 강사</th>
+                    <th scope="col" className="text-right px-3 py-2 font-medium text-gray-600">총 강사료</th>
+                    <th scope="col" className="text-right px-3 py-2 font-medium text-gray-600">원천징수(3.3%)</th>
+                    <th scope="col" className="text-right px-3 py-2 font-medium text-gray-600">실지급액</th>
+                    <th scope="col" className="text-right px-3 py-2 font-medium text-gray-600">입금 완료</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {(() => {
+                    const schoolRows = SCHOOLS.map((school) => {
+                      const assignmentsForSchool = applicants.flatMap((a) =>
+                        a.assignments.filter((asn) => asn.school_id === school.id)
+                      );
+                      const instructorIds = new Set(
+                        applicants
+                          .filter((a) => a.assignments.some((asn) => asn.school_id === school.id))
+                          .map((a) => a.id)
+                      );
+                      const total = assignmentsForSchool.reduce((s, asn) => s + (asn.payment_amount || 0), 0);
+                      const paidAmount = assignmentsForSchool
+                        .filter((asn) => asn.payment_date)
+                        .reduce((s, asn) => s + (asn.payment_amount || 0), 0);
+                      const tax = Math.floor(total * 0.033);
+                      const net = total - tax;
+                      return { school, instructorCount: instructorIds.size, total, tax, net, paidAmount };
+                    }).filter((r) => r.instructorCount > 0 || r.total > 0);
+
+                    const grandTotal = schoolRows.reduce((s, r) => s + r.total, 0);
+                    const grandTax = Math.floor(grandTotal * 0.033);
+                    const grandNet = grandTotal - grandTax;
+                    const grandPaid = schoolRows.reduce((s, r) => s + r.paidAmount, 0);
+                    const grandInstructors = new Set(applicants.filter((a) => a.assignments.length > 0).map((a) => a.id)).size;
+
+                    if (schoolRows.length === 0) {
+                      return (
+                        <tr>
+                          <td colSpan={6} className="px-3 py-4 text-center text-sm text-gray-400">아직 배정 데이터가 없습니다.</td>
+                        </tr>
+                      );
+                    }
+
+                    return (
+                      <>
+                        {schoolRows.map((r) => (
+                          <tr key={r.school.id} className="border-b border-gray-100">
+                            <td className="px-3 py-2.5 font-medium text-gray-900">{r.school.shortName}</td>
+                            <td className="px-3 py-2.5 text-right text-gray-700">{r.instructorCount}명</td>
+                            <td className="px-3 py-2.5 text-right font-mono text-gray-900">
+                              {r.total > 0 ? r.total.toLocaleString() : "-"}
+                            </td>
+                            <td className="px-3 py-2.5 text-right font-mono text-red-500 text-xs">
+                              {r.total > 0 ? `-${r.tax.toLocaleString()}` : "-"}
+                            </td>
+                            <td className="px-3 py-2.5 text-right font-mono font-semibold text-emerald-700">
+                              {r.total > 0 ? r.net.toLocaleString() : "-"}
+                            </td>
+                            <td className="px-3 py-2.5 text-right font-mono text-xs">
+                              {r.paidAmount > 0 ? (
+                                <span className="text-emerald-700">{r.paidAmount.toLocaleString()}원</span>
+                              ) : (
+                                <span className="text-gray-300">-</span>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                        <tr className="bg-indigo-50 font-bold">
+                          <td className="px-3 py-3 text-indigo-900">전체 합계</td>
+                          <td className="px-3 py-3 text-right text-indigo-900">{grandInstructors}명</td>
+                          <td className="px-3 py-3 text-right font-mono text-indigo-900">
+                            {grandTotal > 0 ? grandTotal.toLocaleString() : "-"}
+                          </td>
+                          <td className="px-3 py-3 text-right font-mono text-red-600">
+                            {grandTotal > 0 ? `-${grandTax.toLocaleString()}` : "-"}
+                          </td>
+                          <td className="px-3 py-3 text-right font-mono text-emerald-700">
+                            {grandTotal > 0 ? grandNet.toLocaleString() : "-"}
+                          </td>
+                          <td className="px-3 py-3 text-right font-mono text-emerald-700">
+                            {grandPaid > 0 ? grandPaid.toLocaleString() : "-"}
+                          </td>
+                        </tr>
+                      </>
+                    );
+                  })()}
+                </tbody>
+              </table>
+            </div>
+            <p className="text-[11px] text-gray-400 mt-2">* 원천징수 3.3% 공제 후 실지급액 · 입금 완료는 입금일이 설정된 배정의 합계</p>
+          </section>
+        )}
 
         <div className="flex gap-3">
           <Link
