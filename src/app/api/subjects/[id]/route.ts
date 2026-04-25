@@ -4,12 +4,6 @@ import { verifyAdmin } from "@/lib/auth-server";
 
 export const dynamic = "force-dynamic";
 
-/**
- * 관리자: 학교 필드 수정
- * 지원 필드: name, shortName, startDate, endDate, recruitDeadline, dateLabel, time,
- * location, target, capacityPerSubject, campType, hideName, hideScheduleCard,
- * isClosed, sortOrder
- */
 export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -22,29 +16,11 @@ export async function PATCH(
   const { id } = await params;
   const body = await request.json();
 
-  // body의 키 → DB 컬럼 매핑
   const fieldMap: Record<string, { col: string; transform?: (v: unknown) => unknown }> = {
     name: { col: "name" },
-    shortName: { col: "short_name" },
-    startDate: { col: "start_date" },
-    endDate: { col: "end_date" },
-    recruitDeadline: {
-      col: "recruit_deadline",
-      transform: (v) =>
-        typeof v === "string" && /^\d{4}-\d{2}-\d{2}$/.test(v) ? v : null,
-    },
-    dateLabel: { col: "date_label" },
-    time: { col: "time_label" },
-    location: { col: "location" },
-    target: { col: "target" },
-    capacityPerSubject: { col: "capacity_per_subject", transform: (v) => Number(v) || 0 },
-    campType: {
-      col: "camp_type",
-      transform: (v) =>
-        v === "rotation" || v === "hybrid" ? v : "class",
-    },
-    hideName: { col: "hide_name", transform: (v) => (v ? 1 : 0) },
-    hideScheduleCard: { col: "hide_schedule_card", transform: (v) => (v ? 1 : 0) },
+    description: { col: "description" },
+    skills: { col: "skills" },
+    icon: { col: "icon" },
     isClosed: { col: "is_closed", transform: (v) => (v ? 1 : 0) },
     sortOrder: { col: "sort_order", transform: (v) => Number(v) || 100 },
   };
@@ -67,21 +43,18 @@ export async function PATCH(
   values.push(id);
 
   try {
-    await query(
-      `UPDATE schools SET ${sets.join(", ")} WHERE id = ?`,
-      values
-    );
+    await query(`UPDATE subjects SET ${sets.join(", ")} WHERE id = ?`, values);
     return NextResponse.json({ message: "수정되었습니다" });
   } catch (err) {
-    console.error("[PATCH /api/schools/[id]]", err);
+    console.error("[PATCH /api/subjects/[id]]", err);
     return NextResponse.json({ error: "수정 실패" }, { status: 500 });
   }
 }
 
 /**
- * 관리자: 학교 삭제 (관련 grade, grade_subjects 자동 cascade)
- * 지원자 외래 참조(applicant_schools, applicant_assignments)는 학교 ID를 텍스트로 보관 → cascade 없음.
- * 안전을 위해 해당 학교에 배정된 지원자가 있으면 거부.
+ * 관리자: 과목 삭제
+ * 지원/배정 외래 참조 있으면 삭제 거부.
+ * school_grade_subjects는 cascade로 자동 삭제됨.
  */
 export async function DELETE(
   request: NextRequest,
@@ -95,25 +68,24 @@ export async function DELETE(
   const { id } = await params;
 
   try {
-    // 지원자 또는 배정 존재 시 삭제 거부
     const refs = await query<{ cnt: number }>(
       `SELECT
-         (SELECT COUNT(*) FROM applicant_schools WHERE school_id = ?) +
-         (SELECT COUNT(*) FROM applicant_assignments WHERE school_id = ?) AS cnt`,
+         (SELECT COUNT(*) FROM applicant_subjects WHERE subject_id = ?) +
+         (SELECT COUNT(*) FROM applicant_assignments WHERE subject_id = ?) AS cnt`,
       [id, id]
     );
     const refCount = refs[0]?.cnt || 0;
     if (refCount > 0) {
       return NextResponse.json(
-        { error: `이 학교에 연결된 지원/배정이 ${refCount}건 있어 삭제할 수 없습니다. 먼저 정리해주세요.` },
+        { error: `이 과목에 연결된 지원/배정이 ${refCount}건 있어 삭제할 수 없습니다.` },
         { status: 409 }
       );
     }
 
-    await query("DELETE FROM schools WHERE id = ?", [id]);
+    await query("DELETE FROM subjects WHERE id = ?", [id]);
     return NextResponse.json({ message: "삭제되었습니다" });
   } catch (err) {
-    console.error("[DELETE /api/schools/[id]]", err);
+    console.error("[DELETE /api/subjects/[id]]", err);
     return NextResponse.json({ error: "삭제 실패" }, { status: 500 });
   }
 }

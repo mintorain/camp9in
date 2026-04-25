@@ -273,6 +273,9 @@ export default function DashboardPage() {
           <Link href="/admin/assigned" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white text-sm transition-colors">
             <UserCheck className="w-4 h-4" /> 배정 강사 명단
           </Link>
+          <Link href="/admin/camps" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-white/5 hover:text-white text-sm transition-colors">
+            <School className="w-4 h-4" /> 학교·과목 관리
+          </Link>
         </nav>
         <div className="p-3 border-t border-white/10 space-y-1">
           <button onClick={handleExport} className="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-white/5 hover:text-white text-xs w-full transition-colors">
@@ -293,6 +296,7 @@ export default function DashboardPage() {
         <div className="flex items-center gap-2">
           <Link href="/admin/applicants" className="p-2 rounded-lg hover:bg-white/10"><ClipboardList className="w-4 h-4" /></Link>
           <Link href="/admin/assigned" className="p-2 rounded-lg hover:bg-white/10"><UserCheck className="w-4 h-4" /></Link>
+          <Link href="/admin/camps" className="p-2 rounded-lg hover:bg-white/10" aria-label="학교·과목 관리"><School className="w-4 h-4" /></Link>
           <button onClick={handleLogout} className="p-2 rounded-lg hover:bg-white/10"><LogOut className="w-4 h-4" /></button>
         </div>
       </header>
