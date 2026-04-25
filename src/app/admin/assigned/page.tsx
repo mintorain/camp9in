@@ -47,6 +47,8 @@ export default function AssignedPage() {
   const [paymentDates, setPaymentDates] = useState<Record<string, string>>({});
   const [paymentDate, setPaymentDate] = useState("");
   const [viewMode, setViewMode] = useState<"school" | "instructor">("school");
+  const [bulkSchoolDate, setBulkSchoolDate] = useState<Record<string, string>>({});
+  const [bulkSchoolApplying, setBulkSchoolApplying] = useState<string | null>(null);
   const [savingPayment, setSavingPayment] = useState(false);
   const paymentRef = useRef<HTMLDivElement>(null);
 
@@ -164,6 +166,63 @@ export default function AssignedPage() {
       alert("저장 중 오류가 발생했습니다");
     } finally {
       setSavingPayment(false);
+    }
+  }
+
+  // 학교별 입금일 일괄 적용 — 해당 학교의 모든 배정 payment_date를 동일하게 설정
+  async function applyBulkSchoolDate(schoolId: string) {
+    const date = bulkSchoolDate[schoolId];
+    if (!date) {
+      alert("입금일을 선택해주세요");
+      return;
+    }
+    const targets = applicants.filter((a) =>
+      a.assignments.some((asn) => asn.school_id === schoolId)
+    );
+    if (targets.length === 0) {
+      alert("이 학교에 배정된 강사가 없습니다");
+      return;
+    }
+    const schoolName =
+      SCHOOLS.find((s) => s.id === schoolId)?.shortName || schoolId;
+    if (!confirm(`${schoolName} 배정 ${targets.length}명의 입금일을 ${date}로 일괄 설정하시겠습니까?`)) {
+      return;
+    }
+
+    setBulkSchoolApplying(schoolId);
+    let success = 0;
+    let failed = 0;
+    try {
+      for (const a of targets) {
+        const assignmentPayments = a.assignments
+          .filter((asn) => asn.school_id === schoolId)
+          .map((asn) => ({
+            school_id: asn.school_id,
+            subject_id: asn.subject_id,
+            grade: asn.grade,
+            payment_amount: asn.payment_amount ?? null,
+            payment_date: date,
+          }));
+
+        try {
+          const res = await adminFetch(`/api/applicants/${a.id}`, {
+            method: "PATCH",
+            body: JSON.stringify({ assignment_payments: assignmentPayments }),
+          });
+          if (res.ok) success++;
+          else failed++;
+        } catch {
+          failed++;
+        }
+      }
+      await fetchData();
+      if (failed === 0) {
+        alert(`${success}명 일괄 적용 완료`);
+      } else {
+        alert(`완료: ${success}명 / 실패: ${failed}명`);
+      }
+    } finally {
+      setBulkSchoolApplying(null);
     }
   }
 
@@ -497,7 +556,7 @@ export default function AssignedPage() {
 
           return (
             <section key={school.id}>
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center justify-between mb-2">
                 <h2 className="text-lg font-bold text-gray-900">
                   {school.name}
                   <span className="ml-2 text-sm font-normal text-gray-400">
@@ -506,6 +565,39 @@ export default function AssignedPage() {
                 </h2>
                 <span className="text-xs text-gray-400">{school.dateLabel}</span>
               </div>
+              {/* 학교별 입금일 일괄 적용 */}
+              {schoolApplicants.length > 0 && (
+                <div className="mb-3 flex items-center gap-2 bg-emerald-50/60 border border-emerald-200 rounded-lg px-3 py-2">
+                  <Calendar className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span className="text-xs font-medium text-emerald-800 shrink-0">
+                    이 학교 입금일 일괄 적용
+                  </span>
+                  <input
+                    type="date"
+                    aria-label={`${school.shortName} 입금일`}
+                    value={bulkSchoolDate[school.id] || ""}
+                    onChange={(e) =>
+                      setBulkSchoolDate({ ...bulkSchoolDate, [school.id]: e.target.value })
+                    }
+                    disabled={bulkSchoolApplying === school.id}
+                    className="text-xs border border-emerald-200 rounded px-2 py-1 bg-white focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 disabled:opacity-50"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => applyBulkSchoolDate(school.id)}
+                    disabled={
+                      !bulkSchoolDate[school.id] ||
+                      bulkSchoolApplying === school.id
+                    }
+                    className="text-xs px-3 py-1 rounded bg-emerald-600 hover:bg-emerald-700 text-white font-semibold disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                  >
+                    {bulkSchoolApplying === school.id ? "적용중..." : "전체 적용"}
+                  </button>
+                  <span className="ml-auto text-[11px] text-emerald-700/70">
+                    {schoolApplicants.length}명에 적용
+                  </span>
+                </div>
+              )}
               <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
                 <table className="w-full text-sm">
                   <thead>
