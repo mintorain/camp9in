@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { query } from "@/lib/db";
 import { getSchools, getSubjects } from "@/lib/data";
 import { verifyAdmin } from "@/lib/auth-server";
+import ExcelJS from "exceljs";
 
 interface ApplicantRow {
   id: number;
@@ -29,6 +30,22 @@ interface AssignmentRow {
   payment_date: string | null;
 }
 
+// 셀 타입: 텍스트/강제텍스트(주민·계좌)/숫자/엑셀수식
+type Cell =
+  | { kind: "plain"; v: string }
+  | { kind: "forceText"; v: string } // 스프레드시트가 숫자로 해석하지 않도록
+  | { kind: "number"; v: number; fmt?: string }
+  | { kind: "formula"; formula: string; result: number; fmt?: string }
+  | { kind: "empty" };
+
+type Row = { style: "header" | "data" | "subtotal" | "grand"; cells: Cell[] };
+
+const NUM_FMT = "#,##0";
+
+function emptyN(n: number): Cell[] {
+  return Array.from({ length: n }, () => ({ kind: "empty" } as Cell));
+}
+
 export async function GET(request: NextRequest) {
   const isAdmin = await verifyAdmin(request.headers.get("authorization"));
   if (!isAdmin) {
@@ -36,7 +53,8 @@ export async function GET(request: NextRequest) {
   }
 
   const { searchParams } = new URL(request.url);
-  const schoolFilter = searchParams.get("school"); // 특정 학교만 다운로드 (없으면 전체)
+  const schoolFilter = searchParams.get("school"); // 학교 필터 (없으면 전체)
+  const format = (searchParams.get("format") || "csv").toLowerCase(); // csv | xlsx
 
   try {
     const [applicants, assignmentRows, SCHOOLS, SUBJECTS] = await Promise.all([
@@ -62,7 +80,6 @@ export async function GET(request: NextRequest) {
       getSubjects(),
     ]);
 
-    const BOM = "﻿";
     // 학교(A) 이름(B) 연락처(C) 이메일(D) 주소(E) 생년월일(F)
     // 배정과목(G) 배정학년(H)
     // 지급성명(I) 주민(J) 지급주소(K) 은행(L) 계좌(M)
@@ -76,9 +93,6 @@ export async function GET(request: NextRequest) {
       "입금일자", "지급정보제출",
     ];
 
-    const applicantById = new Map<number, ApplicantRow>();
-    for (const a of applicants) applicantById.set(a.id, a);
-
     const schoolOrder = new Map<string, number>();
     SCHOOLS.forEach((s, idx) => schoolOrder.set(s.id, idx));
     const schoolName = (id: string) =>
@@ -87,29 +101,23 @@ export async function GET(request: NextRequest) {
       SUBJECTS.find((s) => s.id === id)?.name || id;
 
     type Item = {
-      kind: "row";
       schoolId: string;
       applicant: ApplicantRow;
-      assignment: AssignmentRow | null; // null = 합격했지만 배정 없음
+      assignment: AssignmentRow | null;
     };
 
-    // 합격자만 대상 — 학교 → 강사명 → 배정 ID 순으로 정렬
-    // schoolFilter가 있으면 해당 학교의 배정만 포함 (미배정 합격자도 제외)
     const items: Item[] = [];
     for (const a of applicants) {
       const myAssigns = assignmentRows.filter(
-        (r) =>
-          r.applicant_id === a.id &&
-          (schoolFilter ? r.school_id === schoolFilter : true)
+        (r) => r.applicant_id === a.id && (schoolFilter ? r.school_id === schoolFilter : true)
       );
       if (myAssigns.length === 0) {
         if (!schoolFilter) {
-          items.push({ kind: "row", schoolId: "__none__", applicant: a, assignment: null });
+          items.push({ schoolId: "__none__", applicant: a, assignment: null });
         }
-        // schoolFilter가 있으면 해당 학교 배정 없는 강사는 스킵
       } else {
         for (const asn of myAssigns) {
-          items.push({ kind: "row", schoolId: asn.school_id, applicant: a, assignment: asn });
+          items.push({ schoolId: asn.school_id, applicant: a, assignment: asn });
         }
       }
     }
@@ -118,37 +126,31 @@ export async function GET(request: NextRequest) {
       const sx = schoolOrder.get(x.schoolId) ?? 9999;
       const sy = schoolOrder.get(y.schoolId) ?? 9999;
       if (sx !== sy) return sx - sy;
-      // 학교 내 강사명 가나다 순
-      const nx = x.applicant.name || "";
-      const ny = y.applicant.name || "";
-      const cmp = nx.localeCompare(ny, "ko");
+      const cmp = (x.applicant.name || "").localeCompare(y.applicant.name || "", "ko");
       if (cmp !== 0) return cmp;
-      // 같은 강사 내에서는 과목명 → 학년 순으로
       const subX = x.assignment ? subjectName(x.assignment.subject_id) : "";
       const subY = y.assignment ? subjectName(y.assignment.subject_id) : "";
       const subCmp = subX.localeCompare(subY, "ko");
       if (subCmp !== 0) return subCmp;
-      const gX = x.assignment?.grade || "";
-      const gY = y.assignment?.grade || "";
-      return gX.localeCompare(gY, "ko");
+      return (x.assignment?.grade || "").localeCompare(y.assignment?.grade || "", "ko");
     });
 
-    const csvLine = (cells: (string | number)[]) =>
-      cells.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(",");
-
-    const lines: string[] = [];
-    lines.push(csvLine(headers));
+    // 행 데이터 생성
+    const rows: Row[] = [];
+    rows.push({
+      style: "header",
+      cells: headers.map((h) => ({ kind: "plain", v: h }) as Cell),
+    });
 
     let currentSchoolId: string | null = null;
     let schoolSubtotal = 0;
     let schoolCount = 0;
     let grandTotal = 0;
     let grandCount = 0;
-    let rowCursor = 1; // header is line 1, next data row will be 2
+    let rowCursor = 1; // 헤더가 row 1
 
-    const flushSchoolSubtotal = () => {
-      if (currentSchoolId === null) return;
-      if (schoolCount === 0) return;
+    const flushSubtotal = () => {
+      if (currentSchoolId === null || schoolCount === 0) return;
       const incomeTax = Math.floor(schoolSubtotal * 0.03);
       const localTax = Math.floor(schoolSubtotal * 0.003);
       const totalTax = incomeTax + localTax;
@@ -157,24 +159,24 @@ export async function GET(request: NextRequest) {
         currentSchoolId === "__none__"
           ? `소계 (미배정 ${schoolCount}건)`
           : `${schoolName(currentSchoolId)} 소계 (${schoolCount}건)`;
-      lines.push(
-        csvLine([
-          label, "", "", "", "", "", "", "", "", "", "", "", "",
-          schoolSubtotal > 0 ? schoolSubtotal : "",
-          schoolSubtotal > 0 ? incomeTax : "",
-          schoolSubtotal > 0 ? localTax : "",
-          schoolSubtotal > 0 ? totalTax : "",
-          schoolSubtotal > 0 ? net : "",
-          "", "",
-        ])
-      );
+      const cells: Cell[] = [
+        { kind: "plain", v: label },
+        ...emptyN(12),
+        schoolSubtotal > 0 ? { kind: "number", v: schoolSubtotal, fmt: NUM_FMT } : { kind: "empty" },
+        schoolSubtotal > 0 ? { kind: "number", v: incomeTax, fmt: NUM_FMT } : { kind: "empty" },
+        schoolSubtotal > 0 ? { kind: "number", v: localTax, fmt: NUM_FMT } : { kind: "empty" },
+        schoolSubtotal > 0 ? { kind: "number", v: totalTax, fmt: NUM_FMT } : { kind: "empty" },
+        schoolSubtotal > 0 ? { kind: "number", v: net, fmt: NUM_FMT } : { kind: "empty" },
+        { kind: "empty" },
+        { kind: "empty" },
+      ];
+      rows.push({ style: "subtotal", cells });
       rowCursor += 1;
     };
 
     for (const it of items) {
       if (currentSchoolId !== null && it.schoolId !== currentSchoolId) {
-        flushSchoolSubtotal();
-        // reset
+        flushSubtotal();
         schoolSubtotal = 0;
         schoolCount = 0;
       }
@@ -185,86 +187,183 @@ export async function GET(request: NextRequest) {
       const amount = asn?.payment_amount ?? 0;
       const paymentDate = asn?.payment_date || "";
 
-      // 세금 신고용 — 주민등록번호 전체 노출 (000000-0000000 형식으로 정규화)
-      // 앞에 ' 접두사 추가 → 스프레드시트에서 텍스트로 인식되어 선두 0/하이픈 보존
+      // 주민등록번호 (세금 신고용 — 마스킹 없음, 13자리 정규화)
       const rid = a.resident_id || "";
       const ridDigits = rid.replace(/\D/g, "");
-      const fullResidentId =
-        ridDigits.length >= 13
-          ? `'${ridDigits.slice(0, 6)}-${ridDigits.slice(6, 13)}`
-          : rid
-            ? `'${rid}`
-            : "";
+      const fullRid =
+        ridDigits.length >= 13 ? `${ridDigits.slice(0, 6)}-${ridDigits.slice(6, 13)}` : rid;
 
       rowCursor += 1;
-      const rowNum = rowCursor; // current row's spreadsheet row number
+      const rn = rowCursor;
 
-      lines.push(
-        csvLine([
-          it.schoolId === "__none__" ? "(미배정)" : schoolName(it.schoolId),
-          a.name,
-          a.phone,
-          a.email,
-          a.address,
-          a.birth_date,
-          asn ? subjectName(asn.subject_id) : "",
-          asn?.grade || "",
-          a.payment_name || "",
-          fullResidentId,
-          a.payment_address || "",
-          a.bank_name || "",
-          // 계좌번호: 앞에 ' 를 붙여 Excel/스프레드시트에서 텍스트로 인식되게 함 (선두 0 보존, 지수 표기 방지)
-          a.bank_account ? `'${a.bank_account}` : "",
-          amount > 0 ? amount.toString() : "",
-          // 사업소득세 =ROUND(N{row}*0.03,0)
-          amount > 0 ? `=ROUND(N${rowNum}*0.03,0)` : "",
-          // 지방소득세 =ROUND(N{row}*0.003,0)
-          amount > 0 ? `=ROUND(N${rowNum}*0.003,0)` : "",
-          // 원천징수합계 =O+P
-          amount > 0 ? `=O${rowNum}+P${rowNum}` : "",
-          // 실수령 =N-Q
-          amount > 0 ? `=N${rowNum}-Q${rowNum}` : "",
-          paymentDate,
-          a.payment_submitted_at ? "제출완료" : "미제출",
-        ])
-      );
+      const incomeTax = Math.floor(amount * 0.03);
+      const localTax = Math.floor(amount * 0.003);
+      const totalTax = incomeTax + localTax;
+      const net = amount - totalTax;
+
+      const cells: Cell[] = [
+        { kind: "plain", v: it.schoolId === "__none__" ? "(미배정)" : schoolName(it.schoolId) },
+        { kind: "plain", v: a.name || "" },
+        { kind: "forceText", v: a.phone || "" },
+        { kind: "plain", v: a.email || "" },
+        { kind: "plain", v: a.address || "" },
+        { kind: "forceText", v: a.birth_date || "" },
+        { kind: "plain", v: asn ? subjectName(asn.subject_id) : "" },
+        { kind: "plain", v: asn?.grade || "" },
+        { kind: "plain", v: a.payment_name || "" },
+        { kind: "forceText", v: fullRid },
+        { kind: "plain", v: a.payment_address || "" },
+        { kind: "plain", v: a.bank_name || "" },
+        { kind: "forceText", v: a.bank_account || "" },
+        amount > 0 ? { kind: "number", v: amount, fmt: NUM_FMT } : { kind: "empty" },
+        amount > 0
+          ? { kind: "formula", formula: `ROUND(N${rn}*0.03,0)`, result: incomeTax, fmt: NUM_FMT }
+          : { kind: "empty" },
+        amount > 0
+          ? { kind: "formula", formula: `ROUND(N${rn}*0.003,0)`, result: localTax, fmt: NUM_FMT }
+          : { kind: "empty" },
+        amount > 0
+          ? { kind: "formula", formula: `O${rn}+P${rn}`, result: totalTax, fmt: NUM_FMT }
+          : { kind: "empty" },
+        amount > 0
+          ? { kind: "formula", formula: `N${rn}-Q${rn}`, result: net, fmt: NUM_FMT }
+          : { kind: "empty" },
+        { kind: "forceText", v: paymentDate },
+        { kind: "plain", v: a.payment_submitted_at ? "제출완료" : "미제출" },
+      ];
+      rows.push({ style: "data", cells });
 
       schoolSubtotal += amount;
       schoolCount += 1;
       grandTotal += amount;
       grandCount += 1;
     }
+    flushSubtotal();
 
-    // 마지막 학교 소계
-    flushSchoolSubtotal();
-
-    // 전체 합계
     if (grandCount > 0) {
       const incomeTax = Math.floor(grandTotal * 0.03);
       const localTax = Math.floor(grandTotal * 0.003);
       const totalTax = incomeTax + localTax;
       const net = grandTotal - totalTax;
-      lines.push(
-        csvLine([
-          `전체 합계 (${grandCount}건)`, "", "", "", "", "", "", "", "", "", "", "", "",
-          grandTotal > 0 ? grandTotal : "",
-          grandTotal > 0 ? incomeTax : "",
-          grandTotal > 0 ? localTax : "",
-          grandTotal > 0 ? totalTax : "",
-          grandTotal > 0 ? net : "",
-          "", "",
-        ])
-      );
+      rows.push({
+        style: "grand",
+        cells: [
+          { kind: "plain", v: `전체 합계 (${grandCount}건)` },
+          ...emptyN(12),
+          grandTotal > 0 ? { kind: "number", v: grandTotal, fmt: NUM_FMT } : { kind: "empty" },
+          grandTotal > 0 ? { kind: "number", v: incomeTax, fmt: NUM_FMT } : { kind: "empty" },
+          grandTotal > 0 ? { kind: "number", v: localTax, fmt: NUM_FMT } : { kind: "empty" },
+          grandTotal > 0 ? { kind: "number", v: totalTax, fmt: NUM_FMT } : { kind: "empty" },
+          grandTotal > 0 ? { kind: "number", v: net, fmt: NUM_FMT } : { kind: "empty" },
+          { kind: "empty" },
+          { kind: "empty" },
+        ],
+      });
     }
-
-    const csv = BOM + lines.join("\n");
 
     const dateStr = new Date().toISOString().slice(0, 10);
     const schoolSlug = schoolFilter
       ? `_${(SCHOOLS.find((s) => s.id === schoolFilter)?.shortName || schoolFilter).replace(/\s+/g, "")}`
       : "";
+
+    if (format === "xlsx") {
+      const wb = new ExcelJS.Workbook();
+      wb.creator = "camp9in";
+      wb.created = new Date();
+      const ws = wb.addWorksheet("강사료");
+
+      // 컬럼 너비 (대략)
+      const widths = [10, 10, 14, 24, 32, 12, 10, 10, 10, 18, 30, 12, 18, 12, 12, 12, 14, 12, 12, 12];
+      ws.columns = widths.map((w) => ({ width: w }));
+
+      for (const r of rows) {
+        const xrow = ws.addRow([]);
+        r.cells.forEach((c, i) => {
+          const cell = xrow.getCell(i + 1);
+          switch (c.kind) {
+            case "plain":
+              cell.value = c.v;
+              break;
+            case "forceText":
+              cell.numFmt = "@";
+              cell.value = c.v;
+              break;
+            case "number":
+              cell.value = c.v;
+              if (c.fmt) cell.numFmt = c.fmt;
+              break;
+            case "formula":
+              cell.value = { formula: c.formula, result: c.result };
+              if (c.fmt) cell.numFmt = c.fmt;
+              break;
+            case "empty":
+              break;
+          }
+        });
+
+        if (r.style === "header") {
+          xrow.font = { bold: true };
+          xrow.fill = {
+            type: "pattern",
+            pattern: "solid",
+            fgColor: { argb: "FFE5E7EB" },
+          };
+        } else if (r.style === "subtotal") {
+          xrow.font = { bold: true };
+          xrow.fill = {
+            type: "pattern",
+            pattern: "solid",
+            fgColor: { argb: "FFECFDF5" },
+          };
+        } else if (r.style === "grand") {
+          xrow.font = { bold: true };
+          xrow.fill = {
+            type: "pattern",
+            pattern: "solid",
+            fgColor: { argb: "FFE0E7FF" },
+          };
+        }
+      }
+
+      // 헤더 고정
+      ws.views = [{ state: "frozen", ySplit: 1 }];
+
+      const buf = await wb.xlsx.writeBuffer();
+      const fileBase = `payment${schoolSlug}_${dateStr}.xlsx`;
+      const asciiFallback = `payment${schoolFilter ? "_" + schoolFilter : ""}_${dateStr}.xlsx`;
+      const dispo = `attachment; filename="${asciiFallback}"; filename*=UTF-8''${encodeURIComponent(fileBase)}`;
+      return new NextResponse(Buffer.from(buf as ArrayBuffer), {
+        headers: {
+          "Content-Type":
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "Content-Disposition": dispo,
+        },
+      });
+    }
+
+    // ===== CSV =====
+    const csvCell = (c: Cell): string => {
+      const escape = (s: string) => `"${s.replace(/"/g, '""')}"`;
+      switch (c.kind) {
+        case "plain":
+          return escape(c.v);
+        case "forceText":
+          // 빈값은 그대로, 값이 있을 때만 ' 접두사로 텍스트 인식 유도
+          return escape(c.v ? `'${c.v}` : "");
+        case "number":
+          return escape(c.v.toString());
+        case "formula":
+          return escape(`=${c.formula}`);
+        case "empty":
+          return `""`;
+      }
+    };
+
+    const BOM = "﻿";
+    const lines = rows.map((r) => r.cells.map(csvCell).join(","));
+    const csv = BOM + lines.join("\n");
+
     const fileBase = `payment${schoolSlug}_${dateStr}.csv`;
-    // RFC 5987: filename* with UTF-8 한글 보존 + ASCII fallback
     const asciiFallback = `payment${schoolFilter ? "_" + schoolFilter : ""}_${dateStr}.csv`;
     const dispo = `attachment; filename="${asciiFallback}"; filename*=UTF-8''${encodeURIComponent(fileBase)}`;
 
@@ -275,7 +374,7 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (err) {
-    console.error("Payment CSV export error:", err);
+    console.error("Payment export error:", err);
     return NextResponse.json({ error: "데이터 조회 실패" }, { status: 500 });
   }
 }

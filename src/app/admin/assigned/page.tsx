@@ -226,12 +226,14 @@ export default function AssignedPage() {
     }
   }
 
-  // 선발 강사 CSV 다운로드 (전체 또는 특정 학교)
-  async function handlePaymentExport(schoolId?: string) {
+  // 선발 강사 강사료 다운로드 (전체 또는 특정 학교, csv 또는 xlsx)
+  async function handlePaymentExport(schoolId?: string, format: "csv" | "xlsx" = "csv") {
     const token = getAdminToken();
-    const url = schoolId
-      ? `/api/applicants/export-payment?school=${encodeURIComponent(schoolId)}`
-      : "/api/applicants/export-payment";
+    const params = new URLSearchParams();
+    if (schoolId) params.set("school", schoolId);
+    if (format === "xlsx") params.set("format", "xlsx");
+    const qs = params.toString();
+    const url = `/api/applicants/export-payment${qs ? "?" + qs : ""}`;
     const res = await fetch(url, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -242,7 +244,7 @@ export default function AssignedPage() {
     const schoolSlug = schoolId
       ? `_${SCHOOLS.find((s) => s.id === schoolId)?.shortName || schoolId}`
       : "";
-    a.download = `payment${schoolSlug}_${new Date().toISOString().slice(0, 10)}.csv`;
+    a.download = `payment${schoolSlug}_${new Date().toISOString().slice(0, 10)}.${format}`;
     a.click();
     URL.revokeObjectURL(objectUrl);
   }
@@ -832,7 +834,8 @@ export default function AssignedPage() {
                     <th scope="col" className="text-right px-3 py-2 font-medium text-gray-600">원천징수(3.3%)</th>
                     <th scope="col" className="text-right px-3 py-2 font-medium text-gray-600">실지급액</th>
                     <th scope="col" className="text-right px-3 py-2 font-medium text-gray-600">입금 완료</th>
-                    <th scope="col" className="text-center px-3 py-2 font-medium text-gray-600">CSV</th>
+                    <th scope="col" className="text-center px-3 py-2 font-medium text-gray-600">입금일 일괄</th>
+                    <th scope="col" className="text-center px-3 py-2 font-medium text-gray-600">다운로드</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -864,7 +867,7 @@ export default function AssignedPage() {
                     if (schoolRows.length === 0) {
                       return (
                         <tr>
-                          <td colSpan={7} className="px-3 py-4 text-center text-sm text-gray-400">아직 배정 데이터가 없습니다.</td>
+                          <td colSpan={8} className="px-3 py-4 text-center text-sm text-gray-400">아직 배정 데이터가 없습니다.</td>
                         </tr>
                       );
                     }
@@ -891,17 +894,55 @@ export default function AssignedPage() {
                                 <span className="text-gray-300">-</span>
                               )}
                             </td>
-                            <td className="px-3 py-2.5 text-center">
-                              <button
-                                type="button"
-                                onClick={() => handlePaymentExport(r.school.id)}
-                                className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-emerald-50 text-emerald-700 hover:bg-emerald-100 text-[11px] font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-400"
-                                aria-label={`${r.school.shortName} 강사료 CSV 다운로드`}
-                                title={`${r.school.shortName} 강사료 CSV 다운로드`}
-                              >
-                                <Download className="w-3 h-3" />
-                                다운
-                              </button>
+                            <td className="px-3 py-2 text-center whitespace-nowrap">
+                              <div className="inline-flex items-center gap-1.5">
+                                <input
+                                  type="date"
+                                  aria-label={`${r.school.shortName} 입금일 일괄 적용 날짜`}
+                                  value={bulkSchoolDate[r.school.id] || ""}
+                                  onChange={(e) =>
+                                    setBulkSchoolDate({ ...bulkSchoolDate, [r.school.id]: e.target.value })
+                                  }
+                                  disabled={bulkSchoolApplying === r.school.id}
+                                  className="text-xs border border-emerald-200 rounded px-1.5 py-1 bg-white focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 disabled:opacity-50"
+                                />
+                                <button
+                                  type="button"
+                                  onClick={() => applyBulkSchoolDate(r.school.id)}
+                                  disabled={
+                                    !bulkSchoolDate[r.school.id] ||
+                                    bulkSchoolApplying === r.school.id
+                                  }
+                                  className="text-[11px] px-2 py-1 rounded bg-emerald-600 hover:bg-emerald-700 text-white font-semibold disabled:opacity-40 disabled:cursor-not-allowed transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                                  title={`${r.school.shortName} 모든 배정에 입금일 일괄 적용`}
+                                >
+                                  {bulkSchoolApplying === r.school.id ? "..." : "적용"}
+                                </button>
+                              </div>
+                            </td>
+                            <td className="px-3 py-2.5 text-center whitespace-nowrap">
+                              <div className="inline-flex items-center gap-1">
+                                <button
+                                  type="button"
+                                  onClick={() => handlePaymentExport(r.school.id, "csv")}
+                                  className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-emerald-50 text-emerald-700 hover:bg-emerald-100 text-[11px] font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                                  aria-label={`${r.school.shortName} 강사료 CSV 다운로드`}
+                                  title={`${r.school.shortName} 강사료 CSV 다운로드`}
+                                >
+                                  <Download className="w-3 h-3" />
+                                  CSV
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => handlePaymentExport(r.school.id, "xlsx")}
+                                  className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-green-100 text-green-800 hover:bg-green-200 text-[11px] font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-green-500"
+                                  aria-label={`${r.school.shortName} 강사료 엑셀 다운로드`}
+                                  title={`${r.school.shortName} 강사료 엑셀(XLSX) 다운로드`}
+                                >
+                                  <Download className="w-3 h-3" />
+                                  XLSX
+                                </button>
+                              </div>
                             </td>
                           </tr>
                         ))}
@@ -920,17 +961,30 @@ export default function AssignedPage() {
                           <td className="px-3 py-3 text-right font-mono text-emerald-700">
                             {grandPaid > 0 ? grandPaid.toLocaleString() : "-"}
                           </td>
-                          <td className="px-3 py-3 text-center">
-                            <button
-                              type="button"
-                              onClick={() => handlePaymentExport()}
-                              className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400"
-                              aria-label="전체 강사료 CSV 다운로드"
-                              title="전체 강사료 CSV 다운로드"
-                            >
-                              <Download className="w-3 h-3" />
-                              전체
-                            </button>
+                          <td className="px-3 py-3 text-center text-[11px] text-indigo-400">—</td>
+                          <td className="px-3 py-3 text-center whitespace-nowrap">
+                            <div className="inline-flex items-center gap-1">
+                              <button
+                                type="button"
+                                onClick={() => handlePaymentExport(undefined, "csv")}
+                                className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                                aria-label="전체 강사료 CSV 다운로드"
+                                title="전체 강사료 CSV 다운로드"
+                              >
+                                <Download className="w-3 h-3" />
+                                CSV
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => handlePaymentExport(undefined, "xlsx")}
+                                className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-green-700 hover:bg-green-800 text-white text-[11px] font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-green-500"
+                                aria-label="전체 강사료 엑셀 다운로드"
+                                title="전체 강사료 엑셀(XLSX) 다운로드"
+                              >
+                                <Download className="w-3 h-3" />
+                                XLSX
+                              </button>
+                            </div>
                           </td>
                         </tr>
                       </>

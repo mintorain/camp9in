@@ -3,6 +3,8 @@ export PATH=/usr/local/bin:$PATH
 cd /volume3/web/camp9in
 git pull
 rm -f .next/lock
+# 의존성 변경 자동 반영 (package.json 변경 시 새 패키지 설치)
+npm install --no-audit --no-fund
 npm run build
 mkdir -p .next/standalone/.next
 rm -rf .next/standalone/.next/static .next/standalone/public
