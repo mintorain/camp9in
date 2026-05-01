@@ -185,12 +185,16 @@ export async function GET(request: NextRequest) {
       const amount = asn?.payment_amount ?? 0;
       const paymentDate = asn?.payment_date || "";
 
-      // 주민번호 마스킹: 뒷자리 첫 1자리만 노출
-      const maskedResidentId = a.resident_id
-        ? a.resident_id.length >= 7
-          ? `${a.resident_id.slice(0, 6)}-${a.resident_id[6]}******`
-          : a.resident_id
-        : "";
+      // 세금 신고용 — 주민등록번호 전체 노출 (000000-0000000 형식으로 정규화)
+      // 앞에 ' 접두사 추가 → 스프레드시트에서 텍스트로 인식되어 선두 0/하이픈 보존
+      const rid = a.resident_id || "";
+      const ridDigits = rid.replace(/\D/g, "");
+      const fullResidentId =
+        ridDigits.length >= 13
+          ? `'${ridDigits.slice(0, 6)}-${ridDigits.slice(6, 13)}`
+          : rid
+            ? `'${rid}`
+            : "";
 
       rowCursor += 1;
       const rowNum = rowCursor; // current row's spreadsheet row number
@@ -206,7 +210,7 @@ export async function GET(request: NextRequest) {
           asn ? subjectName(asn.subject_id) : "",
           asn?.grade || "",
           a.payment_name || "",
-          maskedResidentId,
+          fullResidentId,
           a.payment_address || "",
           a.bank_name || "",
           // 계좌번호: 앞에 ' 를 붙여 Excel/스프레드시트에서 텍스트로 인식되게 함 (선두 0 보존, 지수 표기 방지)
