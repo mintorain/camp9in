@@ -75,21 +75,24 @@ export async function PATCH(
     }
 
     // 배정별 강사료 및 입금일 저장
+    // 같은 (applicant_id, school_id, subject_id) 안에 학년만 다른 행이 여러 개일 수 있어
+    // grade까지 WHERE에 포함해야 한 행씩 정확히 업데이트됨 (<=>는 NULL-safe equality).
     if (body.assignment_payments && Array.isArray(body.assignment_payments)) {
       for (const ap of body.assignment_payments) {
+        const grade = ap.grade ?? null;
         try {
           await query(
             `UPDATE applicant_assignments SET payment_amount = ?, payment_date = ?
-             WHERE applicant_id = ? AND school_id = ? AND subject_id = ?`,
-            [ap.payment_amount, ap.payment_date || null, id, ap.school_id, ap.subject_id]
+             WHERE applicant_id = ? AND school_id = ? AND subject_id = ? AND grade <=> ?`,
+            [ap.payment_amount, ap.payment_date || null, id, ap.school_id, ap.subject_id, grade]
           );
         } catch {
           // payment_date 컬럼이 아직 없는 구버전 DB: payment_amount만
           try {
             await query(
               `UPDATE applicant_assignments SET payment_amount = ?
-               WHERE applicant_id = ? AND school_id = ? AND subject_id = ?`,
-              [ap.payment_amount, id, ap.school_id, ap.subject_id]
+               WHERE applicant_id = ? AND school_id = ? AND subject_id = ? AND grade <=> ?`,
+              [ap.payment_amount, id, ap.school_id, ap.subject_id, grade]
             );
           } catch {
             // payment_amount 컬럼도 없으면 무시
