@@ -226,12 +226,17 @@ export default function AssignedPage() {
     }
   }
 
-  // 선발 강사 강사료 다운로드 (전체 또는 특정 학교, csv 또는 xlsx)
-  async function handlePaymentExport(schoolId?: string, format: "csv" | "xlsx" = "csv") {
+  // 선발 강사 강사료 다운로드 (전체/학교별, csv/xlsx, 배정별/강사합계)
+  async function handlePaymentExport(
+    schoolId?: string,
+    format: "csv" | "xlsx" = "csv",
+    group?: "instructor"
+  ) {
     const token = getAdminToken();
     const params = new URLSearchParams();
     if (schoolId) params.set("school", schoolId);
     if (format === "xlsx") params.set("format", "xlsx");
+    if (group) params.set("group", group);
     const qs = params.toString();
     const url = `/api/applicants/export-payment${qs ? "?" + qs : ""}`;
     const res = await fetch(url, {
@@ -244,7 +249,8 @@ export default function AssignedPage() {
     const schoolSlug = schoolId
       ? `_${SCHOOLS.find((s) => s.id === schoolId)?.shortName || schoolId}`
       : "";
-    a.download = `payment${schoolSlug}_${new Date().toISOString().slice(0, 10)}.${format}`;
+    const groupSlug = group === "instructor" ? "_summary" : "";
+    a.download = `payment${schoolSlug}${groupSlug}_${new Date().toISOString().slice(0, 10)}.${format}`;
     a.click();
     URL.revokeObjectURL(objectUrl);
   }
@@ -921,13 +927,13 @@ export default function AssignedPage() {
                               </div>
                             </td>
                             <td className="px-3 py-2.5 text-center whitespace-nowrap">
-                              <div className="inline-flex items-center gap-1">
+                              <div className="inline-flex items-center gap-1 flex-wrap justify-center">
                                 <button
                                   type="button"
                                   onClick={() => handlePaymentExport(r.school.id, "csv")}
                                   className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-emerald-50 text-emerald-700 hover:bg-emerald-100 text-[11px] font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-400"
-                                  aria-label={`${r.school.shortName} 강사료 CSV 다운로드`}
-                                  title={`${r.school.shortName} 강사료 CSV 다운로드`}
+                                  aria-label={`${r.school.shortName} 강사료 CSV (배정별)`}
+                                  title={`${r.school.shortName} 배정별 CSV 다운로드`}
                                 >
                                   <Download className="w-3 h-3" />
                                   CSV
@@ -936,11 +942,21 @@ export default function AssignedPage() {
                                   type="button"
                                   onClick={() => handlePaymentExport(r.school.id, "xlsx")}
                                   className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-green-100 text-green-800 hover:bg-green-200 text-[11px] font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-green-500"
-                                  aria-label={`${r.school.shortName} 강사료 엑셀 다운로드`}
-                                  title={`${r.school.shortName} 강사료 엑셀(XLSX) 다운로드`}
+                                  aria-label={`${r.school.shortName} 강사료 XLSX (배정별)`}
+                                  title={`${r.school.shortName} 배정별 엑셀(XLSX) 다운로드`}
                                 >
                                   <Download className="w-3 h-3" />
                                   XLSX
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => handlePaymentExport(r.school.id, "xlsx", "instructor")}
+                                  className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-amber-100 text-amber-800 hover:bg-amber-200 text-[11px] font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                  aria-label={`${r.school.shortName} 강사 합계 엑셀 다운로드 (세금신고용)`}
+                                  title={`${r.school.shortName} 강사별 합계 엑셀 — 같은 강사명+주민번호는 합산 (세금 신고용)`}
+                                >
+                                  <Download className="w-3 h-3" />
+                                  합계
                                 </button>
                               </div>
                             </td>
@@ -963,13 +979,13 @@ export default function AssignedPage() {
                           </td>
                           <td className="px-3 py-3 text-center text-[11px] text-indigo-400">—</td>
                           <td className="px-3 py-3 text-center whitespace-nowrap">
-                            <div className="inline-flex items-center gap-1">
+                            <div className="inline-flex items-center gap-1 flex-wrap justify-center">
                               <button
                                 type="button"
                                 onClick={() => handlePaymentExport(undefined, "csv")}
                                 className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400"
-                                aria-label="전체 강사료 CSV 다운로드"
-                                title="전체 강사료 CSV 다운로드"
+                                aria-label="전체 강사료 CSV 다운로드 (배정별)"
+                                title="전체 배정별 CSV 다운로드"
                               >
                                 <Download className="w-3 h-3" />
                                 CSV
@@ -978,11 +994,21 @@ export default function AssignedPage() {
                                 type="button"
                                 onClick={() => handlePaymentExport(undefined, "xlsx")}
                                 className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-green-700 hover:bg-green-800 text-white text-[11px] font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-green-500"
-                                aria-label="전체 강사료 엑셀 다운로드"
-                                title="전체 강사료 엑셀(XLSX) 다운로드"
+                                aria-label="전체 강사료 XLSX 다운로드 (배정별)"
+                                title="전체 배정별 엑셀(XLSX) 다운로드"
                               >
                                 <Download className="w-3 h-3" />
                                 XLSX
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => handlePaymentExport(undefined, "xlsx", "instructor")}
+                                className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-amber-600 hover:bg-amber-700 text-white text-[11px] font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500"
+                                aria-label="전체 강사 합계 엑셀 다운로드 (세금신고용)"
+                                title="전체 강사별 합계 엑셀 — 같은 강사명+주민번호는 합산 (세금 신고용)"
+                              >
+                                <Download className="w-3 h-3" />
+                                합계
                               </button>
                             </div>
                           </td>
