@@ -226,19 +226,25 @@ export default function AssignedPage() {
     }
   }
 
-  // 선발 강사 CSV 다운로드
-  async function handlePaymentExport() {
+  // 선발 강사 CSV 다운로드 (전체 또는 특정 학교)
+  async function handlePaymentExport(schoolId?: string) {
     const token = getAdminToken();
-    const res = await fetch("/api/applicants/export-payment", {
+    const url = schoolId
+      ? `/api/applicants/export-payment?school=${encodeURIComponent(schoolId)}`
+      : "/api/applicants/export-payment";
+    const res = await fetch(url, {
       headers: { Authorization: `Bearer ${token}` },
     });
     const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
+    const objectUrl = URL.createObjectURL(blob);
     const a = document.createElement("a");
-    a.href = url;
-    a.download = `payment_${new Date().toISOString().slice(0, 10)}.csv`;
+    a.href = objectUrl;
+    const schoolSlug = schoolId
+      ? `_${SCHOOLS.find((s) => s.id === schoolId)?.shortName || schoolId}`
+      : "";
+    a.download = `payment${schoolSlug}_${new Date().toISOString().slice(0, 10)}.csv`;
     a.click();
-    URL.revokeObjectURL(url);
+    URL.revokeObjectURL(objectUrl);
   }
 
   // 슬롯에 지원자 배정
@@ -375,7 +381,7 @@ export default function AssignedPage() {
           <div className="ml-auto flex items-center gap-2">
             <span className="text-sm text-gray-500">합격자 {applicants.length}명</span>
             <button
-              onClick={handlePaymentExport}
+              onClick={() => handlePaymentExport()}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500"
             >
               <Download className="w-3.5 h-3.5" />
@@ -826,6 +832,7 @@ export default function AssignedPage() {
                     <th scope="col" className="text-right px-3 py-2 font-medium text-gray-600">원천징수(3.3%)</th>
                     <th scope="col" className="text-right px-3 py-2 font-medium text-gray-600">실지급액</th>
                     <th scope="col" className="text-right px-3 py-2 font-medium text-gray-600">입금 완료</th>
+                    <th scope="col" className="text-center px-3 py-2 font-medium text-gray-600">CSV</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -857,7 +864,7 @@ export default function AssignedPage() {
                     if (schoolRows.length === 0) {
                       return (
                         <tr>
-                          <td colSpan={6} className="px-3 py-4 text-center text-sm text-gray-400">아직 배정 데이터가 없습니다.</td>
+                          <td colSpan={7} className="px-3 py-4 text-center text-sm text-gray-400">아직 배정 데이터가 없습니다.</td>
                         </tr>
                       );
                     }
@@ -884,6 +891,18 @@ export default function AssignedPage() {
                                 <span className="text-gray-300">-</span>
                               )}
                             </td>
+                            <td className="px-3 py-2.5 text-center">
+                              <button
+                                type="button"
+                                onClick={() => handlePaymentExport(r.school.id)}
+                                className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-emerald-50 text-emerald-700 hover:bg-emerald-100 text-[11px] font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                                aria-label={`${r.school.shortName} 강사료 CSV 다운로드`}
+                                title={`${r.school.shortName} 강사료 CSV 다운로드`}
+                              >
+                                <Download className="w-3 h-3" />
+                                다운
+                              </button>
+                            </td>
                           </tr>
                         ))}
                         <tr className="bg-indigo-50 font-bold">
@@ -900,6 +919,18 @@ export default function AssignedPage() {
                           </td>
                           <td className="px-3 py-3 text-right font-mono text-emerald-700">
                             {grandPaid > 0 ? grandPaid.toLocaleString() : "-"}
+                          </td>
+                          <td className="px-3 py-3 text-center">
+                            <button
+                              type="button"
+                              onClick={() => handlePaymentExport()}
+                              className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                              aria-label="전체 강사료 CSV 다운로드"
+                              title="전체 강사료 CSV 다운로드"
+                            >
+                              <Download className="w-3 h-3" />
+                              전체
+                            </button>
                           </td>
                         </tr>
                       </>

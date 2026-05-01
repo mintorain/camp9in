@@ -35,6 +35,9 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "인증이 필요합니다" }, { status: 401 });
   }
 
+  const { searchParams } = new URL(request.url);
+  const schoolFilter = searchParams.get("school"); // 특정 학교만 다운로드 (없으면 전체)
+
   try {
     const [applicants, assignmentRows, SCHOOLS, SUBJECTS] = await Promise.all([
       query<ApplicantRow>(
@@ -91,11 +94,19 @@ export async function GET(request: NextRequest) {
     };
 
     // 합격자만 대상 — 학교 → 강사명 → 배정 ID 순으로 정렬
+    // schoolFilter가 있으면 해당 학교의 배정만 포함 (미배정 합격자도 제외)
     const items: Item[] = [];
     for (const a of applicants) {
-      const myAssigns = assignmentRows.filter((r) => r.applicant_id === a.id);
+      const myAssigns = assignmentRows.filter(
+        (r) =>
+          r.applicant_id === a.id &&
+          (schoolFilter ? r.school_id === schoolFilter : true)
+      );
       if (myAssigns.length === 0) {
-        items.push({ kind: "row", schoolId: "__none__", applicant: a, assignment: null });
+        if (!schoolFilter) {
+          items.push({ kind: "row", schoolId: "__none__", applicant: a, assignment: null });
+        }
+        // schoolFilter가 있으면 해당 학교 배정 없는 강사는 스킵
       } else {
         for (const asn of myAssigns) {
           items.push({ kind: "row", schoolId: asn.school_id, applicant: a, assignment: asn });
@@ -198,7 +209,8 @@ export async function GET(request: NextRequest) {
           maskedResidentId,
           a.payment_address || "",
           a.bank_name || "",
-          a.bank_account || "",
+          // 계좌번호: 앞에 ' 를 붙여 Excel/스프레드시트에서 텍스트로 인식되게 함 (선두 0 보존, 지수 표기 방지)
+          a.bank_account ? `'${a.bank_account}` : "",
           amount > 0 ? amount.toString() : "",
           // 사업소득세 =ROUND(N{row}*0.03,0)
           amount > 0 ? `=ROUND(N${rowNum}*0.03,0)` : "",
@@ -243,10 +255,19 @@ export async function GET(request: NextRequest) {
 
     const csv = BOM + lines.join("\n");
 
+    const dateStr = new Date().toISOString().slice(0, 10);
+    const schoolSlug = schoolFilter
+      ? `_${(SCHOOLS.find((s) => s.id === schoolFilter)?.shortName || schoolFilter).replace(/\s+/g, "")}`
+      : "";
+    const fileBase = `payment${schoolSlug}_${dateStr}.csv`;
+    // RFC 5987: filename* with UTF-8 한글 보존 + ASCII fallback
+    const asciiFallback = `payment${schoolFilter ? "_" + schoolFilter : ""}_${dateStr}.csv`;
+    const dispo = `attachment; filename="${asciiFallback}"; filename*=UTF-8''${encodeURIComponent(fileBase)}`;
+
     return new NextResponse(csv, {
       headers: {
         "Content-Type": "text/csv; charset=utf-8",
-        "Content-Disposition": `attachment; filename="payment_${new Date().toISOString().slice(0, 10)}.csv"`,
+        "Content-Disposition": dispo,
       },
     });
   } catch (err) {
