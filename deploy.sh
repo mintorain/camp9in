@@ -1,4 +1,5 @@
 #!/bin/bash
+export PATH=/usr/local/bin:$PATH
 cd /volume3/web/camp9in
 git pull
 rm -f .next/lock
